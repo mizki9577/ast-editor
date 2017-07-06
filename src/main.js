@@ -1,9 +1,10 @@
 // @flow
 import React from 'react'
 import ReactDOM from 'react-dom'
+import AstEditor from './AstEditor.js'
 
 ReactDOM.render(
-  <div />,
+  <AstEditor />,
   document.getElementById('app')
 )
 
