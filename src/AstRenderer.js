@@ -33,7 +33,12 @@ const AstRenderer = ({ node }: Props) => {
           <AstRenderer node={ node.callee } />
           (
           <div className="arguments">
-            { node.arguments.map(argument => <AstRenderer node={ argument } />) }
+            { node.arguments.map(argument => (
+              <div className="argument">
+                <AstRenderer node={ argument } />
+                ,
+              </div>
+            ) ) }
           </div>
           )
         </span>
