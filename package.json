@@ -9,10 +9,12 @@
   },
   "scripts": {
     "start": "NODE_ENV=development concurrently -k \"rollup -c -w -m inline\" \"http-server -p $npm_package_config_port dist/\"",
+    "build": "NODE_ENV=production rollup -c",
     "flow": "flow"
   },
   "devDependencies": {
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-babili": "^0.1.4",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^3.5.0",
     "flow-bin": "^0.49.1",

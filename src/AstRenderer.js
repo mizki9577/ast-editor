@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import { Node } from 'babylon'
+import type { Node } from 'babylon'
 
 type Props = {|
   node: ?Node,
