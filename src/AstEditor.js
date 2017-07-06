@@ -1,8 +1,11 @@
 // @flow
 import React from 'react'
+import * as babylon from 'babylon'
+import AstRenderer from './AstRenderer.js'
 
 type State = {|
   src: string,
+  ast: ?babylon.Node,
 |}
 
 class AstEditor extends React.Component {
@@ -12,11 +15,14 @@ class AstEditor extends React.Component {
     super(props)
     this.state = {
       src: '',
+      ast: null,
     }
   }
 
   handleSourceChange(ev: SyntheticInputEvent) {
-    this.setState({ src: ev.target.value })
+    const src = ev.target.value
+    const ast = babylon.parse(src)
+    this.setState({ src, ast })
   }
 
   render() {
@@ -24,7 +30,7 @@ class AstEditor extends React.Component {
       <div>
         <textarea id="src" onChange={ ev => this.handleSourceChange(ev) } />
         <div id="dest">
-          hoge
+          <AstRenderer node={ this.state.ast } />
         </div>
       </div>
     )
