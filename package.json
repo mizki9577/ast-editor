@@ -4,12 +4,9 @@
   "author": "Mizki SUZUMORI <mizki9577@gmail.com>",
   "license": "BSD-2-Clause",
   "private": true,
-  "config": {
-    "port": "8080"
-  },
   "scripts": {
-    "start": "NODE_ENV=development concurrently -k \"rollup -c -w -m inline\" \"http-server -p $npm_package_config_port dist/\"",
-    "build": "NODE_ENV=production rollup -c",
+    "start": "concurrently -k \"rollup -c -w -m inline --environment NODE_ENV:development\" \"http-server dist/\"",
+    "build": "rollup -c --environment NODE_ENV:production",
     "deploy": "npm run build && gh-pages -d dist",
     "flow": "flow"
   },
