@@ -22,8 +22,6 @@ class AstEditor extends React.Component {
   handleSourceChange(ev: SyntheticInputEvent) {
     const src = ev.target.value
     const ast = babylon.parse(src, {
-      sourceType: 'module',
-      plugins: ['jsx'],
     })
     this.setState({ src, ast })
   }
