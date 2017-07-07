@@ -123,6 +123,12 @@ const AstRenderer = ({ node }: Props) => {
     case 'ObjectExpression':
       return <ObjectExpressionRenderer node={ node } />
 
+    case 'ObjectProperty':
+      return <ObjectPropertyRenderer node={ node } />
+
+    case 'ObjectMethod':
+      return <ObjectMethodRenderer node={ node } />
+
     case 'FunctionExpression':
       return <FunctionExpressionRenderer node={ node } />
 
@@ -170,6 +176,18 @@ const AstRenderer = ({ node }: Props) => {
 
     case 'TaggedTemplateExpression':
       return <TaggedTemplateExpressionRenderer node={ node } />
+
+    case 'ObjectPattern':
+      return <ObjectPatternRenderer node={ node } />
+
+    case 'ArrayPattern':
+      return <ArrayPatternRenderer node={ node } />
+
+    case 'RestElement':
+      return <RestElementRenderer node={ node } />
+
+    case 'AssignmentPattern':
+      return <AssignmentPatternRenderer node={ node } />
 
     default:
       return <UnknownNodeRenderer node={ node } />
@@ -631,8 +649,46 @@ const DoExpressionRenderer = ({ node }: { node: Node }) => (
   </div>
 )
 
+// Not implemented. they must be awful works.
 const TemplateLiteralRenderer = UnknownNodeRenderer
 const TaggedTemplateExpressionRenderer = UnknownNodeRenderer
+
+const AssignmentPropertyRenderer = ({ node }: { node: Node }) => (
+  <div className="pattern assignment-property">
+    <ObjectPropertyRenderer node={ node } />
+  </div>
+)
+
+const ObjectPatternRenderer = ({ node }: { node: Node }) => (
+  <div className="pattern object-pattern">
+    { '{' }
+    { node.properties.map(property => <AstRenderer node={ property } />) }
+    { '}' }
+  </div>
+)
+
+const ArrayPatternRenderer = ({ node }: { node: Node }) => (
+  <div className="pattern array-pattern">
+    { '[' }
+    { node.elements.map(element => element !== null ? <AstRenderer node={ element } /> : null) }
+    { ']' }
+  </div>
+)
+
+const RestElementRenderer = ({ node }: { node: Node }) => (
+  <div className="rest-element">
+    { '...' }
+    <AstRenderer node={ node.pattern } />
+  </div>
+)
+
+const AssignmentPatternRenderer = ({ node }: { node: Node }) => (
+  <div className="pattern assignment-pattern">
+    <AstRenderer node={ node.left } />
+    { '=' }
+    <AstRenderer node={ node.right } />
+  </div>
+)
 
 export default AstRenderer
 // vim: set ts=2 sw=2 et:
