@@ -195,44 +195,44 @@ const AstRenderer = ({ node }: Props) => {
 }
 
 const UnknownNodeRenderer = ({ node }: { node: Node }) => (
-  <div className="unknown-node">[UNKNOWN NODE TYPE: { node.type }]</div>
+  <div>[UNKNOWN NODE TYPE: { node.type }]</div>
 )
 
 const IdentifierRenderer = ({ node }: { node: Node }) => (
-  <div className="identifier">{ node.name }</div>
+  <div>{ node.name }</div>
 )
 
 const PrivateNameRenderer = UnknownNodeRenderer
 
 const RegExpLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal regexp-literal">/{ node.pattern }/{ node.flags }</div>
+  <div>/{ node.pattern }/{ node.flags }</div>
 )
 
 const NullLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal null-literal">null</div>
+  <div>null</div>
 )
 
 const StringLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal string-literal">'{ node.value }'</div>
+  <div>'{ node.value }'</div>
 )
 
 const BooleanLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal boolean-literal">{ String(node.value) }</div>
+  <div>{ String(node.value) }</div>
 )
 
 const NumericLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal numeric-literal">{ String(node.value) }</div>
+  <div>{ String(node.value) }</div>
 )
 
 // WIP. currently it ignores sourceType and directives, and not implemented ModuleDeclaration Renderer
 const ProgramRenderer = ({ node }: { node: Node }) => (
-  <div className="program">
+  <div>
     { node.body.map(child => <AstRenderer node={ child } />) }
   </div>
 )
 
 const FunctionRenderer = ({ node }: { node: Node }) => (
-  <div className="function">
+  <div>
     { node.async ? 'async' : '' }
     { 'function' }
     { node.generator ? '*' : '' }
@@ -245,7 +245,7 @@ const FunctionRenderer = ({ node }: { node: Node }) => (
 )
 
 const ExpressionStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement expression-statement">
+  <div>
     <AstRenderer node={ node.expression } />
     ;
   </div>
@@ -253,7 +253,7 @@ const ExpressionStatementRenderer = ({ node }: { node: Node }) => (
 
 // WIP. what's directive?
 const BlockStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement block-statement">
+  <div>
     { '{' }
     { node.body.map(child => <AstRenderer node={ child } />) }
     { '}' }
@@ -261,13 +261,13 @@ const BlockStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const EmptyStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement empty-statement">;</div>
+  <div>;</div>
 )
 
 const DebuggerStatementRenderer = UnknownNodeRenderer
 
 const WithStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement with-statement">
+  <div>
     with (
     <AstRenderer node={ node.object } />
     )
@@ -276,14 +276,14 @@ const WithStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const ReturnStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement return-statement">
+  <div>
     return
     { node.argument !== null ? <AstRenderer node={ node.argument } /> : null }
   </div>
 )
 
 const LabeledStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement labeled-statement">
+  <div>
     { node.label }
     :
     <AstRenderer node={ node.body } />
@@ -291,21 +291,21 @@ const LabeledStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const BreakStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement break-statement">
+  <div>
     break
     { node.label !== null ? <IdentifierRenderer node={ node.label } /> : null }
   </div>
 )
 
 const ContinueStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement continue-statement">
+  <div>
     continue
     { node.label !== null ? <IdentifierRenderer node={ node.label } /> : null }
   </div>
 )
 
 const IfStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement if-statement">
+  <div>
     if (
     <AstRenderer node={ node.test } />
     )
@@ -316,7 +316,7 @@ const IfStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const SwitchStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement switch-statement">
+  <div>
     { 'switch (' }
     <AstRenderer node={ node.discriminant } />
     { ') {' }
@@ -326,7 +326,7 @@ const SwitchStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const SwitchCaseRenderer = ({ node }: { node: Node }) => (
-  <div className="switch-case">
+  <div>
     { node.test !== null ? 'case' : 'default' }
     { node.test !== null ? <AstRenderer node={ node.test } /> : null }
     :
@@ -335,14 +335,14 @@ const SwitchCaseRenderer = ({ node }: { node: Node }) => (
 )
 
 const ThrowStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement throw-statement">
+  <div>
     throw
     <AstRenderer node={ node.argument } />
   </div>
 )
 
 const TryStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement try-statement">
+  <div>
     try
     <BlockStatementRenderer node={ node.block } />
     { node.handler !== null ? <CatchClauseRenderer node={ node.handler } /> : null }
@@ -352,7 +352,7 @@ const TryStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const CatchClauseRenderer = ({ node }: { node: Node }) => (
-  <div className="catch-clause">
+  <div>
     catch (
     <AstRenderer node={ node.param } />
     )
@@ -361,7 +361,7 @@ const CatchClauseRenderer = ({ node }: { node: Node }) => (
 )
 
 const WhileStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement while-statement">
+  <div>
     while (
     <AstRenderer node={ node.test } />
     )
@@ -370,7 +370,7 @@ const WhileStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const DoWhileStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement dowhile-statement">
+  <div>
     do
     <AstRenderer node={ node.body } />
     while (
@@ -380,7 +380,7 @@ const DoWhileStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const ForStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement for-statement">
+  <div>
     for (
     { node.init !== null ? <AstRenderer node={ node.init } /> : null }
     ;
@@ -393,7 +393,7 @@ const ForStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const ForInStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement forin-statement">
+  <div>
     for (
     <AstRenderer node={ node.init } />
     in
@@ -405,7 +405,7 @@ const ForInStatementRenderer = ({ node }: { node: Node }) => (
 
 // WIP. what's await???
 const ForOfStatementRenderer = ({ node }: { node: Node }) => (
-  <div className="statement forof-statement">
+  <div>
     for (
     <AstRenderer node={ node.init } />
     of
@@ -416,20 +416,20 @@ const ForOfStatementRenderer = ({ node }: { node: Node }) => (
 )
 
 const FunctionDeclarationRenderer = ({ node }: { node: Node }) => (
-  <div className="declaration function-declaration">
+  <div>
     <FunctionRenderer node={ node } />
   </div>
 )
 
 const VariableDeclarationRenderer = ({ node }: { node: Node }) => (
-  <div className="declaration variable-declaration">
+  <div>
     { node.kind }
     { node.declarations.map(declaration => <VariableDeclaratorRenderer node={ declaration } />) }
   </div>
 )
 
 const VariableDeclaratorRenderer = ({ node }: { node: Node }) => (
-  <div className="variable-declarator">
+  <div>
     <AstRenderer node={ node.id } />
     { node.init !== null ? '=' : '' }
     { node.init !== null ? <AstRenderer node={ node.init } /> : null }
@@ -437,36 +437,36 @@ const VariableDeclaratorRenderer = ({ node }: { node: Node }) => (
 )
 
 const DecoratorRenderer = ({ node }: { node: Node }) => (
-  <div className="decorator">
+  <div>
     @
     <AstRenderer node={ node.expression } />
   </div>
 )
 
 const DirectiveRenderer = ({ node }: { node: Node }) => (
-  <div className="directive">
+  <div>
     <DirectiveLiteralRenderer node={ node.value } />
   </div>
 )
 
 const DirectiveLiteralRenderer = ({ node }: { node: Node }) => (
-  <div className="literal directive-literal">'{ node.value }'</div>
+  <div>'{ node.value }'</div>
 )
 
 const SuperRenderer = ({ node }: { node: Node }) => (
-  <div className="expression super-expression">super</div>
+  <div>super</div>
 )
 
 const ImportRenderer = ({ node }: { node: Node }) => (
-  <div className="expression import-expression">import</div>
+  <div>import</div>
 )
 
 const ThisExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression this-expression">this</div>
+  <div>this</div>
 )
 
 const ArrowFunctionExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression arrowfunction-expression">
+  <div>
     (
     { node.params.map(p => <AstRenderer node={ p } />) }
     ) =>
@@ -475,7 +475,7 @@ const ArrowFunctionExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const YieldExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression yield-expression">
+  <div>
     { 'yield' }
     { node.delegate ? '*' : '' }
     { node.argument !== null ? <AstRenderer node={ node.argument } /> : null }
@@ -483,14 +483,14 @@ const YieldExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const AwaitExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression await-expression">
+  <div>
     { 'await' }
     { node.argument !== null ? <AstRenderer node={ node.argument } /> : null }
   </div>
 )
 
 const ArrayExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression array-expression">
+  <div>
     { '[' }
     { node.elements.map(e => e !== null ? <AstRenderer node={ e } /> : null) }
     { ']' }
@@ -498,7 +498,7 @@ const ArrayExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const ObjectExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression object-expression">
+  <div>
     { '{' }
     { node.properties.map(p => <AstRenderer node={ p } />) }
     { '}' }
@@ -507,7 +507,7 @@ const ObjectExpressionRenderer = ({ node }: { node: Node }) => (
 
 // WIP for decorator
 const ObjectPropertyRenderer = ({ node }: { node: Node }) => (
-  <div className="object-property">
+  <div>
     { node.computed ? '[' : '' }
     <AstRenderer node={ node.key } />
     { node.computed ? ']' : '' }
@@ -518,7 +518,7 @@ const ObjectPropertyRenderer = ({ node }: { node: Node }) => (
 
 // WIP. I think some lines of this method must be wrong.
 const ObjectMethodRenderer = ({ node }: { node: Node }) => (
-  <div className="object-method">
+  <div>
     { node.async ? 'async' : '' }
     { node.generator ? '*' : '' }
     { node.kind !== 'method' ? node.kind : '' }
@@ -534,21 +534,21 @@ const ObjectMethodRenderer = ({ node }: { node: Node }) => (
 )
 
 const FunctionExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression function-expression">
+  <div>
     <FunctionRenderer node={ node } />
   </div>
 )
 
 // WIP. what does the property prefix mean? I think all unary operators are prefixed.
 const UnaryExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression unary-expression">
+  <div>
     { node.operator }
     <AstRenderer node={ node.argument } />
   </div>
 )
 
 const UpdateExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression update-expression">
+  <div>
     { node.prefix ? node.operator : '' }
     <AstRenderer node={ node.argument } />
     { !node.prefix ? node.operator : '' }
@@ -556,7 +556,7 @@ const UpdateExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const BinaryExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression binary-expression">
+  <div>
     <AstRenderer node={ node.left } />
     { node.operator }
     <AstRenderer node={ node.right } />
@@ -564,7 +564,7 @@ const BinaryExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const AssignmentExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression assignment-expression">
+  <div>
     <AstRenderer node={ node.left } />
     { node.operator }
     <AstRenderer node={ node.right } />
@@ -572,7 +572,7 @@ const AssignmentExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const LogicalExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression logical-expression">
+  <div>
     <AstRenderer node={ node.left } />
     { node.operator }
     <AstRenderer node={ node.right } />
@@ -580,7 +580,7 @@ const LogicalExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const SpreadElementRenderer = ({ node }: { node: Node }) => (
-  <div className="expression spread-element">
+  <div>
     ...
     <AstRenderer node={ node.argument } />
   </div>
@@ -588,7 +588,7 @@ const SpreadElementRenderer = ({ node }: { node: Node }) => (
 
 // WIP. shall I handle optional prop?
 const MemberExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression member-expression">
+  <div>
     <AstRenderer node={ node.object } />
     { node.computed ? '[' : '.' }
     <AstRenderer node={ node.property } />
@@ -597,7 +597,7 @@ const MemberExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const BindExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression bind-expression">
+  <div>
     { node.object !== null ? <AstRenderer node={ node.object } /> : null }
     { '::' }
     <AstRenderer node={ node.callee } />
@@ -605,7 +605,7 @@ const BindExpressionRenderer = ({ node }: { node: Node }) => (
 )
 
 const ConditionalExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression conditional-expression">
+  <div>
     <AstRenderer node={ node.test } />
     { '?' }
     <AstRenderer node={ node.consequent } />
@@ -616,7 +616,7 @@ const ConditionalExpressionRenderer = ({ node }: { node: Node }) => (
 
 // WIP. shall I handle optional prop?
 const CallExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression call-expression">
+  <div>
     <AstRenderer node={ node.callee } />
     { '(' }
     { node.arguments.map(argument => <AstRenderer node={ argument } />) }
@@ -626,7 +626,7 @@ const CallExpressionRenderer = ({ node }: { node: Node }) => (
 
 // WIP. shall I handle optional prop?
 const NewExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression new-expression">
+  <div>
     { 'new' }
     <AstRenderer node={ node.object } />
     { '(' }
@@ -637,13 +637,13 @@ const NewExpressionRenderer = ({ node }: { node: Node }) => (
 
 // WIP. put comma.
 const SequenceExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression sequence-expression">
+  <div>
     { node.expressions.map(expression => <AstRenderer node={ expression } />) }
   </div>
 )
 
 const DoExpressionRenderer = ({ node }: { node: Node }) => (
-  <div className="expression do-expression">
+  <div>
     { 'do' }
     <BlockStatementRenderer node={ node.body } />
   </div>
@@ -654,13 +654,13 @@ const TemplateLiteralRenderer = UnknownNodeRenderer
 const TaggedTemplateExpressionRenderer = UnknownNodeRenderer
 
 const AssignmentPropertyRenderer = ({ node }: { node: Node }) => (
-  <div className="pattern assignment-property">
+  <div>
     <ObjectPropertyRenderer node={ node } />
   </div>
 )
 
 const ObjectPatternRenderer = ({ node }: { node: Node }) => (
-  <div className="pattern object-pattern">
+  <div>
     { '{' }
     { node.properties.map(property => <AstRenderer node={ property } />) }
     { '}' }
@@ -668,7 +668,7 @@ const ObjectPatternRenderer = ({ node }: { node: Node }) => (
 )
 
 const ArrayPatternRenderer = ({ node }: { node: Node }) => (
-  <div className="pattern array-pattern">
+  <div>
     { '[' }
     { node.elements.map(element => element !== null ? <AstRenderer node={ element } /> : null) }
     { ']' }
@@ -676,14 +676,14 @@ const ArrayPatternRenderer = ({ node }: { node: Node }) => (
 )
 
 const RestElementRenderer = ({ node }: { node: Node }) => (
-  <div className="rest-element">
+  <div>
     { '...' }
     <AstRenderer node={ node.pattern } />
   </div>
 )
 
 const AssignmentPatternRenderer = ({ node }: { node: Node }) => (
-  <div className="pattern assignment-pattern">
+  <div>
     <AstRenderer node={ node.left } />
     { '=' }
     <AstRenderer node={ node.right } />
