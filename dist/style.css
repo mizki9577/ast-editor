@@ -1,3 +1,8 @@
+body {
+    width: 100%;
+    margin: 0;
+}
+
 div[data-reactroot] {
     display: flex;
     font-family: monospace;
@@ -5,7 +10,7 @@ div[data-reactroot] {
 }
 
 textarea#src, div#dest {
-    width: 640px;
+    flex-grow: 1;
     margin: 1em;
 }
 
@@ -16,6 +21,17 @@ textarea#src {
 
 div#dest {
     border: solid thin black;
+}
+
+div#dest span {
+    padding: 0.1em;
+    border: solid thin red;
+}
+
+div#dest div {
+    margin: 0.5em 0 0.5em 2em;
+    padding: 0.5em;
+    border: solid thin blue;
 }
 
 /* vim: set ts=4 sw=4 et: */
