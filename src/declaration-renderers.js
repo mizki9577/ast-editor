@@ -19,16 +19,16 @@ export const renderDeclaration = (node: babylon.Declaration) => {
 }
 
 export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDeclaration }) => (
-  <div>
+  <span>
     <FunctionRenderer node={ node } />
-  </div>
+  </span>
 )
 
 export const VariableDeclarationRenderer = ({ node }: { node: babylon.VariableDeclaration }) => (
-  <div>
+  <span>
     <span>{ node.kind }</span>
     { node.declarations.map(declaration => <VariableDeclaratorRenderer node={ declaration } />) }
-  </div>
+  </span>
 )
 
 const VariableDeclaratorRenderer = ({ node }: { node: babylon.VariableDeclarator }) => (

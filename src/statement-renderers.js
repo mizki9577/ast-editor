@@ -64,7 +64,12 @@ export const renderStatement = (node: babylon.Node) => {
       return <ForOfStatementRenderer node={ node } />
 
     default:
-      return renderDeclaration(node)
+      return (
+        <div>
+          { renderDeclaration(node) }
+          <span>;</span>
+        </div>
+      )
   }
 }
 
