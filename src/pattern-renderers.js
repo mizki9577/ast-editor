@@ -4,7 +4,7 @@ import React from 'react'
 import { UnknownNodeRenderer, IdentifierRenderer } from './JavaScriptASTRenderer.js'
 import { ObjectPropertyRenderer } from './expression-renderers.js'
 import { VariableDeclarationRenderer, FunctionDeclarationRenderer } from './declaration-renderers.js'
-import { renderExpression } from './expression-renderers.js'
+import { renderExpression, MemberExpressionRenderer } from './expression-renderers.js'
 
 export const renderPattern = (node: babylon.Pattern) => {
   switch (node.type) {
@@ -22,6 +22,9 @@ export const renderPattern = (node: babylon.Pattern) => {
 
     case 'Identifier':
       return <IdentifierRenderer node={ node } />
+
+    case 'MemberExpression':
+      return <MemberExpressionRenderer node={ node } />
 
     default:
       return <UnknownNodeRenderer node={ node } />

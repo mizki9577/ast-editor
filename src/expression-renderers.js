@@ -217,7 +217,7 @@ const SpreadElementRenderer = ({ node }: { node: babylon.SpreadElement }) => (
   </span>
 )
 
-const MemberExpressionRenderer = ({ node }: { node: babylon.MemberExpression }) => (
+export const MemberExpressionRenderer = ({ node }: { node: babylon.MemberExpression }) => (
   <span>
     { renderExpression(node.object) }
     { node.computed ? <span>[</span> : null }
