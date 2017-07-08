@@ -186,7 +186,7 @@ const TryStatementRenderer = ({ node }: { node: babylon.TryStatement }) => (
     <BlockStatementRenderer node={ node.block } />
     { node.handler !== null ? <CatchClauseRenderer node={ node.handler } /> : null }
     { node.finalizer !== null ? <span>finally</span> : null }
-    { node.finalizer !== null ? <BlockStatementRenderer node={ node.handler } /> : null }
+    { node.finalizer !== null ? <BlockStatementRenderer node={ node.finalizer } /> : null }
   </div>
 )
 
