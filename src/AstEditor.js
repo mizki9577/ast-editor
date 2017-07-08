@@ -30,7 +30,7 @@ class AstEditor extends React.Component {
   render() {
     return (
       <div>
-        <textarea id="src" onChange={ ev => this.handleSourceChange(ev) } />
+        <textarea id="src" value={ this.state.src } onChange={ ev => this.handleSourceChange(ev) } />
         <div id="dest">
           { this.state.ast ? <AstRenderer node={ this.state.ast } /> : null }
         </div>
