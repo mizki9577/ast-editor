@@ -1,6 +1,8 @@
 body {
     width: 100%;
     margin: 0;
+    background: black;
+    color: white;
 }
 
 div[data-reactroot] {
@@ -12,6 +14,8 @@ div[data-reactroot] {
 textarea#src, div#dest {
     flex-grow: 1;
     margin: 1em;
+    background: inherit;
+    color: inherit;
 }
 
 textarea#src {
