@@ -65,8 +65,8 @@ export const renderStatement = (node: babylon.Node, key: ?number) => {
 
     default:
       return (
-        <div key="declaration-wrapper">
-          { renderDeclaration(node, key) }
+        <div key={ key }>
+          { renderDeclaration(node) }
         </div>
       )
   }

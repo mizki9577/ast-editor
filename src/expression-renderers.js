@@ -257,7 +257,7 @@ const CallExpressionRenderer = ({ node }: { node: babylon.CallExpression }) => (
   <span>
     { renderExpression(node.callee) }
     <span>(</span>
-    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument)) }
+    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument, i)) }
     <span>)</span>
   </span>
 )
@@ -267,7 +267,7 @@ const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression }) => (
     <span>new</span>
     { renderExpression(node.callee) }
     <span>(</span>
-    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument)) }
+    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument, i)) }
     <span>)</span>
   </span>
 )
