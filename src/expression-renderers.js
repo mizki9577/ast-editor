@@ -2,9 +2,10 @@
 import type babylon from 'babylon'
 import React from 'react'
 import { UnknownNodeRenderer, IdentifierRenderer, FunctionRenderer, DecoratorRenderer } from './JavaScriptASTRenderer.js'
-import { BlockStatementRenderer } from './statement-renderers.js'
-import { renderPattern } from './pattern-renderers.js'
 import { renderLiteral } from './literal-renderers.js'
+import { renderPattern } from './pattern-renderers.js'
+import { BlockStatementRenderer } from './statement-renderers.js'
+import { ClassRenderer } from './class-renderers.js'
 
 export const renderExpression = (node: babylon.Expression) => {
   switch (node.type) {
@@ -73,6 +74,12 @@ export const renderExpression = (node: babylon.Expression) => {
 
     case 'Identifier':
       return <IdentifierRenderer node={ node } />
+
+    case 'ClassExpression':
+      return <ClassExpressionRenderer node={ node } />
+
+    case 'MetaProperty':
+      return <MetaPropertyRenderer node={ node } />
 
     default:
       return renderLiteral(node)
@@ -278,5 +285,11 @@ const DoExpressionRenderer = ({ node }: { node: babylon.DoExpression }) => (
     <BlockStatementRenderer node={ node.body } />
   </span>
 )
+
+const ClassExpressionRenderer = ({ node }: { node: babylon.ClassExpression }) => (
+  <ClassRenderer node={ node } />
+)
+
+const MetaPropertyRenderer = () => <UnknownNodeRenderer node={ null } />
 
 // vim: set ts=2 sw=2 et:

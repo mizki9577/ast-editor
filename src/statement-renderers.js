@@ -67,7 +67,6 @@ export const renderStatement = (node: babylon.Node) => {
       return (
         <div>
           { renderDeclaration(node) }
-          <span>;</span>
         </div>
       )
   }
@@ -259,6 +258,5 @@ const ForOfStatementRenderer = ({ node }: { node: babylon.ForOfStatement }) => (
     { renderStatement(node.body) }
   </div>
 )
-
 
 // vim: set ts=2 sw=2 et:

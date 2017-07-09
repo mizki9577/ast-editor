@@ -31,8 +31,9 @@ const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
   <div>
     { node.directives.map(directive => <DirectiveRenderer node={ directive } />) }
     { node.body.map(child => (
-      child.type === 'ModuleDeclaration' ? modules.renderModuleDeclaration(child)
-                                         : statements.renderStatement(child)
+      ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportDefaultDeclaration', 'ExportAllDeclaration'].includes(child.type)
+        ? modules.renderModuleDeclaration(child)
+        : statements.renderStatement(child)
     )) }
   </div>
 )

@@ -2,9 +2,9 @@
 import type babylon from 'babylon'
 import React from 'react'
 import { UnknownNodeRenderer, IdentifierRenderer } from './JavaScriptASTRenderer.js'
+import { renderExpression, MemberExpressionRenderer } from './expression-renderers.js'
 import { ObjectPropertyRenderer } from './expression-renderers.js'
 import { VariableDeclarationRenderer, FunctionDeclarationRenderer } from './declaration-renderers.js'
-import { renderExpression, MemberExpressionRenderer } from './expression-renderers.js'
 
 export const renderPattern = (node: babylon.Pattern) => {
   switch (node.type) {
