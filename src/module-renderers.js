@@ -6,32 +6,32 @@ import { renderDeclaration, FunctionDeclarationRenderer, ClassDeclarationReender
 import { renderExpression } from './expression-renderers.js'
 import { renderLiteral } from './literal-renderers.js'
 
-export const renderModuleDeclaration = (node: babylon.ModuleDeclaration) => {
+export const renderModuleDeclaration = (node: babylon.ModuleDeclaration, key: ?number) => {
   switch (node.type) {
     case 'ImportDeclaration':
-      return <ImportDeclarationRenderer node={ node } />
+      return <ImportDeclarationRenderer key={ key } node={ node } />
 
     case 'ExportNamedDeclaration':
-      return <ExportNamedDeclarationRenderer node={ node } />
+      return <ExportNamedDeclarationRenderer key={ key } node={ node } />
 
     case 'ExportDefaultDeclaration':
-      return <ExportDefaultDeclarationRenderer node={ node } />
+      return <ExportDefaultDeclarationRenderer key={ key } node={ node } />
 
     case 'ExportAllDeclaration':
-      return <ExportAllDeclarationRenderer node={ node } />
+      return <ExportAllDeclarationRenderer key={ key } node={ node } />
 
     default:
-      return <UnknownNodeRenderer node={ node } />
+      return <UnknownNodeRenderer key={ key } node={ node } />
   }
 }
 
 const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclaration }) => (
   <div>
     <span>import</span>
-    { node.specifiers.map(specifier => (
-      specifier.type === 'ImportSpecifier'              ? <ImportSpecifierRenderer node={ specifier } />:
-      specifier.type === 'ImportDefaultSpecifier'       ? <ImportDefaultSpecifierRenderer node={ specifier } />:
-      /* specifier.type === 'ImportNamespaceSpecifier' */ <ImportNamespaceSpecifierRenderer node={ specifier } />
+    { node.specifiers.map((specifier, i) => (
+      specifier.type === 'ImportSpecifier'              ? <ImportSpecifierRenderer          key={ i } node={ specifier } />:
+      specifier.type === 'ImportDefaultSpecifier'       ? <ImportDefaultSpecifierRenderer   key={ i } node={ specifier } />:
+      /* specifier.type === 'ImportNamespaceSpecifier' */ <ImportNamespaceSpecifierRenderer key={ i } node={ specifier } />
     )) }
     <span>from</span>
     { renderLiteral(node.source) }
@@ -65,7 +65,7 @@ const ExportNamedDeclarationRenderer = ({ node }: { node: babylon.ExportNamedDec
   <div>
     <span>export</span>
     { node.declaration !== null ? renderDeclaration(node.declaration) : null }
-    { node.specifiers.map(specifier => <ExportSpecifierRenderer node={ specifier } />) }
+    { node.specifiers.map((specifier, i) => <ExportSpecifierRenderer key={ i } node={ specifier } />) }
     { node.source !== null ? <span>from</span> : null }
     { node.source !== null ? renderLiteral(node.source) : null }
     <span>;</span>

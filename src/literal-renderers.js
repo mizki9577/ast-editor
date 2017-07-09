@@ -3,25 +3,25 @@ import type babylon from 'babylon'
 import React from 'react'
 import { UnknownNodeRenderer } from './JavaScriptASTRenderer.js'
 
-export const renderLiteral = (node: babylon.Literal) => {
+export const renderLiteral = (node: babylon.Literal, key: ?number) => {
   switch (node.type) {
     case 'RegExpLiteral':
-      return <RegExpLiteralRenderer node={ node } />
+      return <RegExpLiteralRenderer key={ key } node={ node } />
 
     case 'NullLiteral':
-      return <NullLiteralRenderer node={ node } />
+      return <NullLiteralRenderer key={ key } node={ node } />
 
     case 'StringLiteral':
-      return <StringLiteralRenderer node={ node } />
+      return <StringLiteralRenderer key={ key } node={ node } />
 
     case 'BooleanLiteral':
-      return <BooleanLiteralRenderer node={ node } />
+      return <BooleanLiteralRenderer key={ key } node={ node } />
 
     case 'NumericLiteral':
-      return <NumericLiteralRenderer node={ node } />
+      return <NumericLiteralRenderer key={ key } node={ node } />
 
     default:
-      return <UnknownNodeRenderer node={ node } />
+      return <UnknownNodeRenderer key={ key } node={ node } />
   }
 }
 

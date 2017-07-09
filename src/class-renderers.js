@@ -8,7 +8,7 @@ import { BlockStatementRenderer } from './statement-renderers.js'
 
 export const ClassRenderer = ({ node }: { node: babylon.Class }) => (
   <span>
-    { node.decorators ? node.decorators.map(decorator => <DecoratorRenderer node={ decorator } />) : null }
+    { node.decorators ? node.decorators.map((decorator, i) => <DecoratorRenderer key={ i } node={ decorator } />) : null }
     <span>class</span>
     { node.id !== null ? <IdentifierRenderer node={ node.id } /> : null }
     { node.superClass !== null ? <span>extends</span> : null }
@@ -20,10 +20,10 @@ export const ClassRenderer = ({ node }: { node: babylon.Class }) => (
 const ClassBodyRenderer = ({ node }: { node: babylon.ClassBody }) => (
   <div>
     <span>{ '{' }</span>
-    { node.body.map(child => (
-      child.type === 'ClassMethod'              ? <ClassMethodRenderer node={ child } /> :
-      child.type === 'ClassProperty'            ? <ClassPropertyRenderer node={ child } /> :
-      /* child.type === 'ClassPrivateProperty' */ <ClassPrivatePropertyRenderer node={ child } />
+    { node.body.map((child, i) => (
+      child.type === 'ClassMethod'              ? <ClassMethodRenderer          key={ i } node={ child } /> :
+      child.type === 'ClassProperty'            ? <ClassPropertyRenderer        key={ i } node={ child } /> :
+      /* child.type === 'ClassPrivateProperty' */ <ClassPrivatePropertyRenderer key={ i } node={ child } />
     )) }
     <span>{ '}' }</span>
   </div>
@@ -31,7 +31,7 @@ const ClassBodyRenderer = ({ node }: { node: babylon.ClassBody }) => (
 
 const ClassMethodRenderer = ({ node }: { node: babylon.ClassMethod }) => (
   <div>
-    { node.decorators ? node.decorators.map(decorator => <DecoratorRenderer node={ decorator } />) : null }
+    { node.decorators ? node.decorators.map((decorator, i) => <DecoratorRenderer key={ i } node={ decorator } />) : null }
     { node.static ? <span>static</span> : null }
     { node.kind === 'get' || node.kind === 'set' ? <span>{ node.kind }</span> : null }
     { node.computed ? <span>[</span> : null }
@@ -39,7 +39,7 @@ const ClassMethodRenderer = ({ node }: { node: babylon.ClassMethod }) => (
     { node.computed ? <span>]</span> : null }
 
     <span>(</span>
-    { node.params.map(param => { renderPattern(param) }) }
+    { node.params.map((param, i) => { renderPattern(param, i) }) }
     <span>)</span>
     <BlockStatementRenderer node={ node.body } />
   </div>

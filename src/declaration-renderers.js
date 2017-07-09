@@ -6,19 +6,19 @@ import { renderExpression } from './expression-renderers.js'
 import { renderPattern } from './pattern-renderers.js'
 import { ClassRenderer } from './class-renderers.js'
 
-export const renderDeclaration = (node: babylon.Declaration) => {
+export const renderDeclaration = (node: babylon.Declaration, key: ?number) => {
   switch (node.type) {
     case 'FunctionDeclaration':
-      return <FunctionDeclarationRenderer node={ node } />
+      return <FunctionDeclarationRenderer key={ key } node={ node } />
 
     case 'VariableDeclaration':
-      return <VariableDeclarationRenderer node={ node } />
+      return <VariableDeclarationRenderer key={ key } node={ node } />
 
     case 'ClassDeclaration':
-      return <ClassDeclarationReenderer node={ node } />
+      return <ClassDeclarationReenderer key={ key } node={ node } />
 
     default:
-      return <UnknownNodeRenderer node={ node } />
+      return <UnknownNodeRenderer key={ key } node={ node } />
   }
 }
 
@@ -29,7 +29,7 @@ export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDe
 export const VariableDeclarationRenderer = ({ node }: { node: babylon.VariableDeclaration }) => (
   <span>
     <span>{ node.kind }</span>
-    { node.declarations.map(declaration => <VariableDeclaratorRenderer node={ declaration } />) }
+    { node.declarations.map((declaration, i) => <VariableDeclaratorRenderer key={ i } node={ declaration } />) }
   </span>
 )
 

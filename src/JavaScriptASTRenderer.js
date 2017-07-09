@@ -29,11 +29,11 @@ const PrivateNameRenderer = UnknownNodeRenderer
 
 const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
   <div>
-    { node.directives.map(directive => <DirectiveRenderer node={ directive } />) }
-    { node.body.map(child => (
+    { node.directives.map((directive, i) => <DirectiveRenderer key={ i } node={ directive } />) }
+    { node.body.map((child, i) => (
       ['ImportDeclaration', 'ExportNamedDeclaration', 'ExportDefaultDeclaration', 'ExportAllDeclaration'].includes(child.type)
-        ? modules.renderModuleDeclaration(child)
-        : statements.renderStatement(child)
+        ? modules.renderModuleDeclaration(child, i)
+        : statements.renderStatement(child, i)
     )) }
   </div>
 )
@@ -45,7 +45,7 @@ export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
     <span>{ node.generator ? '*' : '' }</span>
     <span>{ node.id !== null ? <IdentifierRenderer node={ node.id } /> : null }</span>
     <span>(</span>
-    <span>{ node.params.map(param => patterns.renderPattern(param)) }</span>
+    <span>{ node.params.map((param, i) => patterns.renderPattern(param, i)) }</span>
     <span>)</span>
     <statements.BlockStatementRenderer node={ node.body } />
   </span>

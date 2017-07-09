@@ -7,82 +7,82 @@ import { renderPattern } from './pattern-renderers.js'
 import { BlockStatementRenderer } from './statement-renderers.js'
 import { ClassRenderer } from './class-renderers.js'
 
-export const renderExpression = (node: babylon.Expression) => {
+export const renderExpression = (node: babylon.Expression, key: ?number) => {
   switch (node.type) {
     case 'Super':
-      return <SuperRenderer node={ node } />
+      return <SuperRenderer key={ key } node={ node } />
 
     case 'Import':
-      return <ImportRenderer node={ node } />
+      return <ImportRenderer key={ key } node={ node } />
 
     case 'ThisExpression':
-      return <ThisExpressionRenderer node={ node } />
+      return <ThisExpressionRenderer key={ key } node={ node } />
 
     case 'ArrowFunctionExpression':
-      return <ArrowFunctionExpressionRenderer node={ node } />
+      return <ArrowFunctionExpressionRenderer key={ key } node={ node } />
 
     case 'YieldExpression':
-      return <YieldExpressionRenderer node={ node } />
+      return <YieldExpressionRenderer key={ key } node={ node } />
 
     case 'AwaitExpression':
-      return <AwaitExpressionRenderer node={ node } />
+      return <AwaitExpressionRenderer key={ key } node={ node } />
 
     case 'ArrayExpression':
-      return <ArrayExpressionRenderer node={ node } />
+      return <ArrayExpressionRenderer key={ key } node={ node } />
 
     case 'ObjectExpression':
-      return <ObjectExpressionRenderer node={ node } />
+      return <ObjectExpressionRenderer key={ key } node={ node } />
 
     case 'FunctionExpression':
-      return <FunctionExpressionRenderer node={ node } />
+      return <FunctionExpressionRenderer key={ key } node={ node } />
 
     case 'UnaryExpression':
-      return <UnaryExpressionRenderer node={ node } />
+      return <UnaryExpressionRenderer key={ key } node={ node } />
 
     case 'UpdateExpression':
-      return <UpdateExpressionRenderer node={ node } />
+      return <UpdateExpressionRenderer key={ key } node={ node } />
 
     case 'BinaryExpression':
-      return <BinaryExpressionRenderer node={ node } />
+      return <BinaryExpressionRenderer key={ key } node={ node } />
 
     case 'AssignmentExpression':
-      return <AssignmentExpressionRenderer node={ node } />
+      return <AssignmentExpressionRenderer key={ key } node={ node } />
 
     case 'LogicalExpression':
-      return <LogicalExpressionRenderer node={ node } />
+      return <LogicalExpressionRenderer key={ key } node={ node } />
 
     case 'MemberExpression':
-      return <MemberExpressionRenderer node={ node } />
+      return <MemberExpressionRenderer key={ key } node={ node } />
 
     case 'BindExpression':
-      return <BindExpressionRenderer node={ node } />
+      return <BindExpressionRenderer key={ key } node={ node } />
 
     case 'ConditionalExpression':
-      return <ConditionalExpressionRenderer node={ node } />
+      return <ConditionalExpressionRenderer key={ key } node={ node } />
 
     case 'CallExpression':
-      return <CallExpressionRenderer node={ node } />
+      return <CallExpressionRenderer key={ key } node={ node } />
 
     case 'NewExpression':
-      return <NewExpressionRenderer node={ node } />
+      return <NewExpressionRenderer key={ key } node={ node } />
 
     case 'SequenceExpression':
-      return <SequenceExpressionRenderer node={ node } />
+      return <SequenceExpressionRenderer key={ key } node={ node } />
 
     case 'DoExpression':
-      return <DoExpressionRenderer node={ node } />
+      return <DoExpressionRenderer key={ key } node={ node } />
 
     case 'Identifier':
-      return <IdentifierRenderer node={ node } />
+      return <IdentifierRenderer key={ key } node={ node } />
 
     case 'ClassExpression':
-      return <ClassExpressionRenderer node={ node } />
+      return <ClassExpressionRenderer key={ key } node={ node } />
 
     case 'MetaProperty':
-      return <MetaPropertyRenderer node={ node } />
+      return <MetaPropertyRenderer key={ key } node={ node } />
 
     default:
-      return renderLiteral(node)
+      return renderLiteral(node, key)
   }
 }
 
@@ -101,7 +101,7 @@ const ThisExpressionRenderer = ({ node }: { node: babylon.ThisExpression }) => (
 const ArrowFunctionExpressionRenderer = ({ node }: { node: babylon.ArrowFunctionExpression }) => (
   <span>
     <span>(</span>
-    { node.params.map(param => { renderPattern(param) }) }
+    { node.params.map((param, i) => { renderPattern(param, i) }) }
     <span>)</span>
     <span>=></span>
     { node.expression ? renderExpression(node.body) : <BlockStatementRenderer node={ node.body } /> }
@@ -126,7 +126,7 @@ const AwaitExpressionRenderer = ({ node }: { node: babylon.AwaitExpression }) =>
 const ArrayExpressionRenderer = ({ node }: { node: babylon.ArrayExpression }) => (
   <span>
     <span>[</span>
-    { node.elements.map(element => element !== null ? renderExpression(element) : null) }
+    { node.elements.map((element, i) => element !== null ? renderExpression(element, i) : null) }
     <span>]</span>
   </span>
 )
@@ -134,10 +134,10 @@ const ArrayExpressionRenderer = ({ node }: { node: babylon.ArrayExpression }) =>
 const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpression }) => (
   <span>
     <span>{ '{' }</span>
-    { node.properties.map(property => (
-      property.type === 'ObjectProperty'    ? <ObjectPropertyRenderer node={ property } /> :
-      property.type === 'ObjectMethod'      ? <ObjectMethodRenderer node={ property } /> :
-      /* property.type === 'SpreadElement' */ <SpreadElementRenderer node={ property } />
+    { node.properties.map((property, i) => (
+      property.type === 'ObjectProperty'    ? <ObjectPropertyRenderer key={ i } node={ property } /> :
+      property.type === 'ObjectMethod'      ? <ObjectMethodRenderer   key={ i } node={ property } /> :
+      /* property.type === 'SpreadElement' */ <SpreadElementRenderer  key={ i } node={ property } />
     )) }
     <span>{ '}' }</span>
   </span>
@@ -145,7 +145,7 @@ const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpression }) 
 
 export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty }) => (
   <span>
-    { node.decorators ? node.decorators.map(decorator => <DecoratorRenderer node={ decorator } />) : null }
+    { node.decorators ? node.decorators.map((decorator, i) => <DecoratorRenderer key={ i } node={ decorator } />) : null }
     { node.computed ? <span>[</span> : null }
     { renderExpression(node.key) }
     { node.computed ? <span>]</span> : null }
@@ -164,7 +164,7 @@ const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) => (
     { node.computed ? <span>]</span> : null }
 
     <span>(</span>
-    { node.params.map(param => { renderPattern(param) }) }
+    { node.params.map((param, i) => { renderPattern(param, i) }) }
     <span>)</span>
     <BlockStatementRenderer node={ node.body } />
   </span>
@@ -257,7 +257,7 @@ const CallExpressionRenderer = ({ node }: { node: babylon.CallExpression }) => (
   <span>
     { renderExpression(node.callee) }
     <span>(</span>
-    { node.arguments.map(argument => argument.type === 'SpreadElement' ? <SpreadElementRenderer node={ argument } /> : renderExpression(argument)) }
+    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument)) }
     <span>)</span>
   </span>
 )
@@ -267,7 +267,7 @@ const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression }) => (
     <span>new</span>
     { renderExpression(node.callee) }
     <span>(</span>
-    { node.arguments.map(argument => argument.type === 'SpreadElement' ? <SpreadElementRenderer node={ argument } /> : renderExpression(argument)) }
+    { node.arguments.map((argument, i) => argument.type === 'SpreadElement' ? <SpreadElementRenderer key={ i } node={ argument } /> : renderExpression(argument)) }
     <span>)</span>
   </span>
 )
@@ -275,7 +275,7 @@ const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression }) => (
 // WIP. put comma.
 const SequenceExpressionRenderer = ({ node }: { node: babylon.SequenceExpression }) => (
   <span>
-    { node.expressions.map(expression => renderExpression(expression)) }
+    { node.expressions.map((expression, i) => renderExpression(expression, i)) }
   </span>
 )
 

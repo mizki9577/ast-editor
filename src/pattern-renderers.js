@@ -6,28 +6,28 @@ import { renderExpression, MemberExpressionRenderer } from './expression-rendere
 import { ObjectPropertyRenderer } from './expression-renderers.js'
 import { VariableDeclarationRenderer, FunctionDeclarationRenderer } from './declaration-renderers.js'
 
-export const renderPattern = (node: babylon.Pattern) => {
+export const renderPattern = (node: babylon.Pattern, key: ?number) => {
   switch (node.type) {
     case 'ObjectPattern':
-      return <FunctionDeclarationRenderer node={ node } />
+      return <FunctionDeclarationRenderer key={ key } node={ node } />
 
     case 'ArrayPattern':
-      return <VariableDeclarationRenderer node={ node } />
+      return <VariableDeclarationRenderer key={ key } node={ node } />
 
     case 'RestElement':
-      return <RestElementRenderer node={ node } />
+      return <RestElementRenderer key={ key } node={ node } />
 
     case 'AssignmentPattern':
-      return <AssignmentPatternRenderer node={ node } />
+      return <AssignmentPatternRenderer key={ key } node={ node } />
 
     case 'Identifier':
-      return <IdentifierRenderer node={ node } />
+      return <IdentifierRenderer key={ key } node={ node } />
 
     case 'MemberExpression':
-      return <MemberExpressionRenderer node={ node } />
+      return <MemberExpressionRenderer key={ key } node={ node } />
 
     default:
-      return <UnknownNodeRenderer node={ node } />
+      return <UnknownNodeRenderer key={ key } node={ node } />
   }
 }
 
@@ -38,7 +38,7 @@ const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentProperty
 const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (
   <span>
     <span>{ '{' }</span>
-    { node.properties.map(property => property.type === 'AssignmentProperty' ? <AssignmentPropertyRenderer node={ property } /> : <RestElementRenderer node={ property } />) }
+    { node.properties.map((property, i) => property.type === 'AssignmentProperty' ? <AssignmentPropertyRenderer key={ i } node={ property } /> : <RestElementRenderer key={ i } node={ property } />) }
     <span>{ '}' }</span>
   </span>
 )
@@ -46,7 +46,7 @@ const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (
 const ArrayPatternRenderer = ({ node }: { node: babylon.ArrayPattern }) => (
   <span>
     <span>[</span>
-    { node.elements.map(element => element !== null ? renderPattern(element) : null) }
+    { node.elements.map((element, i) => element !== null ? renderPattern(element, i) : null) }
     <span>]</span>
   </span>
 )

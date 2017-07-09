@@ -7,66 +7,66 @@ import { renderPattern } from './pattern-renderers.js'
 import { renderDeclaration } from './declaration-renderers.js'
 import { VariableDeclarationRenderer } from './declaration-renderers.js'
 
-export const renderStatement = (node: babylon.Node) => {
+export const renderStatement = (node: babylon.Node, key: ?number) => {
   switch (node.type) {
     case 'ExpressionStatement':
-      return <ExpressionStatementRenderer node={ node } />
+      return <ExpressionStatementRenderer key={ key } node={ node } />
 
     case 'BlockStatement':
-      return <BlockStatementRenderer node={ node } />
+      return <BlockStatementRenderer key={ key } node={ node } />
 
     case 'EmptyStatement':
-      return <EmptyStatementRenderer node={ node } />
+      return <EmptyStatementRenderer key={ key } node={ node } />
 
     case 'DebuggerStatement':
-      return <DebuggerStatementRenderer node={ node } />
+      return <DebuggerStatementRenderer key={ key } node={ node } />
 
     case 'WithStatement':
-      return <WithStatementRenderer node={ node } />
+      return <WithStatementRenderer key={ key } node={ node } />
 
     case 'ReturnStatement':
-      return <ReturnStatementRenderer node={ node } />
+      return <ReturnStatementRenderer key={ key } node={ node } />
 
     case 'LabeledStatement':
-      return <LabeledStatementRenderer node={ node } />
+      return <LabeledStatementRenderer key={ key } node={ node } />
 
     case 'BreakStatement':
-      return <BreakStatementRenderer node={ node } />
+      return <BreakStatementRenderer key={ key } node={ node } />
 
     case 'ContinueStatement':
-      return <ContinueStatementRenderer node={ node } />
+      return <ContinueStatementRenderer key={ key } node={ node } />
 
     case 'IfStatement':
-      return <IfStatementRenderer node={ node } />
+      return <IfStatementRenderer key={ key } node={ node } />
 
     case 'SwitchStatement':
-      return <SwitchStatementRenderer node={ node } />
+      return <SwitchStatementRenderer key={ key } node={ node } />
 
     case 'ThrowStatement':
-      return <ThrowStatementRenderer node={ node } />
+      return <ThrowStatementRenderer key={ key } node={ node } />
 
     case 'TryStatement':
-      return <TryStatementRenderer node={ node } />
+      return <TryStatementRenderer key={ key } node={ node } />
 
     case 'WhileStatement':
-      return <WhileStatementRenderer node={ node } />
+      return <WhileStatementRenderer key={ key } node={ node } />
 
     case 'DoWhileStatement':
-      return <DoWhileStatementRenderer node={ node } />
+      return <DoWhileStatementRenderer key={ key } node={ node } />
 
     case 'ForStatement':
-      return <ForStatementRenderer node={ node } />
+      return <ForStatementRenderer key={ key } node={ node } />
 
     case 'ForInStatement':
-      return <ForInStatementRenderer node={ node } />
+      return <ForInStatementRenderer key={ key } node={ node } />
 
     case 'ForOfStatement':
-      return <ForOfStatementRenderer node={ node } />
+      return <ForOfStatementRenderer key={ key } node={ node } />
 
     default:
       return (
-        <div>
-          { renderDeclaration(node) }
+        <div key="declaration-wrapper">
+          { renderDeclaration(node, key) }
         </div>
       )
   }
@@ -82,8 +82,8 @@ const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStateme
 export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement }) => (
   <div>
     <span>{ '{' }</span>
-    { node.directives.map(directive => <DirectiveRenderer node={ directive } />) }
-    { node.body.map(child => renderStatement(child)) }
+    { node.directives.map((directive, i) => <DirectiveRenderer key={ i } node={ directive } />) }
+    { node.body.map((child, i) => renderStatement(child, i)) }
     <span>{ '}' }</span>
   </div>
 )
@@ -157,7 +157,7 @@ const SwitchStatementRenderer = ({ node }: { node: babylon.SwitchStatement }) =>
     { renderExpression(node.discriminant) }
     <span>)</span>
     <span>{ '{' }</span>
-    { node.cases.map(c => <SwitchCaseRenderer node={ c } />) }
+    { node.cases.map((c, i) => <SwitchCaseRenderer key={ i } node={ c } />) }
     <span>{ '}' }</span>
   </div>
 )
@@ -167,7 +167,7 @@ const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
     <span>{ node.test !== null ? 'case' : 'default' }</span>
     { node.test !== null ? renderExpression(node.test) : null }
     <span>:</span>
-    { node.consequent.map(statement => renderStatement(statement)) }
+    { node.consequent.map((statement, i) => renderStatement(statement, i)) }
   </div>
 )
 
