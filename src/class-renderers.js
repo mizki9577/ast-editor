@@ -45,6 +45,7 @@ const ClassMethodRenderer = ({ node }: { node: babylon.ClassMethod }) => (
   </div>
 )
 
+// NOTE: According to Babylon AST Specification, `value` should not be null.
 const ClassPropertyRenderer = ({ node }: { node: babylon.ClassProperty }) => (
   <div>
     { node.static ? <span>static</span> : null }
@@ -52,7 +53,7 @@ const ClassPropertyRenderer = ({ node }: { node: babylon.ClassProperty }) => (
     { renderExpression(node.key) }
     { node.computed ? <span>]</span> : null }
     <span>:</span>
-    { renderExpression(node.value) }
+    { node.value !== null ? renderExpression(node.value) : null }
   </div>
 )
 
