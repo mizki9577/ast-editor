@@ -1,21 +1,21 @@
 // @flow
 import React from 'react'
 import * as babylon from 'babylon'
-import AstRenderer from './JavaScriptASTRenderer.js'
+import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 type State = {|
   src: string,
-  ast: ?babylon.Node,
+  ast: babylon.Node,
 |}
 
 class AstEditor extends React.Component {
   state: State
 
-  constructor(props: typeof undefined) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       src: '',
-      ast: null,
+      ast: babylon.parse(''),
     }
   }
 
@@ -23,6 +23,7 @@ class AstEditor extends React.Component {
     const src = ev.target.value
     const ast = babylon.parse(src, {
       sourceType: 'module',
+      plugins: ['jsx', 'flow'],
     })
     this.setState({ src, ast })
   }
@@ -30,10 +31,8 @@ class AstEditor extends React.Component {
   render() {
     return (
       <div>
+        <div id="dest">{ renderBabylonAST(this.state.ast) }</div>
         <textarea id="src" value={ this.state.src } onChange={ ev => this.handleSourceChange(ev) } />
-        <div id="dest">
-          { this.state.ast ? <AstRenderer node={ this.state.ast } /> : null }
-        </div>
       </div>
     )
   }

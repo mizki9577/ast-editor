@@ -7,6 +7,7 @@ body {
 
 div[data-reactroot] {
     display: flex;
+    flex-direction: column;
     font-family: monospace;
     font-size: 12pt;
 }
@@ -21,10 +22,6 @@ textarea#src, div#dest {
 textarea#src {
     resize: none;
     padding: 0;
-}
-
-div#dest {
-    border: solid thin black;
 }
 
 div#dest span {
