@@ -204,7 +204,7 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
       return <patterns.ObjectPatternRenderer key={ key } node={ node } />
 
     case 'ArrayPattern':
-      return <patterns.VariableDeclarationRenderer key={ key } node={ node } />
+      return <patterns.ArrayPatternRenderer key={ key } node={ node } />
 
     case 'RestElement':
       return <patterns.RestElementRenderer key={ key } node={ node } />
