@@ -59,7 +59,7 @@ export const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpress
 
 export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty }) => (
   <span>
-    { node.decorators !== null ? node.decorators.map((decorator, i) => renderNode(decorator, i)) : null }
+    { node.decorators ? node.decorators.map((decorator, i) => renderNode(decorator, i)) : null }
     { node.computed ? <span>[</span> : null }
     { renderNode(node.key) }
     { node.computed ? <span>]</span> : null }

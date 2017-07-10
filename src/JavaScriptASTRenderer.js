@@ -8,6 +8,7 @@ import * as expressions from './expression-renderers.js'
 import * as declarations from './declaration-renderers.js'
 import * as patterns from './pattern-renderers.js'
 import * as modules from './module-renderers.js'
+import * as classes from './class-renderers.js'
 
 type File = babylon.Node & {
   type: 'File',
@@ -44,9 +45,6 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
 
     case 'Program':
       return <ProgramRenderer key={ key } node={ node } />
-
-    case 'Function':
-      return <FunctionRenderer key={ key } node={ node } />
 
     // Statements [
     case 'ExpressionStatement':
@@ -149,6 +147,12 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
     case 'ObjectExpression':
       return <expressions.ObjectExpressionRenderer key={ key } node={ node } />
 
+    case 'ObjectMethod':
+      return <expressions.ObjectMethodRenderer key={ key } node={ node } />
+
+    case 'ObjectProperty':
+      return <expressions.ObjectPropertyRenderer key={ key } node={ node } />
+
     case 'FunctionExpression':
       return <expressions.FunctionExpressionRenderer key={ key } node={ node } />
 
@@ -213,9 +217,26 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
       return <patterns.AssignmentPatternRenderer key={ key } node={ node } />
     // Patterns ]
 
+    // Classes [
+    case 'ClassMethod':
+      return <classes.ClassMethodRenderer key={ key } node={ node } />
+
+    case 'ClassProperty':
+      return <classes.ClassPropertyRenderer key={ key } node={ node } />
+    // Classes ]
+
     // Modules [
     case 'ImportDeclaration':
       return <modules.ImportDeclarationRenderer key={ key } node={ node } />
+
+    case 'ImportSpecifier':
+      return <modules.ImportSpecifierRenderer key={ key } node={ node } />
+
+    case 'ImportDefaultSpecifier':
+      return <modules.ImportDefaultSpecifierRenderer key={ key } node={ node } />
+
+    case 'ImportNamespaceSpecifier':
+      return <modules.ImportNamespaceSpecifierRenderer key={ key } node={ node } />
 
     case 'ExportNamedDeclaration':
       return <modules.ExportNamedDeclarationRenderer key={ key } node={ node } />
