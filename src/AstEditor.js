@@ -6,16 +6,26 @@ import renderBabylonAST from './JavaScriptASTRenderer.js'
 type State = {|
   src: string,
   ast: babylon.Node,
+  cursoredNode: babylon.Node,
 |}
 
 class AstEditor extends React.Component {
   state: State
 
   constructor() {
+    // TODO: To move the cursor, nodes of AST must know which node is its parent.
+    //       It may be necessary to traverse AST tree and to add parent information for each nodes.
+    //       Using babel-traverse in browser is failed at once.
     super()
+
+    const src = ''
+    const ast = babylon.parse('')
+    ast.cursored = true
+    const cursoredNode = ast
+
     this.state = {
-      src: '',
-      ast: babylon.parse(''),
+      src, ast,
+      cursoredNode: ast,
     }
   }
 
@@ -25,13 +35,31 @@ class AstEditor extends React.Component {
       sourceType: 'module',
       plugins: ['jsx', 'flow'],
     })
-    this.setState({ src, ast })
+    this.setState({ src, ast, cursoredNode: ast })
+  }
+
+  handleKeyDown(ev: SyntheticKeyboardEvent) {
+    switch (ev.key) {
+      case 'h':
+        break
+
+      case 'j':
+        break
+
+      case 'k':
+        break
+
+      case 'l':
+        break
+    }
   }
 
   render() {
     return (
       <div>
-        <div id="dest">{ renderBabylonAST(this.state.ast) }</div>
+        <div id="dest" tabIndex="0" onKeyDown={ ev => this.handleKeyDown(ev) }>
+          { renderBabylonAST(this.state.ast) }
+        </div>
         <textarea id="src" onChange={ ev => this.handleSourceChange(ev) } />
       </div>
     )
