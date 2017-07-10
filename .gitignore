@@ -2,3 +2,4 @@
 Session.vim
 /dist/bundle.js
 /node_modules
+/.fusebox

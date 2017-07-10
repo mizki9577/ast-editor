@@ -1,5 +1,5 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import * as babylon from 'babylon'
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 

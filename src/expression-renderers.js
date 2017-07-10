@@ -1,6 +1,6 @@
 // @flow
 import type babylon from 'babylon'
-import React from 'react'
+import * as React from 'react'
 import { renderNode, FunctionRenderer } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
 

@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 
-import React from 'react'
+import * as React from 'react'
 import * as literals from './literal-renderers.js'
 import * as statements from './statement-renderers.js'
 import * as expressions from './expression-renderers.js'
