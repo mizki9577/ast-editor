@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "babylon": "^6.17.4",
-    "react": "next",
-    "react-dom": "next"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }
