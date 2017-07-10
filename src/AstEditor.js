@@ -32,7 +32,7 @@ class AstEditor extends React.Component {
     return (
       <div>
         <div id="dest">{ renderBabylonAST(this.state.ast) }</div>
-        <textarea id="src" value={ this.state.src } onChange={ ev => this.handleSourceChange(ev) } />
+        <textarea id="src" onChange={ ev => this.handleSourceChange(ev) } />
       </div>
     )
   }

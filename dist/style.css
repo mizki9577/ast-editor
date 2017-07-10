@@ -13,6 +13,7 @@ div[data-reactroot] {
 }
 
 textarea#src, div#dest {
+    font-family: monospace;
     flex-grow: 1;
     margin: 1em;
     background: inherit;
