@@ -1,6 +1,7 @@
 const url = require('url')
 const path = require('path')
-const { app, BrowserWindow } = require('electron')
+const fs = require('fs')
+const { app, BrowserWindow, Menu, dialog } = require('electron')
 
 let window = null
 
@@ -12,12 +13,49 @@ const createWindow = () => {
     protocol: 'file:',
   }))
 
-  //window.webContents.openDevTools()
-
   window.on('closed', () => {
     window = null
   })
 }
+
+Menu.setApplicationMenu(Menu.buildFromTemplate([
+  {
+    label: 'File',
+    submenu: [
+      {
+        label: 'New',
+      },
+      {
+        label: 'Open',
+      },
+      {
+        label: 'Save',
+      },
+      {
+        label: 'Save As...',
+      },
+      {
+        label: 'Restart',
+      },
+
+      { role: 'quit' },
+    ],
+  },
+  {
+    label: 'Edit',
+    role: 'editMenu',
+  },
+  {
+    label: 'View',
+  },
+  {
+    label: 'Window',
+    role: 'windowMenu',
+  },
+  {
+    label: 'Help',
+  },
+]))
 
 app.on('ready', createWindow)
 
