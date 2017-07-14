@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import * as babylon from 'babylon'
+const { default: traverse } = FuseBox.import('babel-traverse')  // FIXME: What the heck
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 type State = {|
@@ -13,9 +14,6 @@ class AstEditor extends React.Component {
   state: State
 
   constructor() {
-    // TODO: To move the cursor, nodes of AST must know which node is its parent.
-    //       It may be necessary to traverse AST tree and to add parent information for each nodes.
-    //       Using babel-traverse in browser is failed at once.
     super()
 
     const src = ''
@@ -34,6 +32,13 @@ class AstEditor extends React.Component {
     const ast = babylon.parse(src, {
       sourceType: 'module',
       plugins: ['jsx', 'flow'],
+    })
+
+    traverse(ast, {
+      enter(path) {
+        console.log(path.node.type)
+        path.traverse()
+      }
     })
     this.setState({ src, ast, cursoredNode: ast })
   }
