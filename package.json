@@ -9,7 +9,6 @@
     "electron": "electron .",
     "watch": "node fuse.js development",
     "build": "node fuse.js production",
-    "deploy": "npm run build && gh-pages -d dist",
     "flow": "flow"
   },
   "devDependencies": {
@@ -18,7 +17,6 @@
     "babel-preset-react": "^6.24.1",
     "flow-bin": "^0.49.1",
     "fuse-box": "^2.2.0",
-    "gh-pages": "^1.0.0",
     "typescript": "^2.4.1"
   },
   "dependencies": {
