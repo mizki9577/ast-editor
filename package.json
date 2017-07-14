@@ -4,11 +4,10 @@
   "author": "Mizki SUZUMORI <mizki9577@gmail.com>",
   "license": "BSD-2-Clause",
   "private": true,
-  "config": {
-    "port": "8080"
-  },
+  "main": "src/main/main.js",
   "scripts": {
-    "start": "node fuse.js development",
+    "electron": "electron .",
+    "watch": "node fuse.js development",
     "build": "node fuse.js production",
     "deploy": "npm run build && gh-pages -d dist",
     "flow": "flow"
@@ -24,6 +23,7 @@
   },
   "dependencies": {
     "babylon": "^6.17.4",
+    "electron": "^1.6.11",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

@@ -3,12 +3,13 @@ const { FuseBox, BabelPlugin, EnvPlugin } = require('fuse-box')
 const production = process.argv[2] === 'production'
 
 const fuse = FuseBox.init({
-  homeDir: 'src/',
+  homeDir: 'src/renderer/',
   output: 'dist/$name.js',
   cache: !production,
   log: true,
   debug: true,
   sourceMaps: { inline: !production },
+  target: 'electron',
 
   plugins: [
     EnvPlugin({
@@ -28,8 +29,7 @@ const bundle = fuse
 
 if (!production) {
   fuse.dev({
-    root: 'dist/',
-    port: process.env.npm_package_config_port,
+    httpServer: false,
   })
   bundle.hmr().watch()
 }
