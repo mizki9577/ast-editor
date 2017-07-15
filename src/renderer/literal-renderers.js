@@ -1,6 +1,6 @@
 // @flow
 import type babylon from 'babylon'
-import * as React from 'react'
+import React from 'react'
 
 export const RegExpLiteralRenderer = ({ node }: { node: babylon.RegExpLiteral }) => (
   <span>

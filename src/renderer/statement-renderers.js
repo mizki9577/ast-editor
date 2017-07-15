@@ -1,6 +1,6 @@
 // @flow
 import type babylon from 'babylon'
-import * as React from 'react'
+import React from 'react'
 import { renderNode } from './JavaScriptASTRenderer.js'
 
 export const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStatement }) => (

@@ -18,45 +18,6 @@ const createWindow = () => {
   })
 }
 
-Menu.setApplicationMenu(Menu.buildFromTemplate([
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New',
-      },
-      {
-        label: 'Open',
-      },
-      {
-        label: 'Save',
-      },
-      {
-        label: 'Save As...',
-      },
-      {
-        label: 'Restart',
-      },
-
-      { role: 'quit' },
-    ],
-  },
-  {
-    label: 'Edit',
-    role: 'editMenu',
-  },
-  {
-    label: 'View',
-  },
-  {
-    label: 'Window',
-    role: 'windowMenu',
-  },
-  {
-    label: 'Help',
-  },
-]))
-
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {

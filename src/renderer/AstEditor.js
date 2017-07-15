@@ -1,7 +1,6 @@
 // @flow
-import * as React from 'react'
+import React from 'react'
 import * as babylon from 'babylon'
-const { default: traverse } = FuseBox.import('babel-traverse')  // FIXME: What the heck
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 type State = {|
@@ -34,12 +33,6 @@ class AstEditor extends React.Component {
       plugins: ['jsx', 'flow'],
     })
 
-    traverse(ast, {
-      enter(path) {
-        console.log(path.node.type)
-        path.traverse()
-      }
-    })
     this.setState({ src, ast, cursoredNode: ast })
   }
 
