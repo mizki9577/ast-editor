@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import { Fabric } from 'office-ui-fabric-react'
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 const { ipcRenderer } = require('electron')
@@ -23,7 +24,6 @@ class AstEditor extends React.Component {
 
   componentDidMount() {
     ipcRenderer.on('ast-parsed', (ev, ast) => {
-      console.log('ast-parsed')
       this.setState({ ast })
     })
     ipcRenderer.send('ready')
@@ -31,9 +31,11 @@ class AstEditor extends React.Component {
 
   render() {
     return (
-      <div>
-        { renderBabylonAST(this.state.ast) }
-      </div>
+      <Fabric>
+        <div className="renderer-root ms-bgColor-neutralDark">
+          { renderBabylonAST(this.state.ast) }
+        </div>
+      </Fabric>
     )
   }
 }

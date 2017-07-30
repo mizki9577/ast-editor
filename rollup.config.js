@@ -14,6 +14,7 @@ export default {
     }),
 
     babel({
+      exclude: 'node_modules/**',
       presets: [
         'react',
       ],
@@ -33,7 +34,11 @@ export default {
       jsnext: true,
     }),
 
-    commonjs(),
+    commonjs({
+      namedExports: {
+        'office-ui-fabric-react': ['Fabric'],
+      },
+    }),
   ],
 }
 

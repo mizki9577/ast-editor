@@ -1,39 +1,38 @@
-body {
-    width: 100%;
-    margin: 0;
-    background: black;
-    color: white;
-}
-
-div[data-reactroot] {
-    display: flex;
-    flex-direction: column;
+.renderer-root {
     font-family: monospace;
     font-size: 12pt;
 }
 
-textarea#src, div#dest {
-    font-family: monospace;
-    flex-grow: 1;
-    margin: 1em;
-    background: inherit;
-    color: inherit;
+span.keyword {
+    margin-right: 0.5em;
 }
 
-textarea#src {
-    resize: none;
-    padding: 0;
+span.operator {
+    margin: 0 0.5em;
 }
 
-div#dest span {
-    padding: 0.1em;
-    border: solid thin red;
+div.if-body {
+    margin-left: 2em;
 }
 
-div#dest div {
-    margin: 0.5em 0 0.5em 2em;
-    padding: 0.5em;
-    border: solid thin blue;
+div.cases-wrapper {
+    margin-left: 2em;
+}
+
+div.function-body {
+    margin-left: 2em;
+}
+
+div.case-body {
+    margin-left: 2em;
+}
+
+div.block-body {
+    margin-left: 2em;
+}
+
+:not(.export-named-declaration) > .variable-declaration {
+    display: block;
 }
 
 /* vim: set ts=4 sw=4 et: */

@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { renderNode } from './JavaScriptASTRenderer.js'
+import { renderNode, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer } from './JavaScriptASTRenderer.js'
 
 export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentProperty }) => (
   renderNode(node)
@@ -9,17 +9,17 @@ export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentP
 
 export const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (
   <span>
-    <span>{ '{' }</span>
+    <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
     { node.properties.map((property, i) => renderNode(property, i)) }
-    <span>{ '}' }</span>
+    <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
   </span>
 )
 
 export const ArrayPatternRenderer = ({ node }: { node: babylon.ArrayPattern }) => (
   <span>
-    <span>[</span>
+    <OpenBracketRenderer>[</OpenBracketRenderer>
     { node.elements.map((element, i) => renderNode(element, i)) }
-    <span>]</span>
+    <ClosingBracketRenderer>]</ClosingBracketRenderer>
   </span>
 )
 
@@ -33,7 +33,7 @@ export const RestElementRenderer = ({ node }: { node: babylon.RestElement }) => 
 export const AssignmentPatternRenderer = ({ node }: { node: babylon.AssignmentPattern }) => (
   <span>
     { renderNode(node.left) }
-    <span>=</span>
+    <OperatorRenderer>=</OperatorRenderer>
     { renderNode(node.right) }
   </span>
 )

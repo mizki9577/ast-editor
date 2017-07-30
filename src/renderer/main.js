@@ -5,7 +5,7 @@ import AstEditor from './AstEditor.js'
 
 ReactDOM.render(
   <AstEditor />,
-  document.getElementById('app')
+  document.querySelector('main')
 )
 
 // vim: set ts=2 sw=2 et:

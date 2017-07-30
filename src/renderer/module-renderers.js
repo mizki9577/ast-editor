@@ -1,14 +1,14 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { renderNode } from './JavaScriptASTRenderer.js'
+import { ReservedKeywordRenderer, renderNode } from './JavaScriptASTRenderer.js'
 import { FunctionDeclarationRenderer, ClassDeclarationReenderer } from './declaration-renderers.js'
 
 export const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclaration }) => (
   <div>
-    <span>import</span>
+    <ReservedKeywordRenderer>import</ReservedKeywordRenderer>
     { node.specifiers.map((specifier, i) => renderNode(specifier, i)) }
-    <span>from</span>
+    <ReservedKeywordRenderer>from</ReservedKeywordRenderer>
     { renderNode(node.source) }
     <span>;</span>
   </div>
@@ -18,7 +18,7 @@ export const ImportSpecifierRenderer = ({ node }: { node: babylon.ImportSpecifie
   <span>
     <span>{ '{' }</span>
     { renderNode(node.imported) }
-    <span>as</span>
+    <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
     { renderNode(node.local) }
     <span>{ '}' }</span>
   </span>
@@ -31,14 +31,14 @@ export const ImportDefaultSpecifierRenderer = ({ node }: { node: babylon.ImportD
 export const ImportNamespaceSpecifierRenderer = ({ node }: { node: babylon.ImportNamespaceSpecifier }) => (
   <span>
     <span>*</span>
-    <span>as</span>
+    <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
     { renderNode(node.local) }
   </span>
 )
 
 export const ExportNamedDeclarationRenderer = ({ node }: { node: babylon.ExportNamedDeclaration }) => (
-  <div>
-    <span>export</span>
+  <div className="export-named-declaration">
+    <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
     { renderNode(node.declaration) }
     { node.specifiers.map((specifier, i) => <ExportSpecifierRenderer key={ i } node={ specifier } />) }
     { node.source !== null ? <span>from</span> : null }
@@ -50,15 +50,15 @@ export const ExportNamedDeclarationRenderer = ({ node }: { node: babylon.ExportN
 export const ExportSpecifierRenderer = ({ node }: { node: babylon.ExportSpecifier }) => (
   <span>
     { renderNode(node.local) }
-    <span>as</span>
+    <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
     { renderNode(node.exported) }
   </span>
 )
 
 export const ExportDefaultDeclarationRenderer = ({ node }: { node: babylon.ExportDefaultDeclaration }) => (
   <div>
-    <span>export</span>
-    <span>default</span>
+    <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
+    <ReservedKeywordRenderer>default</ReservedKeywordRenderer>
     { renderNode(node.declaration) }
     <span>;</span>
   </div>
@@ -74,9 +74,9 @@ export const OptClassDeclarationRenderer = ({ node }: { node: babylon.OptClassDe
 
 export const ExportAllDeclarationRenderer = ({ node }: { node: babylon.ExportAllDeclaration }) => (
   <div>
-    <span>export</span>
+    <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
     <span>*</span>
-    <span>from</span>
+    <ReservedKeywordRenderer>from</ReservedKeywordRenderer>
     { renderNode(node.source) }
     <span>;</span>
   </div>

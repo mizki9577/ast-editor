@@ -21,7 +21,7 @@ const createWindow = () => {
 
   promisify(fs.readFile)(process.argv[2], { encoding: 'UTF-8', flag: 'r' })
     .then(src => {
-      const ast = babylon.parse(src)
+      const ast = babylon.parse(src, { sourceType: 'module', plugins: ['jsx', 'flow'] })
       ipcMain.on('ready', ev => {
         ev.sender.send('ast-parsed', ast)
       })
@@ -29,7 +29,10 @@ const createWindow = () => {
     .catch(e => console.log(e))
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  BrowserWindow.addDevToolsExtension('/home/mizki/.config/chromium/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0')
+  createWindow()
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

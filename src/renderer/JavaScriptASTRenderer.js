@@ -253,6 +253,18 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
   }
 }
 
+export const renderNodeList = (nodes: babylon.Node[], separator: React.Element<any>) => {
+  const result = []
+  let i = 0
+  for (const node of nodes) {
+    result.push(renderNode(node, ++i))
+    result.push(Object.assign({}, separator, { key: ++i }))
+  }
+  result.pop()
+  return result
+}
+
+
 export const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
   <span>[{ node.type }]</span>
 )
@@ -262,7 +274,9 @@ export const FileRenderer = ({ node }: { node: File }) => (
 )
 
 export const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
-  <span>{ node.name }</span>
+  <span className="identifier ms-fontColor-neutralLight">
+    { node.name }
+  </span>
 )
 
 export const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
@@ -290,6 +304,38 @@ export const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
     <span>@</span>
     { renderNode(node.expression) }
   </div>
+)
+
+//
+
+export const ReservedKeywordRenderer = ({ children }: { children: string }) => (
+  <span className="keyword ms-fontColor-themePrimary">
+    { children }
+  </span>
+)
+
+export const OperatorRenderer = ({ children }: { children: string }) => (
+  <span className="operator ms-fontColor-neutralLight">
+    { children }
+  </span>
+)
+
+export const OperatorWithoutSpaceRenderer = ({ children }: { children: string }) => (
+  <span className="operator-without-space ms-fontColor-neutralLight">
+    { children }
+  </span>
+)
+
+export const OpenBracketRenderer = ({ children }: { children: string }) => (
+  <span className="open-bracket ms-fontColor-neutralLight">
+    { children }
+  </span>
+)
+
+export const ClosingBracketRenderer = ({ children }: { children: string }) => (
+  <span className="closing-bracket ms-fontColor-neutralLight">
+    { children }
+  </span>
 )
 
 export default renderNode
