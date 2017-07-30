@@ -1,12 +1,13 @@
 // @flow
 import React from 'react'
-import * as babylon from 'babylon'
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 
+const { ipcRenderer } = require('electron')
+
+import type babylonNode from 'babylon'
+
 type State = {|
-  src: string,
-  ast: babylon.Node,
-  cursoredNode: babylon.Node,
+  ast: ?babylonNode,
 |}
 
 class AstEditor extends React.Component {
@@ -15,50 +16,23 @@ class AstEditor extends React.Component {
   constructor() {
     super()
 
-    const src = ''
-    const ast = babylon.parse('')
-    ast.cursored = true
-    const cursoredNode = ast
-
     this.state = {
-      src, ast,
-      cursoredNode: ast,
+      ast: null,
     }
   }
 
-  handleSourceChange(ev: SyntheticInputEvent) {
-    const src = ev.target.value
-    const ast = babylon.parse(src, {
-      sourceType: 'module',
-      plugins: ['jsx', 'flow'],
+  componentDidMount() {
+    ipcRenderer.on('ast-parsed', (ev, ast) => {
+      console.log('ast-parsed')
+      this.setState({ ast })
     })
-
-    this.setState({ src, ast, cursoredNode: ast })
-  }
-
-  handleKeyDown(ev: SyntheticKeyboardEvent) {
-    switch (ev.key) {
-      case 'h':
-        break
-
-      case 'j':
-        break
-
-      case 'k':
-        break
-
-      case 'l':
-        break
-    }
+    ipcRenderer.send('ready')
   }
 
   render() {
     return (
       <div>
-        <div id="dest" tabIndex="0" onKeyDown={ ev => this.handleKeyDown(ev) }>
-          { renderBabylonAST(this.state.ast) }
-        </div>
-        <textarea id="src" onChange={ ev => this.handleSourceChange(ev) } />
+        { renderBabylonAST(this.state.ast) }
       </div>
     )
   }

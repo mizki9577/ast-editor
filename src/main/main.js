@@ -1,7 +1,9 @@
 const url = require('url')
 const path = require('path')
 const fs = require('fs')
-const { app, BrowserWindow, Menu, dialog } = require('electron')
+const promisify = require('util-promisify')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const babylon = require('babylon')
 
 let window = null
 
@@ -16,6 +18,15 @@ const createWindow = () => {
   window.on('closed', () => {
     window = null
   })
+
+  promisify(fs.readFile)(process.argv[2], { encoding: 'UTF-8', flag: 'r' })
+    .then(src => {
+      const ast = babylon.parse(src)
+      ipcMain.on('ready', ev => {
+        ev.sender.send('ast-parsed', ast)
+      })
+    })
+    .catch(e => console.log(e))
 }
 
 app.on('ready', createWindow)
