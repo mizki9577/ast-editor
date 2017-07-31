@@ -30,7 +30,6 @@ const createWindow = () => {
 }
 
 app.on('ready', () => {
-  BrowserWindow.addDevToolsExtension('/home/mizki/.config/chromium/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0')
   createWindow()
 })
 
