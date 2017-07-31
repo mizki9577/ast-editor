@@ -1,6 +1,12 @@
+body {
+    margin: 0;
+}
+
 .renderer-root {
     font-family: monospace;
     font-size: 12pt;
+    overflow-wrap: break-word;
+    word-break: break-all;
 }
 
 span.keyword {
