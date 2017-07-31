@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import { Fabric } from 'office-ui-fabric-react'
+import * as circularJson from 'circular-json'
 import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 const { ipcRenderer } = require('electron')
@@ -23,8 +24,8 @@ class AstEditor extends React.Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on('ast-parsed', (ev, ast) => {
-      this.setState({ ast })
+    ipcRenderer.on('ast-parsed', (ev, astJson) => {
+      this.setState({ ast: circularJson.parse(astJson) })
     })
     ipcRenderer.send('ready')
   }

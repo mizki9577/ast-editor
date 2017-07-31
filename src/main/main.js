@@ -4,6 +4,8 @@ const fs = require('fs')
 const promisify = require('util-promisify')
 const { app, BrowserWindow, ipcMain } = require('electron')
 const babylon = require('babylon')
+const { default: traverse } = require('babel-traverse')
+const circularJson = require('circular-json')
 
 let window = null
 
@@ -21,12 +23,28 @@ const createWindow = () => {
 
   promisify(fs.readFile)(process.argv[2], { encoding: 'UTF-8', flag: 'r' })
     .then(src => {
-      const ast = babylon.parse(src, { sourceType: 'module', plugins: ['jsx', 'flow'] })
+      const ast = parse(src)
+      const astJson = circularJson.stringify(ast)
       ipcMain.on('ready', ev => {
-        ev.sender.send('ast-parsed', ast)
+        ev.sender.send('ast-parsed', astJson)
       })
     })
     .catch(e => console.log(e))
+}
+
+const parse = src => {
+  const ast = babylon.parse(src, {
+    sourceType: 'module',
+    plugins: ['jsx', 'flow'],
+  })
+
+  traverse(ast, {
+    enter(path) {
+      path.node.parent = path.parent
+    }
+  })
+
+  return ast
 }
 
 app.on('ready', () => {
