@@ -11,7 +11,7 @@ const createWindow = () => {
   window = new BrowserWindow()
 
   window.loadURL(url.format({
-    pathname: path.join(__dirname, '../../dist/index.html'),
+    pathname: path.join(__dirname, '../../index.html'),
     protocol: 'file:',
   }))
 
@@ -30,7 +30,7 @@ const createWindow = () => {
 }
 
 app.on('ready', () => {
-  createWindow(/* hoge */)
+  createWindow()
 })
 
 app.on('window-all-closed', () => {

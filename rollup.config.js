@@ -5,7 +5,7 @@ import replace from 'rollup-plugin-replace'
 
 export default {
   entry: 'src/renderer/main.js',
-  dest: 'dist/bundle.js',
+  dest: 'bundle.js',
   format: 'es',
 
   plugins: [
