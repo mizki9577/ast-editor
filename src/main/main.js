@@ -41,6 +41,7 @@ const parse = src => {
   traverse(ast, {
     enter(path) {
       path.node.parent = path.parent
+      // I think there is more procedures to be written, i.e. set first child node or siblings, ...
     }
   })
 

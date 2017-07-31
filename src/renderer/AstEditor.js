@@ -6,10 +6,11 @@ import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 const { ipcRenderer } = require('electron')
 
-import type babylonNode from 'babylon'
+import type { Node as babylonNode } from 'babylon'
 
 type State = {|
   ast: ?babylonNode,
+  focusedNode: ?babylonNode,
 |}
 
 class AstEditor extends React.Component {
@@ -20,20 +21,49 @@ class AstEditor extends React.Component {
 
     this.state = {
       ast: null,
+      focusedNode: null,
     }
   }
 
   componentDidMount() {
     ipcRenderer.on('ast-parsed', (ev, astJson) => {
-      this.setState({ ast: circularJson.parse(astJson) })
+      const ast = circularJson.parse(astJson)
+      this.setState({ ast, focusedNode: ast })
     })
     ipcRenderer.send('ready')
+  }
+
+  handleKeyDown(ev) {
+    switch (ev.key) {
+      case 'h':
+        if (this.state.focusedNode.parent != null) {
+          this.setState({ focusedNode: this.state.focusedNode.parent })
+        }
+        break
+
+      case 'l':
+        // go deeply
+        break
+
+      case 'j':
+        // go to the next
+        break
+
+      case 'k':
+        // go to the prev
+        break
+
+      default:
+        console.log(ev.key)
+    }
   }
 
   render() {
     return (
       <Fabric>
-        <div className="renderer-root ms-bgColor-neutralDark">
+        <div className="renderer-root ms-bgColor-neutralDark"
+          tabIndex={ 0 }
+          onKeyDown={ ev => this.handleKeyDown(ev) }>
           { renderBabylonAST(this.state.ast) }
         </div>
       </Fabric>
