@@ -266,7 +266,7 @@ export const renderNodeList = (nodes: babylon.Node[], separator: React.Element<a
 
 
 export const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
-  <span>[{ node.type }]</span>
+  <span className="ms-fontColor-neutralLight ms-bgColor-red">[UNKNOWN: { node.type }]</span>
 )
 
 export const FileRenderer = ({ node }: { node: File }) => (
@@ -315,25 +315,35 @@ export const ReservedKeywordRenderer = ({ children }: { children: string }) => (
 )
 
 export const OperatorRenderer = ({ children }: { children: string }) => (
-  <span className="operator ms-fontColor-neutralLight">
+  <span className="operator ms-fontColor-themeSecondary">
     { children }
   </span>
 )
 
 export const OperatorWithoutSpaceRenderer = ({ children }: { children: string }) => (
-  <span className="operator-without-space ms-fontColor-neutralLight">
+  <span className="operator-without-space ms-fontColor-themeSecondary">
     { children }
   </span>
 )
 
 export const OpenBracketRenderer = ({ children }: { children: string }) => (
-  <span className="open-bracket ms-fontColor-neutralLight">
+  <span className="open-bracket ms-fontColor-themeSecondary">
     { children }
   </span>
 )
 
 export const ClosingBracketRenderer = ({ children }: { children: string }) => (
-  <span className="closing-bracket ms-fontColor-neutralLight">
+  <span className="closing-bracket ms-fontColor-themeSecondary">
+    { children }
+  </span>
+)
+
+export const CommaRenderer = () => (
+  <span className="comma ms-fontColor-themeSecondary">,</span>
+)
+
+export const QuoteRenderer = ({ children }: { children: string }) => (
+  <span className="ms-fontColor-themeSecondary">
     { children }
   </span>
 )

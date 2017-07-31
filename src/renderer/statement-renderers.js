@@ -1,17 +1,16 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { renderNode, ReservedKeywordRenderer, OpenBracketRenderer, ClosingBracketRenderer } from './JavaScriptASTRenderer.js'
+import { renderNode, ReservedKeywordRenderer, OpenBracketRenderer, ClosingBracketRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
 
 export const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStatement }) => (
   <div>
     { renderNode(node.expression) }
-    <span>;</span>
   </div>
 )
 
 export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement }) => (
-  <span>
+  <span className="block-statement">
     <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
     <div className="block-body">
       { node.directives.map((directive, i) => renderNode(directive, i)) }
@@ -22,11 +21,11 @@ export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement 
 )
 
 export const EmptyStatementRenderer = ({ node }: { node: babylon.EmptyStatement }) => (
-  <div>;</div>
+  <OperatorRenderer>;</OperatorRenderer>
 )
 
 export const DebuggerStatementRenderer = ({ node }: { node: babylon.EmptyStatement }) => (
-  <div>debuger;</div>
+  <ReservedKeywordRenderer>debuger</ReservedKeywordRenderer>
 )
 
 export const WithStatementRenderer = ({ node }: { node: babylon.WithStatement }) => (
@@ -43,7 +42,6 @@ export const ReturnStatementRenderer = ({ node }: { node: babylon.ReturnStatemen
   <div>
     <ReservedKeywordRenderer>return</ReservedKeywordRenderer>
     { renderNode(node.argument) }
-    <span>;</span>
   </div>
 )
 
@@ -59,7 +57,6 @@ export const BreakStatementRenderer = ({ node }: { node: babylon.BreakStatement 
   <div>
     <ReservedKeywordRenderer>break</ReservedKeywordRenderer>
     { renderNode(node.label) }
-    <span>;</span>
   </div>
 )
 
@@ -67,7 +64,6 @@ export const ContinueStatementRenderer = ({ node }: { node: babylon.ContinueStat
   <div>
     <ReservedKeywordRenderer>continue</ReservedKeywordRenderer>
     { renderNode(node.label) }
-    <span>;</span>
   </div>
 )
 
@@ -77,14 +73,14 @@ export const IfStatementRenderer = ({ node }: { node: babylon.IfStatement }) => 
     <OpenBracketRenderer>(</OpenBracketRenderer>
     { renderNode(node.test) }
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    <div className="if-body">
+    <span className="if-body">
       { renderNode(node.consequent) }
-    </div>
+    </span>
     { node.alternate !== null ? <ReservedKeywordRenderer>else</ReservedKeywordRenderer> : null }
     { node.alternate !== null ? (
-      <div className="if-body">
+      <span className="if-body">
         { renderNode(node.alternate) }
-      </div>
+      </span>
     ) : null }
   </div>
 )
@@ -118,7 +114,6 @@ export const ThrowStatementRenderer = ({ node }: { node: babylon.ThrowStatement 
   <div>
     <ReservedKeywordRenderer>throw</ReservedKeywordRenderer>
     { renderNode(node.argument) }
-    <span>;</span>
   </div>
 )
 
@@ -164,13 +159,13 @@ export const DoWhileStatementRenderer = ({ node }: { node: babylon.DoWhileStatem
 )
 
 export const ForStatementRenderer = ({ node }: { node: babylon.ForStatement }) => (
-  <div>
+  <div className="for-statement">
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
     { renderNode(node.init) }
-    <span>;</span>
+    <OperatorRenderer>;</OperatorRenderer>
     { renderNode(node.test) }
-    <span>;</span>
+    <OperatorRenderer>;</OperatorRenderer>
     { renderNode(node.update) }
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
     { renderNode(node.body) }
@@ -178,7 +173,7 @@ export const ForStatementRenderer = ({ node }: { node: babylon.ForStatement }) =
 )
 
 export const ForInStatementRenderer = ({ node }: { node: babylon.ForInStatement }) => (
-  <div>
+  <div className="for-statement">
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
     { renderNode(node.left) }
@@ -190,7 +185,7 @@ export const ForInStatementRenderer = ({ node }: { node: babylon.ForInStatement 
 )
 
 export const ForOfStatementRenderer = ({ node }: { node: babylon.ForOfStatement }) => (
-  <div>
+  <div className="for-statement">
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     { node.await ? <ReservedKeywordRenderer>await</ReservedKeywordRenderer> : null }
     <OpenBracketRenderer>(</OpenBracketRenderer>

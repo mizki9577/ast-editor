@@ -10,7 +10,9 @@ export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentP
 export const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (
   <span>
     <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
-    { node.properties.map((property, i) => renderNode(property, i)) }
+    <div className="object-body">
+      { node.properties.map((property, i) => renderNode(property, i)) }
+    </div>
     <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
   </span>
 )

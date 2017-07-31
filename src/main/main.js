@@ -30,7 +30,7 @@ const createWindow = () => {
 }
 
 app.on('ready', () => {
-  createWindow()
+  createWindow(/* hoge */)
 })
 
 app.on('window-all-closed', () => {

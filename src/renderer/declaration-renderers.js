@@ -9,10 +9,10 @@ export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDe
 )
 
 export const VariableDeclarationRenderer = ({ node }: { node: babylon.VariableDeclaration }) => (
-  <span className="variable-declaration">
+  <div className="variable-declaration">
     <ReservedKeywordRenderer>{ node.kind /* var, let , const */ }</ReservedKeywordRenderer>
     { node.declarations.map((declaration, i) => <VariableDeclaratorRenderer key={ i } node={ declaration } />) }
-  </span>
+  </div>
 )
 
 export const VariableDeclaratorRenderer = ({ node }: { node: babylon.VariableDeclarator }) => (

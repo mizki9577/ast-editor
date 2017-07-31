@@ -1,6 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
+import { QuoteRenderer } from './JavaScriptASTRenderer.js'
 
 export const RegExpLiteralRenderer = ({ node }: { node: babylon.RegExpLiteral }) => (
   <span className="ms-fontColor-themeTertiary">
@@ -19,9 +20,9 @@ export const NullLiteralRenderer = ({ node }: { node: babylon.NullLiteral }) => 
 
 export const StringLiteralRenderer = ({ node }: { node: babylon.StringLiteral }) => (
   <span className="ms-fontColor-themeTertiary">
-    <span>'</span>
+    <QuoteRenderer>'</QuoteRenderer>
     <span>{ node.value }</span>
-    <span>'</span>
+    <QuoteRenderer>'</QuoteRenderer>
   </span>
 )
 

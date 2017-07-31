@@ -4,14 +4,23 @@
 }
 
 span.keyword {
-    margin-right: 0.5em;
+    margin: 0 0.5em;
+}
+
+span.keyword:first-child {
+    margin-left: 0;
 }
 
 span.operator {
     margin: 0 0.5em;
 }
 
-div.if-body {
+span.comma {
+    margin-right: 0.5em;
+}
+
+span.if-body > *:not(.block-statement) {
+    display: block;
     margin-left: 2em;
 }
 
@@ -31,8 +40,13 @@ div.block-body {
     margin-left: 2em;
 }
 
-:not(.export-named-declaration) > .variable-declaration {
-    display: block;
+div.object-body {
+    margin-left: 2em;
+}
+
+.export-named-declaration > .variable-declaration,
+.for-statement > .variable-declaration {
+    display: inline;
 }
 
 /* vim: set ts=4 sw=4 et: */
