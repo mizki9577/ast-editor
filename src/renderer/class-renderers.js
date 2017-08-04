@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { UnknownNodeRenderer, NodeRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer } from './JavaScriptASTRenderer.js'
 
 export const ClassRenderer = ({ node }: { node: babylon.Class }) => (
   <span>
@@ -14,7 +14,7 @@ export const ClassRenderer = ({ node }: { node: babylon.Class }) => (
   </span>
 )
 
-export const ClassBodyRenderer = ({ node }: { node: babylon.ClassBody }) => (
+const ClassBodyRenderer = ({ node }: { node: babylon.ClassBody }) => (
   <div>
     <span>{ '{' }</span>
     { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
@@ -38,7 +38,6 @@ export const ClassMethodRenderer = ({ node }: { node: babylon.ClassMethod }) => 
   </div>
 )
 
-// NOTE: According to Babylon AST Specification, `value` should not be null.
 export const ClassPropertyRenderer = ({ node }: { node: babylon.ClassProperty }) => (
   <div>
     { node.static ? <span>static</span> : null }
@@ -49,7 +48,5 @@ export const ClassPropertyRenderer = ({ node }: { node: babylon.ClassProperty })
     <NodeRenderer node={ node.value } />
   </div>
 )
-
-export const ClassPrivatePropertyRenderer = ({ node }: { node: babylon.ClassPrivateProperty }) => <UnknownNodeRenderer node={ node } />
 
 // vim: set ts=2 sw=2 et:

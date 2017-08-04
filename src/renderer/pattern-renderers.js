@@ -1,10 +1,18 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
 
 export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentProperty }) => (
-  <NodeRenderer node={ node } />
+  <span>
+    { node.decorators ? node.decorators.map((decorator, i) => <NodeRenderer key={ i } node={ decorator } />) : null }
+    { node.computed ? <OpenBracketRenderer>[</OpenBracketRenderer> : null }
+    <NodeRenderer node={ node.key } />
+    { node.computed ? <ClosingBracketRenderer>]</ClosingBracketRenderer> : null }
+    { node.shorthand ? null : <OperatorRenderer>:</OperatorRenderer> }
+    { node.shorthand ? null : <NodeRenderer node={ node.value } /> }
+    <CommaRenderer />
+  </span>
 )
 
 export const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (

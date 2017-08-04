@@ -80,6 +80,9 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
     case 'SwitchStatement':
       return <statements.SwitchStatementRenderer node={ node } />
 
+    case 'SwitchCase':
+      return <statements.SwitchCaseRenderer node={ node } />
+
     case 'ThrowStatement':
       return <statements.ThrowStatementRenderer node={ node } />
 
@@ -112,8 +115,11 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
     case 'VariableDeclaration':
       return <declarations.VariableDeclarationRenderer node={ node } />
 
+    case 'VariableDeclarator':
+      return <declarations.VariableDeclaratorRenderer node={ node } />
+
     case 'ClassDeclaration':
-      return <declarations.ClassDeclarationReenderer node={ node } />
+      return <declarations.ClassDeclarationRenderer node={ node } />
     // Declarations ]
 
     case 'Decorator':
@@ -171,6 +177,9 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
     case 'LogicalExpression':
       return <expressions.LogicalExpressionRenderer node={ node } />
 
+    case 'SpreadElement':
+      return <expressions.SpreadElementRenderer node={ node } />
+
     case 'MemberExpression':
       return <expressions.MemberExpressionRenderer node={ node } />
 
@@ -206,6 +215,9 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
     // Patterns [
     case 'ObjectPattern':
       return <patterns.ObjectPatternRenderer node={ node } />
+
+    case 'AssignmentProperty':
+      return <patterns.AssignmentPropertyRenderer node={ node } />
 
     case 'ArrayPattern':
       return <patterns.ArrayPatternRenderer node={ node } />
@@ -253,21 +265,21 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
   }
 }
 
-export const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
+const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
   <span className="ms-fontColor-neutralLight ms-bgColor-red">[UNKNOWN: { node.type }]</span>
 )
 
-export const FileRenderer = ({ node }: { node: File }) => (
+const FileRenderer = ({ node }: { node: File }) => (
   <NodeRenderer node={ node.program } />
 )
 
-export const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
+const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
   <span className="identifier ms-fontColor-neutralLight">
     { node.name }
   </span>
 )
 
-export const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
+const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
   <div>
     { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
     { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
@@ -287,7 +299,7 @@ export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
   </span>
 )
 
-export const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
+const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
   <div>
     <span>@</span>
     <NodeRenderer node={ node.expression } />

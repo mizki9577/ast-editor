@@ -97,9 +97,7 @@ export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) =
 )
 
 export const FunctionExpressionRenderer = ({ node }: { node: babylon.FunctionExpression }) => (
-  <span>
-    <FunctionRenderer node={ node } />
-  </span>
+  <FunctionRenderer node={ node } />
 )
 
 export const UnaryExpressionRenderer = ({ node }: { node: babylon.UnaryExpression }) => (

@@ -23,8 +23,10 @@ export const VariableDeclaratorRenderer = ({ node }: { node: babylon.VariableDec
   </span>
 )
 
-export const ClassDeclarationReenderer = ({ node }: { node: babylon.ClassDeclaration }) => (
-  <ClassRenderer node={ node } />
+export const ClassDeclarationRenderer = ({ node }: { node: babylon.ClassDeclaration }) => (
+  <div>
+    <ClassRenderer node={ node } />
+  </div>
 )
 
 // vim: set ts=2 sw=2 et:

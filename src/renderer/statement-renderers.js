@@ -93,13 +93,13 @@ export const SwitchStatementRenderer = ({ node }: { node: babylon.SwitchStatemen
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
     <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
     <div className="cases-wrapper">
-      { node.cases.map((c, i) => <SwitchCaseRenderer key={ i } node={ c } />) }
+      { node.cases.map((c, i) => <NodeRenderer key={ i } node={ c } />) }
     </div>
     <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
   </div>
 )
 
-const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
+export const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
   <div>
     <ReservedKeywordRenderer>{ node.test !== null ? 'case' : 'default' }</ReservedKeywordRenderer>
     <NodeRenderer node={ node.test } />
@@ -120,7 +120,7 @@ export const ThrowStatementRenderer = ({ node }: { node: babylon.ThrowStatement 
 export const TryStatementRenderer = ({ node }: { node: babylon.TryStatement }) => (
   <div>
     <ReservedKeywordRenderer>try</ReservedKeywordRenderer>
-    <BlockStatementRenderer node={ node.block } />
+    <NodeRenderer node={ node.block } />
     <NodeRenderer node={ node.handler } />
     { node.finalizer !== null ? <ReservedKeywordRenderer>finally</ReservedKeywordRenderer> : null }
     <NodeRenderer node={ node.finalizer } />

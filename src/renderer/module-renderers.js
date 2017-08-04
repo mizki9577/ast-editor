@@ -2,7 +2,7 @@
 import type babylon from 'babylon'
 import React from 'react'
 import { NodeRenderer, ReservedKeywordRenderer, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer } from './JavaScriptASTRenderer.js'
-import { FunctionDeclarationRenderer, ClassDeclarationReenderer } from './declaration-renderers.js'
+import { FunctionDeclarationRenderer, ClassDeclarationRenderer } from './declaration-renderers.js'
 
 export const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclaration }) => (
   <div>
@@ -39,7 +39,7 @@ export const ExportNamedDeclarationRenderer = ({ node }: { node: babylon.ExportN
   <div className="export-named-declaration">
     <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
     <NodeRenderer node={ node.declaration } />
-    { node.specifiers.map((specifier, i) => <ExportSpecifierRenderer key={ i } node={ specifier } />) }
+    { node.specifiers.map((specifier, i) => <NodeRenderer key={ i } node={ specifier } />) }
     { node.source !== null ? <ReservedKeywordRenderer>from</ReservedKeywordRenderer> : null }
     <NodeRenderer node={ node.source } />
   </div>
@@ -61,12 +61,12 @@ export const ExportDefaultDeclarationRenderer = ({ node }: { node: babylon.Expor
   </div>
 )
 
-export const OptFunctionDeclarationRenderer = ({ node }: { node: babylon.OptFunctionDeclaration }) => (
+const OptFunctionDeclarationRenderer = ({ node }: { node: babylon.OptFunctionDeclaration }) => (
   <FunctionDeclarationRenderer node={ node } />
 )
 
-export const OptClassDeclarationRenderer = ({ node }: { node: babylon.OptClassDeclaration }) => (
-  <ClassDeclarationReenderer node={ node } />
+const OptClassDeclarationRenderer = ({ node }: { node: babylon.OptClassDeclaration }) => (
+  <ClassDeclarationRenderer node={ node } />
 )
 
 export const ExportAllDeclarationRenderer = ({ node }: { node: babylon.ExportAllDeclaration }) => (
