@@ -2,6 +2,8 @@
 import type babylon from 'babylon'
 
 import React from 'react'
+import * as t from 'babel-types'
+
 import * as literals from './literal-renderers.js'
 import * as statements from './statement-renderers.js'
 import * as expressions from './expression-renderers.js'
@@ -15,254 +17,333 @@ type File = babylon.Node & {
 }
 
 export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
-  if (node == null) return null
+  let children = null
 
-  switch (node.type) {
-    case 'File':
-      return <FileRenderer node={ node } />
-
-    case 'Identifier':
-      return <IdentifierRenderer node={ node } />
-
-    //case 'PrivateName':
-
-    // Literals [
-    case 'RegExpLiteral':
-      return <literals.RegExpLiteralRenderer node={ node } />
-
-    case 'NullLiteral':
-      return <literals.NullLiteralRenderer node={ node } />
-
-    case 'StringLiteral':
-      return <literals.StringLiteralRenderer node={ node } />
-
-    case 'BooleanLiteral':
-      return <literals.BooleanLiteralRenderer node={ node } />
-
-    case 'NumericLiteral':
-      return <literals.NumericLiteralRenderer node={ node } />
-    // Literals ]
-
-    case 'Program':
-      return <ProgramRenderer node={ node } />
-
-    // Statements [
-    case 'ExpressionStatement':
-      return <statements.ExpressionStatementRenderer node={ node } />
-
-    case 'BlockStatement':
-      return <statements.BlockStatementRenderer node={ node } />
-
-    case 'EmptyStatement':
-      return <statements.EmptyStatementRenderer node={ node } />
-
-    case 'DebuggerStatement':
-      return <statements.DebuggerStatementRenderer node={ node } />
-
-    case 'WithStatement':
-      return <statements.WithStatementRenderer node={ node } />
-
-    case 'ReturnStatement':
-      return <statements.ReturnStatementRenderer node={ node } />
-
-    case 'LabeledStatement':
-      return <statements.LabeledStatementRenderer node={ node } />
-
-    case 'BreakStatement':
-      return <statements.BreakStatementRenderer node={ node } />
-
-    case 'ContinueStatement':
-      return <statements.ContinueStatementRenderer node={ node } />
-
-    case 'IfStatement':
-      return <statements.IfStatementRenderer node={ node } />
-
-    case 'SwitchStatement':
-      return <statements.SwitchStatementRenderer node={ node } />
-
-    case 'SwitchCase':
-      return <statements.SwitchCaseRenderer node={ node } />
-
-    case 'ThrowStatement':
-      return <statements.ThrowStatementRenderer node={ node } />
-
-    case 'TryStatement':
-      return <statements.TryStatementRenderer node={ node } />
-
-    case 'CatchClause':
-      return <statements.CatchClauseRenderer node={ node } />
-
-    case 'WhileStatement':
-      return <statements.WhileStatementRenderer node={ node } />
-
-    case 'DoWhileStatement':
-      return <statements.DoWhileStatementRenderer node={ node } />
-
-    case 'ForStatement':
-      return <statements.ForStatementRenderer node={ node } />
-
-    case 'ForInStatement':
-      return <statements.ForInStatementRenderer node={ node } />
-
-    case 'ForOfStatement':
-      return <statements.ForOfStatementRenderer node={ node } />
-    // Statements ]
-
-    // Declarations [
-    case 'FunctionDeclaration':
-      return <declarations.FunctionDeclarationRenderer node={ node } />
-
-    case 'VariableDeclaration':
-      return <declarations.VariableDeclarationRenderer node={ node } />
-
-    case 'VariableDeclarator':
-      return <declarations.VariableDeclaratorRenderer node={ node } />
-
-    case 'ClassDeclaration':
-      return <declarations.ClassDeclarationRenderer node={ node } />
-    // Declarations ]
-
-    case 'Decorator':
-      return <DecoratorRenderer node={ node } />
-
-    //case 'Directive':
-    //case 'DirectiveLiteral':
-
-    // Expressions [
-    case 'Super':
-      return <expressions.SuperRenderer node={ node } />
-
-    case 'Import':
-      return <expressions.ImportRenderer node={ node } />
-
-    case 'ThisExpression':
-      return <expressions.ThisExpressionRenderer node={ node } />
-
-    case 'ArrowFunctionExpression':
-      return <expressions.ArrowFunctionExpressionRenderer node={ node } />
-
-    case 'YieldExpression':
-      return <expressions.YieldExpressionRenderer node={ node } />
-
-    case 'AwaitExpression':
-      return <expressions.AwaitExpressionRenderer node={ node } />
-
-    case 'ArrayExpression':
-      return <expressions.ArrayExpressionRenderer node={ node } />
-
-    case 'ObjectExpression':
-      return <expressions.ObjectExpressionRenderer node={ node } />
-
-    case 'ObjectMethod':
-      return <expressions.ObjectMethodRenderer node={ node } />
-
-    case 'ObjectProperty':
-      return <expressions.ObjectPropertyRenderer node={ node } />
-
-    case 'FunctionExpression':
-      return <expressions.FunctionExpressionRenderer node={ node } />
-
-    case 'UnaryExpression':
-      return <expressions.UnaryExpressionRenderer node={ node } />
-
-    case 'UpdateExpression':
-      return <expressions.UpdateExpressionRenderer node={ node } />
-
-    case 'BinaryExpression':
-      return <expressions.BinaryExpressionRenderer node={ node } />
-
-    case 'AssignmentExpression':
-      return <expressions.AssignmentExpressionRenderer node={ node } />
-
-    case 'LogicalExpression':
-      return <expressions.LogicalExpressionRenderer node={ node } />
-
-    case 'SpreadElement':
-      return <expressions.SpreadElementRenderer node={ node } />
-
-    case 'MemberExpression':
-      return <expressions.MemberExpressionRenderer node={ node } />
-
-    case 'BindExpression':
-      return <expressions.BindExpressionRenderer node={ node } />
-
-    case 'ConditionalExpression':
-      return <expressions.ConditionalExpressionRenderer node={ node } />
-
-    case 'CallExpression':
-      return <expressions.CallExpressionRenderer node={ node } />
-
-    case 'NewExpression':
-      return <expressions.NewExpressionRenderer node={ node } />
-
-    case 'SequenceExpression':
-      return <expressions.SequenceExpressionRenderer node={ node } />
-
-    case 'DoExpression':
-      return <expressions.DoExpressionRenderer node={ node } />
-
-    case 'ClassExpression':
-      return <expressions.ClassExpressionRenderer node={ node } />
-
-    //case 'MetaProperty':
-    // Expressions ]
-
-    // Template Literals [
-    //case 'TemplateLiteral':
-    //case 'TaggedTemplateExpression':
-    // Template Literals ]
-
-    // Patterns [
-    case 'ObjectPattern':
-      return <patterns.ObjectPatternRenderer node={ node } />
-
-    case 'AssignmentProperty':
-      return <patterns.AssignmentPropertyRenderer node={ node } />
-
-    case 'ArrayPattern':
-      return <patterns.ArrayPatternRenderer node={ node } />
-
-    case 'RestElement':
-      return <patterns.RestElementRenderer node={ node } />
-
-    case 'AssignmentPattern':
-      return <patterns.AssignmentPatternRenderer node={ node } />
-    // Patterns ]
-
-    // Classes [
-    case 'ClassMethod':
-      return <classes.ClassMethodRenderer node={ node } />
-
-    case 'ClassProperty':
-      return <classes.ClassPropertyRenderer node={ node } />
-    // Classes ]
-
-    // Modules [
-    case 'ImportDeclaration':
-      return <modules.ImportDeclarationRenderer node={ node } />
-
-    case 'ImportSpecifier':
-      return <modules.ImportSpecifierRenderer node={ node } />
-
-    case 'ImportDefaultSpecifier':
-      return <modules.ImportDefaultSpecifierRenderer node={ node } />
-
-    case 'ImportNamespaceSpecifier':
-      return <modules.ImportNamespaceSpecifierRenderer node={ node } />
-
-    case 'ExportNamedDeclaration':
-      return <modules.ExportNamedDeclarationRenderer node={ node } />
-
-    case 'ExportDefaultDeclaration':
-      return <modules.ExportDefaultDeclarationRenderer node={ node } />
-
-    case 'ExportAllDeclaration':
-      return <modules.ExportAllDeclarationRenderer node={ node } />
-    // Modules ]
-
-    default:
-      return <UnknownNodeRenderer node={ node } />
+  if (t.isFile(node)) {
+    children = <FileRenderer node={ node } />
   }
+
+  else if (t.isIdentifier(node)) {
+    children = <IdentifierRenderer node={ node } />
+  }
+
+  //case 'PrivateName':
+
+  // Literals [
+  else if (t.isRegExpLiteral(node)) {
+    children = <literals.RegExpLiteralRenderer node={ node } />
+  }
+
+  else if (t.isNullLiteral(node)) {
+    children = <literals.NullLiteralRenderer node={ node } />
+  }
+
+  else if (t.isStringLiteral(node)) {
+    children = <literals.StringLiteralRenderer node={ node } />
+  }
+
+  else if (t.isBooleanLiteral(node)) {
+    children = <literals.BooleanLiteralRenderer node={ node } />
+  }
+
+  else if (t.isNumericLiteral(node)) {
+    children = <literals.NumericLiteralRenderer node={ node } />
+  }
+  // Literals ]
+
+  else if (t.isProgram(node)) {
+    children = <ProgramRenderer node={ node } />
+  }
+
+  // Statements [
+  else if (t.isExpressionStatement(node)) {
+    children = <statements.ExpressionStatementRenderer node={ node } />
+  }
+
+  else if (t.isBlockStatement(node)) {
+    children = <statements.BlockStatementRenderer node={ node } />
+  }
+
+  else if (t.isEmptyStatement(node)) {
+    children = <statements.EmptyStatementRenderer node={ node } />
+  }
+
+  else if (t.isDebuggerStatement(node)) {
+    children = <statements.DebuggerStatementRenderer node={ node } />
+  }
+
+  else if (t.isWithStatement(node)) {
+    children = <statements.WithStatementRenderer node={ node } />
+  }
+
+  else if (t.isReturnStatement(node)) {
+    children = <statements.ReturnStatementRenderer node={ node } />
+  }
+
+  else if (t.isLabeledStatement(node)) {
+    children = <statements.LabeledStatementRenderer node={ node } />
+  }
+
+  else if (t.isBreakStatement(node)) {
+    children = <statements.BreakStatementRenderer node={ node } />
+  }
+
+  else if (t.isContinueStatement(node)) {
+    children = <statements.ContinueStatementRenderer node={ node } />
+  }
+
+  else if (t.isIfStatement(node)) {
+    children = <statements.IfStatementRenderer node={ node } />
+  }
+
+  else if (t.isSwitchStatement(node)) {
+    children = <statements.SwitchStatementRenderer node={ node } />
+  }
+
+  else if (t.isSwitchCase(node)) {
+    children = <statements.SwitchCaseRenderer node={ node } />
+  }
+
+  else if (t.isThrowStatement(node)) {
+    children = <statements.ThrowStatementRenderer node={ node } />
+  }
+
+  else if (t.isTryStatement(node)) {
+    children = <statements.TryStatementRenderer node={ node } />
+  }
+
+  else if (t.isCatchClause(node)) {
+    children = <statements.CatchClauseRenderer node={ node } />
+  }
+
+  else if (t.isWhileStatement(node)) {
+    children = <statements.WhileStatementRenderer node={ node } />
+  }
+
+  else if (t.isDoWhileStatement(node)) {
+    children = <statements.DoWhileStatementRenderer node={ node } />
+  }
+
+  else if (t.isForStatement(node)) {
+    children = <statements.ForStatementRenderer node={ node } />
+  }
+
+  else if (t.isForInStatement(node)) {
+    children = <statements.ForInStatementRenderer node={ node } />
+  }
+
+  else if (t.isForOfStatement(node)) {
+    children = <statements.ForOfStatementRenderer node={ node } />
+  }
+  // Statements ]
+
+  // Declarations [
+  else if (t.isFunctionDeclaration(node)) {
+    children = <declarations.FunctionDeclarationRenderer node={ node } />
+  }
+
+  else if (t.isVariableDeclaration(node)) {
+    children = <declarations.VariableDeclarationRenderer node={ node } />
+  }
+
+  else if (t.isVariableDeclarator(node)) {
+    children = <declarations.VariableDeclaratorRenderer node={ node } />
+  }
+
+  else if (t.isClassDeclaration(node)) {
+    children = <declarations.ClassDeclarationRenderer node={ node } />
+  }
+  // Declarations ]
+
+  else if (t.isDecorator(node)) {
+    children = <DecoratorRenderer node={ node } />
+  }
+
+  //case 'Directive':
+  //case 'DirectiveLiteral':
+
+  // Expressions [
+  else if (t.isSuper(node)) {
+    children = <expressions.SuperRenderer node={ node } />
+  }
+
+  else if (t.isImport(node)) {
+    children = <expressions.ImportRenderer node={ node } />
+  }
+
+  else if (t.isThisExpression(node)) {
+    children = <expressions.ThisExpressionRenderer node={ node } />
+  }
+
+  else if (t.isArrowFunctionExpression(node)) {
+    children = <expressions.ArrowFunctionExpressionRenderer node={ node } />
+  }
+
+  else if (t.isYieldExpression(node)) {
+    children = <expressions.YieldExpressionRenderer node={ node } />
+  }
+
+  else if (t.isAwaitExpression(node)) {
+    children = <expressions.AwaitExpressionRenderer node={ node } />
+  }
+
+  else if (t.isArrayExpression(node)) {
+    children = <expressions.ArrayExpressionRenderer node={ node } />
+  }
+
+  else if (t.isObjectExpression(node)) {
+    children = <expressions.ObjectExpressionRenderer node={ node } />
+  }
+
+  else if (t.isObjectMethod(node)) {
+    children = <expressions.ObjectMethodRenderer node={ node } />
+  }
+
+  else if (t.isObjectProperty(node)) {
+    children = <expressions.ObjectPropertyRenderer node={ node } />
+  }
+
+  else if (t.isFunctionExpression(node)) {
+    children = <expressions.FunctionExpressionRenderer node={ node } />
+  }
+
+  else if (t.isUnaryExpression(node)) {
+    children = <expressions.UnaryExpressionRenderer node={ node } />
+  }
+
+  else if (t.isUpdateExpression(node)) {
+    children = <expressions.UpdateExpressionRenderer node={ node } />
+  }
+
+  else if (t.isBinaryExpression(node)) {
+    children = <expressions.BinaryExpressionRenderer node={ node } />
+  }
+
+  else if (t.isAssignmentExpression(node)) {
+    children = <expressions.AssignmentExpressionRenderer node={ node } />
+  }
+
+  else if (t.isLogicalExpression(node)) {
+    children = <expressions.LogicalExpressionRenderer node={ node } />
+  }
+
+  else if (t.isSpreadElement(node)) {
+    children = <expressions.SpreadElementRenderer node={ node } />
+  }
+
+  else if (t.isMemberExpression(node)) {
+    children = <expressions.MemberExpressionRenderer node={ node } />
+  }
+
+  else if (t.isBindExpression(node)) {
+    children = <expressions.BindExpressionRenderer node={ node } />
+  }
+
+  else if (t.isConditionalExpression(node)) {
+    children = <expressions.ConditionalExpressionRenderer node={ node } />
+  }
+
+  else if (t.isCallExpression(node)) {
+    children = <expressions.CallExpressionRenderer node={ node } />
+  }
+
+  else if (t.isNewExpression(node)) {
+    children = <expressions.NewExpressionRenderer node={ node } />
+  }
+
+  else if (t.isSequenceExpression(node)) {
+    children = <expressions.SequenceExpressionRenderer node={ node } />
+  }
+
+  else if (t.isDoExpression(node)) {
+    children = <expressions.DoExpressionRenderer node={ node } />
+  }
+
+  else if (t.isClassExpression(node)) {
+    children = <expressions.ClassExpressionRenderer node={ node } />
+  }
+
+  //case 'MetaProperty':
+  // Expressions ]
+
+  // Template Literals [
+  //case 'TemplateLiteral':
+  //case 'TaggedTemplateExpression':
+  // Template Literals ]
+
+  // Patterns [
+  else if (t.isObjectPattern(node)) {
+    children = <patterns.ObjectPatternRenderer node={ node } />
+  }
+
+  /*
+  else if (t.isAssignmentProperty(node)) {
+    children = <patterns.AssignmentPropertyRenderer node={ node } />
+  }
+  */
+
+  else if (t.isArrayPattern(node)) {
+    children = <patterns.ArrayPatternRenderer node={ node } />
+  }
+
+  else if (t.isRestElement(node)) {
+    children = <patterns.RestElementRenderer node={ node } />
+  }
+
+  else if (t.isAssignmentPattern(node)) {
+    children = <patterns.AssignmentPatternRenderer node={ node } />
+  }
+  // Patterns ]
+
+  // Classes [
+  else if (t.isClassMethod(node)) {
+    children = <classes.ClassMethodRenderer node={ node } />
+  }
+
+  else if (t.isClassProperty(node)) {
+    children = <classes.ClassPropertyRenderer node={ node } />
+  }
+  // Classes ]
+
+  // Modules [
+  else if (t.isImportDeclaration(node)) {
+    children = <modules.ImportDeclarationRenderer node={ node } />
+  }
+
+  else if (t.isImportSpecifier(node)) {
+    children = <modules.ImportSpecifierRenderer node={ node } />
+  }
+
+  else if (t.isImportDefaultSpecifier(node)) {
+    children = <modules.ImportDefaultSpecifierRenderer node={ node } />
+  }
+
+  else if (t.isImportNamespaceSpecifier(node)) {
+    children = <modules.ImportNamespaceSpecifierRenderer node={ node } />
+  }
+
+  else if (t.isExportNamedDeclaration(node)) {
+    children = <modules.ExportNamedDeclarationRenderer node={ node } />
+  }
+
+  else if (t.isExportDefaultDeclaration(node)) {
+    children = <modules.ExportDefaultDeclarationRenderer node={ node } />
+  }
+
+  else if (t.isExportAllDeclaration(node)) {
+    children = <modules.ExportAllDeclarationRenderer node={ node } />
+  }
+  // Modules ]
+
+  else {
+    children = node == null ? null : <UnknownNodeRenderer node={ node } />
+  }
+
+  return (
+    <span>
+      { children }
+    </span>
+  )
 }
 
 const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
