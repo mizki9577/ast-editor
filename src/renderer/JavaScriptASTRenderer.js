@@ -14,186 +14,186 @@ type File = babylon.Node & {
   type: 'File',
 }
 
-export const renderNode = (node: babylon.Node, key: ?number) => {
+export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
   if (node == null) return null
 
   switch (node.type) {
     case 'File':
-      return <FileRenderer key={ key } node={ node } />
+      return <FileRenderer node={ node } />
 
     case 'Identifier':
-      return <IdentifierRenderer key={ key } node={ node } />
+      return <IdentifierRenderer node={ node } />
 
     //case 'PrivateName':
 
     // Literals [
     case 'RegExpLiteral':
-      return <literals.RegExpLiteralRenderer key={ key } node={ node } />
+      return <literals.RegExpLiteralRenderer node={ node } />
 
     case 'NullLiteral':
-      return <literals.NullLiteralRenderer key={ key } node={ node } />
+      return <literals.NullLiteralRenderer node={ node } />
 
     case 'StringLiteral':
-      return <literals.StringLiteralRenderer key={ key } node={ node } />
+      return <literals.StringLiteralRenderer node={ node } />
 
     case 'BooleanLiteral':
-      return <literals.BooleanLiteralRenderer key={ key } node={ node } />
+      return <literals.BooleanLiteralRenderer node={ node } />
 
     case 'NumericLiteral':
-      return <literals.NumericLiteralRenderer key={ key } node={ node } />
+      return <literals.NumericLiteralRenderer node={ node } />
     // Literals ]
 
     case 'Program':
-      return <ProgramRenderer key={ key } node={ node } />
+      return <ProgramRenderer node={ node } />
 
     // Statements [
     case 'ExpressionStatement':
-      return <statements.ExpressionStatementRenderer key={ key } node={ node } />
+      return <statements.ExpressionStatementRenderer node={ node } />
 
     case 'BlockStatement':
-      return <statements.BlockStatementRenderer key={ key } node={ node } />
+      return <statements.BlockStatementRenderer node={ node } />
 
     case 'EmptyStatement':
-      return <statements.EmptyStatementRenderer key={ key } node={ node } />
+      return <statements.EmptyStatementRenderer node={ node } />
 
     case 'DebuggerStatement':
-      return <statements.DebuggerStatementRenderer key={ key } node={ node } />
+      return <statements.DebuggerStatementRenderer node={ node } />
 
     case 'WithStatement':
-      return <statements.WithStatementRenderer key={ key } node={ node } />
+      return <statements.WithStatementRenderer node={ node } />
 
     case 'ReturnStatement':
-      return <statements.ReturnStatementRenderer key={ key } node={ node } />
+      return <statements.ReturnStatementRenderer node={ node } />
 
     case 'LabeledStatement':
-      return <statements.LabeledStatementRenderer key={ key } node={ node } />
+      return <statements.LabeledStatementRenderer node={ node } />
 
     case 'BreakStatement':
-      return <statements.BreakStatementRenderer key={ key } node={ node } />
+      return <statements.BreakStatementRenderer node={ node } />
 
     case 'ContinueStatement':
-      return <statements.ContinueStatementRenderer key={ key } node={ node } />
+      return <statements.ContinueStatementRenderer node={ node } />
 
     case 'IfStatement':
-      return <statements.IfStatementRenderer key={ key } node={ node } />
+      return <statements.IfStatementRenderer node={ node } />
 
     case 'SwitchStatement':
-      return <statements.SwitchStatementRenderer key={ key } node={ node } />
+      return <statements.SwitchStatementRenderer node={ node } />
 
     case 'ThrowStatement':
-      return <statements.ThrowStatementRenderer key={ key } node={ node } />
+      return <statements.ThrowStatementRenderer node={ node } />
 
     case 'TryStatement':
-      return <statements.TryStatementRenderer key={ key } node={ node } />
+      return <statements.TryStatementRenderer node={ node } />
 
     case 'CatchClause':
-      return <statements.CatchClauseRenderer key={ key } node={ node } />
+      return <statements.CatchClauseRenderer node={ node } />
 
     case 'WhileStatement':
-      return <statements.WhileStatementRenderer key={ key } node={ node } />
+      return <statements.WhileStatementRenderer node={ node } />
 
     case 'DoWhileStatement':
-      return <statements.DoWhileStatementRenderer key={ key } node={ node } />
+      return <statements.DoWhileStatementRenderer node={ node } />
 
     case 'ForStatement':
-      return <statements.ForStatementRenderer key={ key } node={ node } />
+      return <statements.ForStatementRenderer node={ node } />
 
     case 'ForInStatement':
-      return <statements.ForInStatementRenderer key={ key } node={ node } />
+      return <statements.ForInStatementRenderer node={ node } />
 
     case 'ForOfStatement':
-      return <statements.ForOfStatementRenderer key={ key } node={ node } />
+      return <statements.ForOfStatementRenderer node={ node } />
     // Statements ]
 
     // Declarations [
     case 'FunctionDeclaration':
-      return <declarations.FunctionDeclarationRenderer key={ key } node={ node } />
+      return <declarations.FunctionDeclarationRenderer node={ node } />
 
     case 'VariableDeclaration':
-      return <declarations.VariableDeclarationRenderer key={ key } node={ node } />
+      return <declarations.VariableDeclarationRenderer node={ node } />
 
     case 'ClassDeclaration':
-      return <declarations.ClassDeclarationReenderer key={ key } node={ node } />
+      return <declarations.ClassDeclarationReenderer node={ node } />
     // Declarations ]
 
     case 'Decorator':
-      return <DecoratorRenderer key={ key } node={ node } />
+      return <DecoratorRenderer node={ node } />
 
     //case 'Directive':
     //case 'DirectiveLiteral':
 
     // Expressions [
     case 'Super':
-      return <expressions.SuperRenderer key={ key } node={ node } />
+      return <expressions.SuperRenderer node={ node } />
 
     case 'Import':
-      return <expressions.ImportRenderer key={ key } node={ node } />
+      return <expressions.ImportRenderer node={ node } />
 
     case 'ThisExpression':
-      return <expressions.ThisExpressionRenderer key={ key } node={ node } />
+      return <expressions.ThisExpressionRenderer node={ node } />
 
     case 'ArrowFunctionExpression':
-      return <expressions.ArrowFunctionExpressionRenderer key={ key } node={ node } />
+      return <expressions.ArrowFunctionExpressionRenderer node={ node } />
 
     case 'YieldExpression':
-      return <expressions.YieldExpressionRenderer key={ key } node={ node } />
+      return <expressions.YieldExpressionRenderer node={ node } />
 
     case 'AwaitExpression':
-      return <expressions.AwaitExpressionRenderer key={ key } node={ node } />
+      return <expressions.AwaitExpressionRenderer node={ node } />
 
     case 'ArrayExpression':
-      return <expressions.ArrayExpressionRenderer key={ key } node={ node } />
+      return <expressions.ArrayExpressionRenderer node={ node } />
 
     case 'ObjectExpression':
-      return <expressions.ObjectExpressionRenderer key={ key } node={ node } />
+      return <expressions.ObjectExpressionRenderer node={ node } />
 
     case 'ObjectMethod':
-      return <expressions.ObjectMethodRenderer key={ key } node={ node } />
+      return <expressions.ObjectMethodRenderer node={ node } />
 
     case 'ObjectProperty':
-      return <expressions.ObjectPropertyRenderer key={ key } node={ node } />
+      return <expressions.ObjectPropertyRenderer node={ node } />
 
     case 'FunctionExpression':
-      return <expressions.FunctionExpressionRenderer key={ key } node={ node } />
+      return <expressions.FunctionExpressionRenderer node={ node } />
 
     case 'UnaryExpression':
-      return <expressions.UnaryExpressionRenderer key={ key } node={ node } />
+      return <expressions.UnaryExpressionRenderer node={ node } />
 
     case 'UpdateExpression':
-      return <expressions.UpdateExpressionRenderer key={ key } node={ node } />
+      return <expressions.UpdateExpressionRenderer node={ node } />
 
     case 'BinaryExpression':
-      return <expressions.BinaryExpressionRenderer key={ key } node={ node } />
+      return <expressions.BinaryExpressionRenderer node={ node } />
 
     case 'AssignmentExpression':
-      return <expressions.AssignmentExpressionRenderer key={ key } node={ node } />
+      return <expressions.AssignmentExpressionRenderer node={ node } />
 
     case 'LogicalExpression':
-      return <expressions.LogicalExpressionRenderer key={ key } node={ node } />
+      return <expressions.LogicalExpressionRenderer node={ node } />
 
     case 'MemberExpression':
-      return <expressions.MemberExpressionRenderer key={ key } node={ node } />
+      return <expressions.MemberExpressionRenderer node={ node } />
 
     case 'BindExpression':
-      return <expressions.BindExpressionRenderer key={ key } node={ node } />
+      return <expressions.BindExpressionRenderer node={ node } />
 
     case 'ConditionalExpression':
-      return <expressions.ConditionalExpressionRenderer key={ key } node={ node } />
+      return <expressions.ConditionalExpressionRenderer node={ node } />
 
     case 'CallExpression':
-      return <expressions.CallExpressionRenderer key={ key } node={ node } />
+      return <expressions.CallExpressionRenderer node={ node } />
 
     case 'NewExpression':
-      return <expressions.NewExpressionRenderer key={ key } node={ node } />
+      return <expressions.NewExpressionRenderer node={ node } />
 
     case 'SequenceExpression':
-      return <expressions.SequenceExpressionRenderer key={ key } node={ node } />
+      return <expressions.SequenceExpressionRenderer node={ node } />
 
     case 'DoExpression':
-      return <expressions.DoExpressionRenderer key={ key } node={ node } />
+      return <expressions.DoExpressionRenderer node={ node } />
 
     case 'ClassExpression':
-      return <expressions.ClassExpressionRenderer key={ key } node={ node } />
+      return <expressions.ClassExpressionRenderer node={ node } />
 
     //case 'MetaProperty':
     // Expressions ]
@@ -205,72 +205,60 @@ export const renderNode = (node: babylon.Node, key: ?number) => {
 
     // Patterns [
     case 'ObjectPattern':
-      return <patterns.ObjectPatternRenderer key={ key } node={ node } />
+      return <patterns.ObjectPatternRenderer node={ node } />
 
     case 'ArrayPattern':
-      return <patterns.ArrayPatternRenderer key={ key } node={ node } />
+      return <patterns.ArrayPatternRenderer node={ node } />
 
     case 'RestElement':
-      return <patterns.RestElementRenderer key={ key } node={ node } />
+      return <patterns.RestElementRenderer node={ node } />
 
     case 'AssignmentPattern':
-      return <patterns.AssignmentPatternRenderer key={ key } node={ node } />
+      return <patterns.AssignmentPatternRenderer node={ node } />
     // Patterns ]
 
     // Classes [
     case 'ClassMethod':
-      return <classes.ClassMethodRenderer key={ key } node={ node } />
+      return <classes.ClassMethodRenderer node={ node } />
 
     case 'ClassProperty':
-      return <classes.ClassPropertyRenderer key={ key } node={ node } />
+      return <classes.ClassPropertyRenderer node={ node } />
     // Classes ]
 
     // Modules [
     case 'ImportDeclaration':
-      return <modules.ImportDeclarationRenderer key={ key } node={ node } />
+      return <modules.ImportDeclarationRenderer node={ node } />
 
     case 'ImportSpecifier':
-      return <modules.ImportSpecifierRenderer key={ key } node={ node } />
+      return <modules.ImportSpecifierRenderer node={ node } />
 
     case 'ImportDefaultSpecifier':
-      return <modules.ImportDefaultSpecifierRenderer key={ key } node={ node } />
+      return <modules.ImportDefaultSpecifierRenderer node={ node } />
 
     case 'ImportNamespaceSpecifier':
-      return <modules.ImportNamespaceSpecifierRenderer key={ key } node={ node } />
+      return <modules.ImportNamespaceSpecifierRenderer node={ node } />
 
     case 'ExportNamedDeclaration':
-      return <modules.ExportNamedDeclarationRenderer key={ key } node={ node } />
+      return <modules.ExportNamedDeclarationRenderer node={ node } />
 
     case 'ExportDefaultDeclaration':
-      return <modules.ExportDefaultDeclarationRenderer key={ key } node={ node } />
+      return <modules.ExportDefaultDeclarationRenderer node={ node } />
 
     case 'ExportAllDeclaration':
-      return <modules.ExportAllDeclarationRenderer key={ key } node={ node } />
+      return <modules.ExportAllDeclarationRenderer node={ node } />
     // Modules ]
 
     default:
-      return <UnknownNodeRenderer key={ key } node={ node } />
+      return <UnknownNodeRenderer node={ node } />
   }
 }
-
-export const renderNodeList = (nodes: babylon.Node[], separator: React.Element<any>) => {
-  const result = []
-  let i = 0
-  for (const node of nodes) {
-    result.push(renderNode(node, ++i))
-    result.push(Object.assign({}, separator, { key: ++i }))
-  }
-  result.pop()
-  return result
-}
-
 
 export const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
   <span className="ms-fontColor-neutralLight ms-bgColor-red">[UNKNOWN: { node.type }]</span>
 )
 
 export const FileRenderer = ({ node }: { node: File }) => (
-  renderNode(node.program)
+  <NodeRenderer node={ node.program } />
 )
 
 export const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
@@ -281,8 +269,8 @@ export const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
 
 export const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
   <div>
-    { node.directives.map((directive, i) => renderNode(directive, i)) }
-    { node.body.map((child, i) => renderNode(child, i)) }
+    { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
+    { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
   </div>
 )
 
@@ -291,18 +279,18 @@ export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
     <span>{ node.async ? 'async' : '' }</span>
     <span>function</span>
     <span>{ node.generator ? '*' : '' }</span>
-    <span>{ renderNode(node.id) }</span>
+    <NodeRenderer node={ node.id } />
     <span>(</span>
-    <span>{ node.params.map((param, i) => renderNode(param, i)) }</span>
+    <span>{ node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }</span>
     <span>)</span>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </span>
 )
 
 export const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
   <div>
     <span>@</span>
-    { renderNode(node.expression) }
+    <NodeRenderer node={ node.expression } />
   </div>
 )
 
@@ -348,5 +336,5 @@ export const QuoteRenderer = ({ children }: { children: string }) => (
   </span>
 )
 
-export default renderNode
+export default (ast: babylon.Node) => <NodeRenderer node={ ast } />
 // vim: set ts=2 sw=2 et:

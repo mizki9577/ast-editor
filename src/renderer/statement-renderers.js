@@ -1,11 +1,11 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { renderNode, ReservedKeywordRenderer, OpenBracketRenderer, ClosingBracketRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, ReservedKeywordRenderer, OpenBracketRenderer, ClosingBracketRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
 
 export const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStatement }) => (
   <div>
-    { renderNode(node.expression) }
+    <NodeRenderer node={ node.expression } />
   </div>
 )
 
@@ -13,8 +13,8 @@ export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement 
   <span className="block-statement">
     <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
     <div className="block-body">
-      { node.directives.map((directive, i) => renderNode(directive, i)) }
-      { node.body.map((child, i) => renderNode(child, i)) }
+      { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
+      { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
     </div>
     <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
   </span>
@@ -32,38 +32,38 @@ export const WithStatementRenderer = ({ node }: { node: babylon.WithStatement })
   <div>
     <ReservedKeywordRenderer>with</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.object) }
+    <NodeRenderer node={ node.object } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
 export const ReturnStatementRenderer = ({ node }: { node: babylon.ReturnStatement }) => (
   <div>
     <ReservedKeywordRenderer>return</ReservedKeywordRenderer>
-    { renderNode(node.argument) }
+    <NodeRenderer node={ node.argument } />
   </div>
 )
 
 export const LabeledStatementRenderer = ({ node }: { node: babylon.LabeledStatement }) => (
   <div>
-    { renderNode(node.label) }
+    <NodeRenderer node={ node.label } />
     <span>:</span>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
 export const BreakStatementRenderer = ({ node }: { node: babylon.BreakStatement }) => (
   <div>
     <ReservedKeywordRenderer>break</ReservedKeywordRenderer>
-    { renderNode(node.label) }
+    <NodeRenderer node={ node.label } />
   </div>
 )
 
 export const ContinueStatementRenderer = ({ node }: { node: babylon.ContinueStatement }) => (
   <div>
     <ReservedKeywordRenderer>continue</ReservedKeywordRenderer>
-    { renderNode(node.label) }
+    <NodeRenderer node={ node.label } />
   </div>
 )
 
@@ -71,15 +71,15 @@ export const IfStatementRenderer = ({ node }: { node: babylon.IfStatement }) => 
   <div>
     <ReservedKeywordRenderer>if</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.test) }
+    <NodeRenderer node={ node.test } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
     <span className="if-body">
-      { renderNode(node.consequent) }
+      <NodeRenderer node={ node.consequent } />
     </span>
     { node.alternate !== null ? <ReservedKeywordRenderer>else</ReservedKeywordRenderer> : null }
     { node.alternate !== null ? (
       <span className="if-body">
-        { renderNode(node.alternate) }
+        <NodeRenderer node={ node.alternate } />
       </span>
     ) : null }
   </div>
@@ -89,7 +89,7 @@ export const SwitchStatementRenderer = ({ node }: { node: babylon.SwitchStatemen
   <div>
     <ReservedKeywordRenderer>switch</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.discriminant) }
+    <NodeRenderer node={ node.discriminant } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
     <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
     <div className="cases-wrapper">
@@ -102,10 +102,10 @@ export const SwitchStatementRenderer = ({ node }: { node: babylon.SwitchStatemen
 const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
   <div>
     <ReservedKeywordRenderer>{ node.test !== null ? 'case' : 'default' }</ReservedKeywordRenderer>
-    { renderNode(node.test) }
+    <NodeRenderer node={ node.test } />
     <span>:</span>
     <div className="case-body">
-      { node.consequent.map((statement, i) => renderNode(statement, i)) }
+      { node.consequent.map((statement, i) => <NodeRenderer key={ i } node={ statement } />) }
     </div>
   </div>
 )
@@ -113,7 +113,7 @@ const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
 export const ThrowStatementRenderer = ({ node }: { node: babylon.ThrowStatement }) => (
   <div>
     <ReservedKeywordRenderer>throw</ReservedKeywordRenderer>
-    { renderNode(node.argument) }
+    <NodeRenderer node={ node.argument } />
   </div>
 )
 
@@ -121,9 +121,9 @@ export const TryStatementRenderer = ({ node }: { node: babylon.TryStatement }) =
   <div>
     <ReservedKeywordRenderer>try</ReservedKeywordRenderer>
     <BlockStatementRenderer node={ node.block } />
-    { renderNode(node.handler) }
+    <NodeRenderer node={ node.handler } />
     { node.finalizer !== null ? <ReservedKeywordRenderer>finally</ReservedKeywordRenderer> : null }
-    { renderNode(node.finalizer) }
+    <NodeRenderer node={ node.finalizer } />
   </div>
 )
 
@@ -131,9 +131,9 @@ export const CatchClauseRenderer = ({ node }: { node: babylon.CatchClause }) => 
   <div>
     <ReservedKeywordRenderer>catch</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.param) }
+    <NodeRenderer node={ node.param } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
@@ -141,19 +141,19 @@ export const WhileStatementRenderer = ({ node }: { node: babylon.WhileStatement 
   <div>
     <ReservedKeywordRenderer>while</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.test) }
+    <NodeRenderer node={ node.test } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
 export const DoWhileStatementRenderer = ({ node }: { node: babylon.DoWhileStatement }) => (
   <div>
     <ReservedKeywordRenderer>do</ReservedKeywordRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
     <ReservedKeywordRenderer>while</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.test) }
+    <NodeRenderer node={ node.test } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
   </div>
 )
@@ -162,13 +162,13 @@ export const ForStatementRenderer = ({ node }: { node: babylon.ForStatement }) =
   <div className="for-statement">
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.init) }
+    <NodeRenderer node={ node.init } />
     <OperatorRenderer>;</OperatorRenderer>
-    { renderNode(node.test) }
+    <NodeRenderer node={ node.test } />
     <OperatorRenderer>;</OperatorRenderer>
-    { renderNode(node.update) }
+    <NodeRenderer node={ node.update } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
@@ -176,11 +176,11 @@ export const ForInStatementRenderer = ({ node }: { node: babylon.ForInStatement 
   <div className="for-statement">
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.left) }
+    <NodeRenderer node={ node.left } />
     <ReservedKeywordRenderer>in</ReservedKeywordRenderer>
-    { renderNode(node.right) }
+    <NodeRenderer node={ node.right } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 
@@ -189,11 +189,11 @@ export const ForOfStatementRenderer = ({ node }: { node: babylon.ForOfStatement 
     <ReservedKeywordRenderer>for</ReservedKeywordRenderer>
     { node.await ? <ReservedKeywordRenderer>await</ReservedKeywordRenderer> : null }
     <OpenBracketRenderer>(</OpenBracketRenderer>
-    { renderNode(node.left) }
+    <NodeRenderer node={ node.left } />
     <ReservedKeywordRenderer>of</ReservedKeywordRenderer>
-    { renderNode(node.right) }
+    <NodeRenderer node={ node.right } />
     <ClosingBracketRenderer>)</ClosingBracketRenderer>
-    { renderNode(node.body) }
+    <NodeRenderer node={ node.body } />
   </div>
 )
 

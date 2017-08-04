@@ -9,8 +9,8 @@ const { ipcRenderer } = require('electron')
 import type { Node as babylonNode } from 'babylon'
 
 type State = {|
-  ast: ?babylonNode,
-  focusedNode: ?babylonNode,
+  ast: babylonNode,
+  focusedNode: babylonNode,
 |}
 
 class AstEditor extends React.Component {
@@ -33,7 +33,7 @@ class AstEditor extends React.Component {
     ipcRenderer.send('ready')
   }
 
-  handleKeyDown(ev) {
+  handleKeyDown(ev: KeyboardEvent) {
     switch (ev.key) {
       case 'h':
         if (this.state.focusedNode.parent != null) {
