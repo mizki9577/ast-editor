@@ -25,12 +25,17 @@ span.punctuation {
     margin: 0 0.5em;
 }
 
-/*
-span.if-body > *:not(.block-statement) {
+span.if-body > *:not(.block-statement),
+span.else-body > *:not(.block-statement) {
     display: block;
     margin-left: 2em;
 }
 
+span.else-body > div.if-statement {
+    display: inline;
+}
+
+/*
 div.cases-wrapper {
     margin-left: 2em;
 }
@@ -60,12 +65,10 @@ div.class-body {
     margin-left: 2em;
 }
 
-/*
 .export-named-declaration > .variable-declaration,
 .for-statement > .variable-declaration {
     display: inline;
 }
-*/
 
 .punctuation.member {
     margin: 0;

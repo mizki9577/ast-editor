@@ -14,7 +14,7 @@ export const ExpressionStatementRenderer = ({ node }: { node: babylon.Expression
 
 export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement }) => (
   <NodeWrapper>
-    <span>
+    <span className="block-statement">
       <BracketRenderer bracket="{" />
       <div className="block-body">
         { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
@@ -88,7 +88,7 @@ export const ContinueStatementRenderer = ({ node }: { node: babylon.ContinueStat
 
 export const IfStatementRenderer = ({ node }: { node: babylon.IfStatement }) => (
   <NodeWrapper>
-    <div>
+    <div className="if-statement">
       <reservedKeywords.If />
       <BracketRenderer bracket="(" />
       <NodeRenderer node={ node.test } />
@@ -98,7 +98,7 @@ export const IfStatementRenderer = ({ node }: { node: babylon.IfStatement }) => 
       </span>
       { node.alternate !== null ? <reservedKeywords.Else /> : null }
       { node.alternate !== null ? (
-        <span className="if-body">
+        <span className="else-body">
           <NodeRenderer node={ node.alternate } />
         </span>
       ) : null }
