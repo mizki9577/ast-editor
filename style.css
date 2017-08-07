@@ -21,10 +21,11 @@ span.operator {
     margin: 0 0.5em;
 }
 
-span.comma {
-    margin-right: 0.5em;
+span.punctuation {
+    margin: 0 0.5em;
 }
 
+/*
 span.if-body > *:not(.block-statement) {
     display: block;
     margin-left: 2em;
@@ -37,6 +38,7 @@ div.cases-wrapper {
 div.function-body {
     margin-left: 2em;
 }
+*/
 
 div.case-body {
     margin-left: 2em;
@@ -50,9 +52,36 @@ div.object-body {
     margin-left: 2em;
 }
 
+div.obj-prop-shorthand {
+    display: inline;
+}
+
+div.class-body {
+    margin-left: 2em;
+}
+
+/*
 .export-named-declaration > .variable-declaration,
 .for-statement > .variable-declaration {
     display: inline;
+}
+*/
+
+.punctuation.member {
+    margin: 0;
+}
+
+.comma-separated-list.inline {
+    display: inline;
+}
+
+.comma-separated-list > *::after {
+    color: white;
+    content: ', ';
+}
+
+.comma-separated-list.inline > *:last-child::after {
+    content: initial;
 }
 
 /* vim: set ts=4 sw=4 et: */

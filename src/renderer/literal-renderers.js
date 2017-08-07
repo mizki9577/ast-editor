@@ -1,14 +1,15 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeWrapper, QuoteRenderer } from './JavaScriptASTRenderer.js'
+import { NodeWrapper, PunctuationRenderer } from './JavaScriptASTRenderer.js'
+import * as reservedKeywords from './reserved-keywords.js'
 
 export const RegExpLiteralRenderer = ({ node }: { node: babylon.RegExpLiteral }) => (
   <NodeWrapper>
     <span className="ms-fontColor-themeTertiary">
-      <span>/</span>
+      <PunctuationRenderer punctuation="/"/>
       <span>{ node.pattern }</span>
-      <span>/</span>
+      <PunctuationRenderer punctuation="/"/>
       <span>{ node.flags }</span>
     </span>
   </NodeWrapper>
@@ -17,7 +18,7 @@ export const RegExpLiteralRenderer = ({ node }: { node: babylon.RegExpLiteral })
 export const NullLiteralRenderer = ({ node }: { node: babylon.NullLiteral }) => (
   <NodeWrapper>
     <span className="ms-fontColor-themeTertiary">
-      null
+      <reservedKeywords.Null />
     </span>
   </NodeWrapper>
 )
@@ -25,9 +26,9 @@ export const NullLiteralRenderer = ({ node }: { node: babylon.NullLiteral }) => 
 export const StringLiteralRenderer = ({ node }: { node: babylon.StringLiteral }) => (
   <NodeWrapper>
     <span className="ms-fontColor-themeTertiary">
-      <QuoteRenderer>'</QuoteRenderer>
+      <PunctuationRenderer punctuation="'" />
       <span>{ node.value }</span>
-      <QuoteRenderer>'</QuoteRenderer>
+      <PunctuationRenderer punctuation="'" />
     </span>
   </NodeWrapper>
 )
@@ -35,7 +36,7 @@ export const StringLiteralRenderer = ({ node }: { node: babylon.StringLiteral })
 export const BooleanLiteralRenderer = ({ node }: { node: babylon.BooleanLiteral }) => (
   <NodeWrapper>
     <span className="ms-fontColor-themeTertiary">
-      { String(node.value) }
+      { node.value ? <reservedKeywords.True /> : <reservedKeywords.False /> }
     </span>
   </NodeWrapper>
 )

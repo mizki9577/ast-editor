@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, PunctuationRenderer } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
@@ -29,7 +29,7 @@ export const VariableDeclaratorRenderer = ({ node }: { node: babylon.VariableDec
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.id } />
-      { node.init !== null ? <OperatorRenderer>=</OperatorRenderer> : null }
+      { node.init !== null ? <PunctuationRenderer punctuation="=" /> : null }
       <NodeRenderer node={ node.init } />
     </span>
   </NodeWrapper>

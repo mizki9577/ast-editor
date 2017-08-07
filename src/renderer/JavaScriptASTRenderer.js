@@ -11,12 +11,13 @@ import * as declarations from './declaration-renderers.js'
 import * as patterns from './pattern-renderers.js'
 import * as modules from './module-renderers.js'
 import * as classes from './class-renderers.js'
+import * as reservedKeywords from './reserved-keywords.js'
 
 type File = babylon.Node & {
   type: 'File',
 }
 
-export const NodeWrapper = ({ children }) => {
+export const NodeWrapper = ({ children }: { children: React.Element<*> }) => {
   const newProps = {
     className: (children.props.className !== null ? children.props.className : ''),
   }
@@ -386,13 +387,13 @@ const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
 export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
   <NodeWrapper>
     <span>
-      <span>{ node.async ? 'async' : '' }</span>
-      <span>function</span>
-      <span>{ node.generator ? '*' : '' }</span>
+      { node.async ? <reservedKeywords.Async /> : null }
+      <reservedKeywords.Function />
+      { node.generator ? <PunctuationRenderer punctuation="*" /> : null }
       <NodeRenderer node={ node.id } />
-      <span>(</span>
-      <span>{ node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }</span>
-      <span>)</span>
+      <BracketRenderer bracket="(" />
+      <CommaSeparatedList elements={ node.params } inline />
+      <BracketRenderer bracket=")" />
       <NodeRenderer node={ node.body } />
     </span>
   </NodeWrapper>
@@ -401,7 +402,7 @@ export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
 const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
   <NodeWrapper>
     <div>
-      <span>@</span>
+      <PunctuationRenderer punctuation="@" />
       <NodeRenderer node={ node.expression } />
     </div>
   </NodeWrapper>
@@ -409,17 +410,27 @@ const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
 
 //
 
-export const OperatorRenderer = ({ children }: { children: string }) => (
-  <span className="operator ms-fontColor-themeSecondary">
-    { children }
-  </span>
-)
+export const CommaSeparatedList = ({ className='', elements, inline=false }: { className?: string, elements: babylon.Node[], inline?: boolean }) => {
+  className += ' comma-separated-list' + (inline ? ' inline' : '')
+  return (
+    <div className={ className }>
+      { elements.map((element, i) => <NodeRenderer key={i} node={ element } />) }
+    </div>
+  )
+}
 
-export const OperatorWithoutSpaceRenderer = ({ children }: { children: string }) => (
-  <span className="operator-without-space ms-fontColor-themeSecondary">
-    { children }
-  </span>
-)
+export const PunctuationRenderer = ({ punctuation }: { punctuation: string }) => {
+  let className = 'punctuation ms-fontColor-themeSecondary'
+  if (punctuation === '.') {
+    className += ' member'
+  }
+
+  return (
+    <span className={ className }>
+      { punctuation }
+    </span>
+  )
+}
 
 export const BracketRenderer = ({ bracket }: { bracket: string }) => {
   switch (bracket) {
@@ -442,16 +453,6 @@ export const BracketRenderer = ({ bracket }: { bracket: string }) => {
       return <span className="close-bracket ms-fontColor-themeSecondary">{ '}' }</span>
   }
 }
-
-export const CommaRenderer = () => (
-  <span className="comma ms-fontColor-themeSecondary">,</span>
-)
-
-export const QuoteRenderer = ({ children }: { children: string }) => (
-  <span className="ms-fontColor-themeSecondary">
-    { children }
-  </span>
-)
 
 export default (ast: babylon.Node) => <NodeRenderer node={ ast } />
 // vim: set ts=2 sw=2 et:

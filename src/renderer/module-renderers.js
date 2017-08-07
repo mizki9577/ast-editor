@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, OperatorRenderer, BracketRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer } from './JavaScriptASTRenderer.js'
 import { FunctionDeclarationRenderer, ClassDeclarationRenderer } from './declaration-renderers.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
@@ -37,7 +37,7 @@ export const ImportDefaultSpecifierRenderer = ({ node }: { node: babylon.ImportD
 export const ImportNamespaceSpecifierRenderer = ({ node }: { node: babylon.ImportNamespaceSpecifier }) => (
   <NodeWrapper>
     <span>
-      <OperatorRenderer>*</OperatorRenderer>
+      <PunctuationRenderer punctuation="*" />
       <reservedKeywords.As />
       <NodeRenderer node={ node.local } />
     </span>
@@ -96,7 +96,7 @@ export const ExportAllDeclarationRenderer = ({ node }: { node: babylon.ExportAll
   <NodeWrapper>
     <div>
       <reservedKeywords.Export />
-      <OperatorRenderer>*</OperatorRenderer>
+      <PunctuationRenderer punctuation="*" />
       <reservedKeywords.From />
       <NodeRenderer node={ node.source } />
     </div>

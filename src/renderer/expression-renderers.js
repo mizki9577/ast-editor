@@ -1,9 +1,30 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, BracketRenderer, OperatorRenderer, OperatorWithoutSpaceRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, BracketRenderer, PunctuationRenderer, CommaSeparatedList } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
 import * as reservedKeywords from './reserved-keywords.js'
+
+type UnaryOperator = '-' | '+' | '!' | '~' | 'typeof' | 'void' | 'delete'
+type UpdateOperator =  '++' | '--'
+type BinaryOperator
+  = '==' | '!=' | '===' | '!=='
+  | '<' | '<=' | '>' | '>='
+  | '<<' | '>>' | '>>>'
+  | '+' | '-' | '*' | '/' | '%'
+  | '|' | '^' | '&' | 'in'
+  | 'instanceof'
+type AssignmentOperator
+  = '=' | '+=' | '-=' | '*=' | '/=' | '%='
+  | '<<=' | '>>=' | '>>>='
+  | '|=' | '^=' | '&='
+type LogicalOperator = '||' | '&&'
+
+const OperatorRenderer = ({ operator }: { operator: UnaryOperator | UpdateOperator | BinaryOperator | AssignmentOperator | LogicalOperator }) => (
+  <span className="operator ms-fontColor-themeSecondary">
+    { operator }
+  </span>
+)
 
 export const SuperRenderer = ({ node }: { node: babylon.Super }) => (
   <NodeWrapper>
@@ -27,9 +48,9 @@ export const ArrowFunctionExpressionRenderer = ({ node }: { node: babylon.ArrowF
   <NodeWrapper>
     <span>
       <BracketRenderer bracket="(" />
-      { node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }
+      <CommaSeparatedList elements={ node.params } inline />
       <BracketRenderer bracket=")" />
-      <OperatorRenderer>=></OperatorRenderer>
+      <PunctuationRenderer punctuation="=>" />
       <NodeRenderer node={ node.body } />
     </span>
   </NodeWrapper>
@@ -39,7 +60,7 @@ export const YieldExpressionRenderer = ({ node }: { node: babylon.YieldExpressio
   <NodeWrapper>
     <span>
       <reservedKeywords.Yield />
-      { node.delegate ? <OperatorRenderer>*</OperatorRenderer> : null }
+      { node.delegate ? <PunctuationRenderer punctuation="*" /> : null }
       <NodeRenderer node={ node.argument } />
     </span>
   </NodeWrapper>
@@ -58,12 +79,7 @@ export const ArrayExpressionRenderer = ({ node }: { node: babylon.ArrayExpressio
   <NodeWrapper>
     <span>
       <BracketRenderer bracket="[" />
-      { node.elements.map((element, i) => (
-        <span key={ i }>
-          <NodeRenderer node={ element } />
-          <CommaRenderer />
-        </span>
-      )) }
+      <CommaSeparatedList elements={ node.elements } inline />
       <BracketRenderer bracket="]" />
     </span>
   </NodeWrapper>
@@ -73,13 +89,7 @@ export const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpress
   <NodeWrapper>
     <span>
       <BracketRenderer bracket="{" />
-      <div className="object-body">
-        { node.properties.map((property, i) => (
-          <div key={ i }>
-            <NodeRenderer node={ property } />
-          </div>
-        )) }
-      </div>
+      <CommaSeparatedList className="object-body" elements={ node.properties } />
       <BracketRenderer bracket="}" />
     </span>
   </NodeWrapper>
@@ -87,14 +97,13 @@ export const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpress
 
 export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty }) => (
   <NodeWrapper>
-    <div>
+    <div className={ node.shorthand ? 'obj-prop-shorthand' : null }>
       { node.decorators ? node.decorators.map((decorator, i) => <NodeRenderer key={ i } node={ decorator } />) : null }
       { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
       { node.computed ? <BracketRenderer bracket="]" /> : null }
-      { node.shorthand ? null : <OperatorRenderer>:</OperatorRenderer> }
+      { node.shorthand ? null : <PunctuationRenderer punctuation=":" /> }
       { node.shorthand ? null : <NodeRenderer node={ node.value } /> }
-      <CommaRenderer />
     </div>
   </NodeWrapper>
 )
@@ -103,14 +112,14 @@ export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) =
   <NodeWrapper>
     <span>
       { node.async ? <reservedKeywords.Async /> : null }
-      { node.generator ? <OperatorRenderer>*</OperatorRenderer> : null }
-      { node.kind !== 'method' ? <span>node.kind</span> : null }
+      { node.generator ? <PunctuationRenderer punctuation="*" /> : null }
+      { node.kind !== 'method' ? <PunctuationRenderer punctuation="method" /> : null }
       { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
       { node.computed ? <BracketRenderer bracket="]" /> : null }
 
       <BracketRenderer bracket="(" />
-      { node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }
+      <CommaSeparatedList elements={ node.params } inline />
       <BracketRenderer bracket=")" />
       <NodeRenderer node={ node.body } />
     </span>
@@ -128,9 +137,9 @@ export const FunctionExpressionRenderer = ({ node }: { node: babylon.FunctionExp
 export const UnaryExpressionRenderer = ({ node }: { node: babylon.UnaryExpression }) => (
   <NodeWrapper>
     <span>
-      { node.prefix ? <OperatorRenderer>{ node.operator }</OperatorRenderer> : null }
+      { node.prefix ? <OperatorRenderer operator={ node.operator } /> : null }
       <NodeRenderer node={ node.argument } />
-      { !node.prefix ? <OperatorRenderer>{ node.operator }</OperatorRenderer> : null }
+      { !node.prefix ? <OperatorRenderer operator={ node.operator } /> : null }
     </span>
   </NodeWrapper>
 )
@@ -138,9 +147,9 @@ export const UnaryExpressionRenderer = ({ node }: { node: babylon.UnaryExpressio
 export const UpdateExpressionRenderer = ({ node }: { node: babylon.UpdateExpression }) => (
   <NodeWrapper>
     <span>
-      { node.prefix ? <OperatorRenderer>{ node.operator }</OperatorRenderer> : null }
+      { node.prefix ? <OperatorRenderer operator={ node.operator } /> : null }
       <NodeRenderer node={ node.argument } />
-      { !node.prefix ? <OperatorRenderer>{ node.operator }</OperatorRenderer> : null }
+      { !node.prefix ? <OperatorRenderer operator={ node.operator } /> : null }
     </span>
   </NodeWrapper>
 )
@@ -149,7 +158,7 @@ export const BinaryExpressionRenderer = ({ node }: { node: babylon.BinaryExpress
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.left } />
-      <OperatorRenderer>{ node.operator }</OperatorRenderer>
+      <OperatorRenderer operator={ node.operator } />
       <NodeRenderer node={ node.right } />
     </span>
   </NodeWrapper>
@@ -160,7 +169,7 @@ export const AssignmentExpressionRenderer = ({ node }: { node: babylon.Assignmen
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.left } />
-      <OperatorRenderer>{ node.operator }</OperatorRenderer>
+      <OperatorRenderer operator={ node.operator } />
       <NodeRenderer node={ node.right } />
     </span>
   </NodeWrapper>
@@ -170,7 +179,7 @@ export const LogicalExpressionRenderer = ({ node }: { node: babylon.LogicalExpre
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.left } />
-      <OperatorRenderer>{ node.operator }</OperatorRenderer>
+      <OperatorRenderer operator={ node.operator } />
       <NodeRenderer node={ node.right } />
     </span>
   </NodeWrapper>
@@ -179,7 +188,7 @@ export const LogicalExpressionRenderer = ({ node }: { node: babylon.LogicalExpre
 export const SpreadElementRenderer = ({ node }: { node: babylon.SpreadElement }) => (
   <NodeWrapper>
     <span>
-      <OperatorRenderer>...</OperatorRenderer>
+      <PunctuationRenderer punctuation="..." />
       <NodeRenderer node={ node.argument } />
     </span>
   </NodeWrapper>
@@ -190,7 +199,7 @@ export const MemberExpressionRenderer = ({ node }: { node: babylon.MemberExpress
     <span>
       <NodeRenderer node={ node.object } />
       { node.computed ? <BracketRenderer bracket="[" /> : null }
-      { node.computed ? null : <OperatorWithoutSpaceRenderer>.</OperatorWithoutSpaceRenderer> }
+      { node.computed ? null : <PunctuationRenderer punctuation="." /> }
       <NodeRenderer node={ node.property } />
       { node.computed ? <BracketRenderer bracket="]" /> : null }
     </span>
@@ -201,7 +210,7 @@ export const BindExpressionRenderer = ({ node }: { node: babylon.BindExpression 
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.object } />
-      <OperatorRenderer>::</OperatorRenderer>
+      <PunctuationRenderer punctuation="::" />
       <NodeRenderer node={ node.callee } />
     </span>
   </NodeWrapper>
@@ -211,9 +220,9 @@ export const ConditionalExpressionRenderer = ({ node }: { node: babylon.Conditio
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.test } />
-      <OperatorRenderer>?</OperatorRenderer>
+      <PunctuationRenderer punctuation="?" />
       <NodeRenderer node={ node.consequent } />
-      <OperatorRenderer>:</OperatorRenderer>
+      <PunctuationRenderer punctuation=":" />
       <NodeRenderer node={ node.alternate } />
     </span>
   </NodeWrapper>
@@ -225,12 +234,7 @@ export const CallExpressionRenderer = ({ node }: { node: babylon.CallExpression 
     <span>
       <NodeRenderer node={ node.callee } />
       <BracketRenderer bracket="(" />
-      { node.arguments.map((argument, i) => (
-        <span key={ i }>
-          <NodeRenderer node={ argument } />
-          <CommaRenderer />
-        </span>
-      )) }
+      <CommaSeparatedList elements={ node.arguments } inline />
       <BracketRenderer bracket=")" />
     </span>
   </NodeWrapper>
@@ -248,12 +252,9 @@ export const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression })
   </NodeWrapper>
 )
 
-// WIP. put comma.
 export const SequenceExpressionRenderer = ({ node }: { node: babylon.SequenceExpression }) => (
   <NodeWrapper>
-    <span>
-      { node.expressions.map((expression, i) => <NodeRenderer key={ i } node={ expression } />) }
-    </span>
+    <CommaSeparatedList elements={ node.expressions } inline />
   </NodeWrapper>
 )
 

@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, BracketRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer } from './JavaScriptASTRenderer.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
 export const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStatement }) => (
@@ -14,7 +14,7 @@ export const ExpressionStatementRenderer = ({ node }: { node: babylon.Expression
 
 export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement }) => (
   <NodeWrapper>
-    <span className="block-statement">
+    <span>
       <BracketRenderer bracket="{" />
       <div className="block-body">
         { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
@@ -27,7 +27,7 @@ export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement 
 
 export const EmptyStatementRenderer = ({ node }: { node: babylon.EmptyStatement }) => (
   <NodeWrapper>
-    <OperatorRenderer>;</OperatorRenderer>
+    <PunctuationRenderer punctuation=";" />
   </NodeWrapper>
 )
 
@@ -62,7 +62,7 @@ export const LabeledStatementRenderer = ({ node }: { node: babylon.LabeledStatem
   <NodeWrapper>
     <div>
       <NodeRenderer node={ node.label } />
-      <span>:</span>
+      <PunctuationRenderer punctuation=":" />
       <NodeRenderer node={ node.body } />
     </div>
   </NodeWrapper>
@@ -127,7 +127,7 @@ export const SwitchCaseRenderer = ({ node }: { node: babylon.SwitchCase }) => (
     <div>
       { node.test !== null ? <reservedKeywords.Case /> : <reservedKeywords.Default /> }
       <NodeRenderer node={ node.test } />
-      <span>:</span>
+      <PunctuationRenderer punctuation=":" />
       <div className="case-body">
         { node.consequent.map((statement, i) => <NodeRenderer key={ i } node={ statement } />) }
       </div>
@@ -199,9 +199,9 @@ export const ForStatementRenderer = ({ node }: { node: babylon.ForStatement }) =
       <reservedKeywords.For />
       <BracketRenderer bracket="(" />
       <NodeRenderer node={ node.init } />
-      <OperatorRenderer>;</OperatorRenderer>
+      <PunctuationRenderer punctuation=";" />
       <NodeRenderer node={ node.test } />
-      <OperatorRenderer>;</OperatorRenderer>
+      <PunctuationRenderer punctuation=";" />
       <NodeRenderer node={ node.update } />
       <BracketRenderer bracket=")" />
       <NodeRenderer node={ node.body } />
