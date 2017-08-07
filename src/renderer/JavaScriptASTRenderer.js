@@ -238,7 +238,7 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
     children = <expressions.LogicalExpressionRenderer node={ node } />
   }
 
-  else if (t.isSpreadElement(node)) {
+  else if (t.isSpreadElement(node) || t.isSpreadProperty(node)) {
     children = <expressions.SpreadElementRenderer node={ node } />
   }
 
