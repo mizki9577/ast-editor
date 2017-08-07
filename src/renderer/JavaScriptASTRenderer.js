@@ -427,17 +427,27 @@ export const OperatorWithoutSpaceRenderer = ({ children }: { children: string })
   </span>
 )
 
-export const OpenBracketRenderer = ({ children }: { children: string }) => (
-  <span className="open-bracket ms-fontColor-themeSecondary">
-    { children }
-  </span>
-)
+export const BracketRenderer = ({ bracket }: { bracket: string }) => {
+  switch (bracket) {
+    case '(':
+      return <span className="open-bracket ms-fontColor-themeSecondary">(</span>
 
-export const ClosingBracketRenderer = ({ children }: { children: string }) => (
-  <span className="closing-bracket ms-fontColor-themeSecondary">
-    { children }
-  </span>
-)
+    case '[':
+      return <span className="open-bracket ms-fontColor-themeSecondary">[</span>
+
+    case '{':
+      return <span className="open-bracket ms-fontColor-themeSecondary">{ '{' }</span>
+
+    case ')':
+      return <span className="close-bracket ms-fontColor-themeSecondary">)</span>
+
+    case ']':
+      return <span className="close-bracket ms-fontColor-themeSecondary">]</span>
+
+    case '}':
+      return <span className="close-bracket ms-fontColor-themeSecondary">{ '}' }</span>
+  }
+}
 
 export const CommaRenderer = () => (
   <span className="comma ms-fontColor-themeSecondary">,</span>

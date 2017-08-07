@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, ReservedKeywordRenderer, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, ReservedKeywordRenderer, OperatorRenderer, BracketRenderer } from './JavaScriptASTRenderer.js'
 import { FunctionDeclarationRenderer, ClassDeclarationRenderer } from './declaration-renderers.js'
 
 export const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclaration }) => (
@@ -18,11 +18,11 @@ export const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclar
 export const ImportSpecifierRenderer = ({ node }: { node: babylon.ImportSpecifier }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
+      <BracketRenderer bracket="{" />
       <NodeRenderer node={ node.imported } />
       <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
       <NodeRenderer node={ node.local } />
-      <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
+      <BracketRenderer bracket="}" />
     </span>
   </NodeWrapper>
 )

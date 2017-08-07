@@ -1,15 +1,15 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, OperatorRenderer, OpenBracketRenderer, ClosingBracketRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, OperatorRenderer, BracketRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
 
 export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentProperty }) => (
   <NodeWrapper>
     <span>
       { node.decorators ? node.decorators.map((decorator, i) => <NodeRenderer key={ i } node={ decorator } />) : null }
-      { node.computed ? <OpenBracketRenderer>[</OpenBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
-      { node.computed ? <ClosingBracketRenderer>]</ClosingBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="]" /> : null }
       { node.shorthand ? null : <OperatorRenderer>:</OperatorRenderer> }
       { node.shorthand ? null : <NodeRenderer node={ node.value } /> }
       <CommaRenderer />
@@ -20,11 +20,11 @@ export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentP
 export const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
+      <BracketRenderer bracket="{" />
       <div className="object-body">
         { node.properties.map((property, i) => <NodeRenderer key={ i } node={ property } />) }
       </div>
-      <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
+      <BracketRenderer bracket="}" />
     </span>
   </NodeWrapper>
 )
@@ -32,9 +32,9 @@ export const ObjectPatternRenderer = ({ node }: { node: babylon.ObjectPattern })
 export const ArrayPatternRenderer = ({ node }: { node: babylon.ArrayPattern }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>[</OpenBracketRenderer>
+      <BracketRenderer bracket="[" />
       { node.elements.map((element, i) => <NodeRenderer key={ i } node={ element } />) }
-      <ClosingBracketRenderer>]</ClosingBracketRenderer>
+      <BracketRenderer bracket="]" />
     </span>
   </NodeWrapper>
 )

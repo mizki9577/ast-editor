@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, ReservedKeywordRenderer, OpenBracketRenderer, ClosingBracketRenderer, OperatorRenderer, OperatorWithoutSpaceRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, ReservedKeywordRenderer, BracketRenderer, OperatorRenderer, OperatorWithoutSpaceRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
 
 export const SuperRenderer = ({ node }: { node: babylon.Super }) => (
@@ -25,9 +25,9 @@ export const ThisExpressionRenderer = ({ node }: { node: babylon.ThisExpression 
 export const ArrowFunctionExpressionRenderer = ({ node }: { node: babylon.ArrowFunctionExpression }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>(</OpenBracketRenderer>
+      <BracketRenderer bracket="(" />
       { node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }
-      <ClosingBracketRenderer>)</ClosingBracketRenderer>
+      <BracketRenderer bracket=")" />
       <OperatorRenderer>=></OperatorRenderer>
       <NodeRenderer node={ node.body } />
     </span>
@@ -56,14 +56,14 @@ export const AwaitExpressionRenderer = ({ node }: { node: babylon.AwaitExpressio
 export const ArrayExpressionRenderer = ({ node }: { node: babylon.ArrayExpression }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>[</OpenBracketRenderer>
+      <BracketRenderer bracket="[" />
       { node.elements.map((element, i) => (
         <span key={ i }>
           <NodeRenderer node={ element } />
           <CommaRenderer />
         </span>
       )) }
-      <ClosingBracketRenderer>]</ClosingBracketRenderer>
+      <BracketRenderer bracket="]" />
     </span>
   </NodeWrapper>
 )
@@ -71,7 +71,7 @@ export const ArrayExpressionRenderer = ({ node }: { node: babylon.ArrayExpressio
 export const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpression }) => (
   <NodeWrapper>
     <span>
-      <OpenBracketRenderer>{ '{' }</OpenBracketRenderer>
+      <BracketRenderer bracket="{" />
       <div className="object-body">
         { node.properties.map((property, i) => (
           <div key={ i }>
@@ -79,7 +79,7 @@ export const ObjectExpressionRenderer = ({ node }: { node: babylon.ObjectExpress
           </div>
         )) }
       </div>
-      <ClosingBracketRenderer>{ '}' }</ClosingBracketRenderer>
+      <BracketRenderer bracket="}" />
     </span>
   </NodeWrapper>
 )
@@ -88,9 +88,9 @@ export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty 
   <NodeWrapper>
     <div>
       { node.decorators ? node.decorators.map((decorator, i) => <NodeRenderer key={ i } node={ decorator } />) : null }
-      { node.computed ? <OpenBracketRenderer>[</OpenBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
-      { node.computed ? <ClosingBracketRenderer>]</ClosingBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="]" /> : null }
       { node.shorthand ? null : <OperatorRenderer>:</OperatorRenderer> }
       { node.shorthand ? null : <NodeRenderer node={ node.value } /> }
       <CommaRenderer />
@@ -104,13 +104,13 @@ export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) =
       { node.async ? <ReservedKeywordRenderer>async</ReservedKeywordRenderer> : null }
       { node.generator ? <OperatorRenderer>*</OperatorRenderer> : null }
       { node.kind !== 'method' ? <ReservedKeywordRenderer>node.kind</ReservedKeywordRenderer> : null }
-      { node.computed ? <OpenBracketRenderer>[</OpenBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
-      { node.computed ? <ClosingBracketRenderer>]</ClosingBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="]" /> : null }
 
-      <OpenBracketRenderer>(</OpenBracketRenderer>
+      <BracketRenderer bracket="(" />
       { node.params.map((param, i) => <NodeRenderer key={ i } node={ param } />) }
-      <ClosingBracketRenderer>)</ClosingBracketRenderer>
+      <BracketRenderer bracket=")" />
       <NodeRenderer node={ node.body } />
     </span>
   </NodeWrapper>
@@ -188,10 +188,10 @@ export const MemberExpressionRenderer = ({ node }: { node: babylon.MemberExpress
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.object } />
-      { node.computed ? <OpenBracketRenderer>[</OpenBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="[" /> : null }
       { node.computed ? null : <OperatorWithoutSpaceRenderer>.</OperatorWithoutSpaceRenderer> }
       <NodeRenderer node={ node.property } />
-      { node.computed ? <ClosingBracketRenderer>]</ClosingBracketRenderer> : null }
+      { node.computed ? <BracketRenderer bracket="]" /> : null }
     </span>
   </NodeWrapper>
 )
@@ -223,14 +223,14 @@ export const CallExpressionRenderer = ({ node }: { node: babylon.CallExpression 
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.callee } />
-      <OpenBracketRenderer>(</OpenBracketRenderer>
+      <BracketRenderer bracket="(" />
       { node.arguments.map((argument, i) => (
         <span key={ i }>
           <NodeRenderer node={ argument } />
           <CommaRenderer />
         </span>
       )) }
-      <ClosingBracketRenderer>)</ClosingBracketRenderer>
+      <BracketRenderer bracket=")" />
     </span>
   </NodeWrapper>
 )
@@ -240,9 +240,9 @@ export const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression })
     <span>
       <ReservedKeywordRenderer>new</ReservedKeywordRenderer>
       <NodeRenderer node={ node.callee } />
-      <OpenBracketRenderer>(</OpenBracketRenderer>
+      <BracketRenderer bracket="(" />
       { node.arguments.map((argument, i) => <NodeRenderer key={ i } node={ argument } />) }
-      <ClosingBracketRenderer>)</ClosingBracketRenderer>
+      <BracketRenderer bracket=")" />
     </span>
   </NodeWrapper>
 )
