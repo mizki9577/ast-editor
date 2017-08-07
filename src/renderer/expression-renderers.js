@@ -47,6 +47,7 @@ export const ThisExpressionRenderer = ({ node }: { node: babylon.ThisExpression 
 export const ArrowFunctionExpressionRenderer = ({ node }: { node: babylon.ArrowFunctionExpression }) => (
   <NodeWrapper>
     <span>
+      { node.async ? <reservedKeywords.Async /> : null }
       <BracketRenderer bracket="(" />
       <CommaSeparatedList elements={ node.params } inline />
       <BracketRenderer bracket=")" />
