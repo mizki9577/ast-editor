@@ -1,24 +1,25 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, ReservedKeywordRenderer, BracketRenderer, OperatorRenderer, OperatorWithoutSpaceRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, BracketRenderer, OperatorRenderer, OperatorWithoutSpaceRenderer, CommaRenderer } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
+import * as reservedKeywords from './reserved-keywords.js'
 
 export const SuperRenderer = ({ node }: { node: babylon.Super }) => (
   <NodeWrapper>
-    <ReservedKeywordRenderer>super</ReservedKeywordRenderer>
+    <reservedKeywords.Super />
   </NodeWrapper>
 )
 
 export const ImportRenderer = ({ node }: { node: babylon.Import }) => (
   <NodeWrapper>
-    <ReservedKeywordRenderer>import</ReservedKeywordRenderer>
+    <reservedKeywords.Import />
   </NodeWrapper>
 )
 
 export const ThisExpressionRenderer = ({ node }: { node: babylon.ThisExpression }) => (
   <NodeWrapper>
-    <ReservedKeywordRenderer>this</ReservedKeywordRenderer>
+    <reservedKeywords.This />
   </NodeWrapper>
 )
 
@@ -37,7 +38,7 @@ export const ArrowFunctionExpressionRenderer = ({ node }: { node: babylon.ArrowF
 export const YieldExpressionRenderer = ({ node }: { node: babylon.YieldExpression }) => (
   <NodeWrapper>
     <span>
-      <ReservedKeywordRenderer>yield</ReservedKeywordRenderer>
+      <reservedKeywords.Yield />
       { node.delegate ? <OperatorRenderer>*</OperatorRenderer> : null }
       <NodeRenderer node={ node.argument } />
     </span>
@@ -47,7 +48,7 @@ export const YieldExpressionRenderer = ({ node }: { node: babylon.YieldExpressio
 export const AwaitExpressionRenderer = ({ node }: { node: babylon.AwaitExpression }) => (
   <NodeWrapper>
     <span>
-      <ReservedKeywordRenderer>await</ReservedKeywordRenderer>
+      <reservedKeywords.Await />
       <NodeRenderer node={ node.argument } />
     </span>
   </NodeWrapper>
@@ -101,9 +102,9 @@ export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty 
 export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) => (
   <NodeWrapper>
     <span>
-      { node.async ? <ReservedKeywordRenderer>async</ReservedKeywordRenderer> : null }
+      { node.async ? <reservedKeywords.Async /> : null }
       { node.generator ? <OperatorRenderer>*</OperatorRenderer> : null }
-      { node.kind !== 'method' ? <ReservedKeywordRenderer>node.kind</ReservedKeywordRenderer> : null }
+      { node.kind !== 'method' ? <span>node.kind</span> : null }
       { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
       { node.computed ? <BracketRenderer bracket="]" /> : null }
@@ -238,7 +239,7 @@ export const CallExpressionRenderer = ({ node }: { node: babylon.CallExpression 
 export const NewExpressionRenderer = ({ node }: { node: babylon.NewExpression }) => (
   <NodeWrapper>
     <span>
-      <ReservedKeywordRenderer>new</ReservedKeywordRenderer>
+      <reservedKeywords.New />
       <NodeRenderer node={ node.callee } />
       <BracketRenderer bracket="(" />
       { node.arguments.map((argument, i) => <NodeRenderer key={ i } node={ argument } />) }
@@ -259,7 +260,7 @@ export const SequenceExpressionRenderer = ({ node }: { node: babylon.SequenceExp
 export const DoExpressionRenderer = ({ node }: { node: babylon.DoExpression }) => (
   <NodeWrapper>
     <span>
-      <ReservedKeywordRenderer>do</ReservedKeywordRenderer>
+      <reservedKeywords.Do />
       <NodeRenderer node={ node.body } />
     </span>
   </NodeWrapper>

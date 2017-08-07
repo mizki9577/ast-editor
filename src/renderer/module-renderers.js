@@ -1,15 +1,16 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, ReservedKeywordRenderer, OperatorRenderer, BracketRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, OperatorRenderer, BracketRenderer } from './JavaScriptASTRenderer.js'
 import { FunctionDeclarationRenderer, ClassDeclarationRenderer } from './declaration-renderers.js'
+import * as reservedKeywords from './reserved-keywords.js'
 
 export const ImportDeclarationRenderer = ({ node }: { node: babylon.ImportDeclaration }) => (
   <NodeWrapper>
     <div>
-      <ReservedKeywordRenderer>import</ReservedKeywordRenderer>
+      <reservedKeywords.Import />
       { node.specifiers.map((specifier, i) => <NodeRenderer key={ i } node={ specifier } />) }
-      <ReservedKeywordRenderer>from</ReservedKeywordRenderer>
+      <reservedKeywords.From />
       <NodeRenderer node={ node.source } />
     </div>
   </NodeWrapper>
@@ -20,7 +21,7 @@ export const ImportSpecifierRenderer = ({ node }: { node: babylon.ImportSpecifie
     <span>
       <BracketRenderer bracket="{" />
       <NodeRenderer node={ node.imported } />
-      <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
+      <reservedKeywords.As />
       <NodeRenderer node={ node.local } />
       <BracketRenderer bracket="}" />
     </span>
@@ -37,7 +38,7 @@ export const ImportNamespaceSpecifierRenderer = ({ node }: { node: babylon.Impor
   <NodeWrapper>
     <span>
       <OperatorRenderer>*</OperatorRenderer>
-      <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
+      <reservedKeywords.As />
       <NodeRenderer node={ node.local } />
     </span>
   </NodeWrapper>
@@ -46,10 +47,10 @@ export const ImportNamespaceSpecifierRenderer = ({ node }: { node: babylon.Impor
 export const ExportNamedDeclarationRenderer = ({ node }: { node: babylon.ExportNamedDeclaration }) => (
   <NodeWrapper>
     <div className="export-named-declaration">
-      <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
+      <reservedKeywords.Export />
       <NodeRenderer node={ node.declaration } />
       { node.specifiers.map((specifier, i) => <NodeRenderer key={ i } node={ specifier } />) }
-      { node.source !== null ? <ReservedKeywordRenderer>from</ReservedKeywordRenderer> : null }
+      { node.source !== null ? <reservedKeywords.From /> : null }
       <NodeRenderer node={ node.source } />
     </div>
   </NodeWrapper>
@@ -59,7 +60,7 @@ export const ExportSpecifierRenderer = ({ node }: { node: babylon.ExportSpecifie
   <NodeWrapper>
     <span>
       <NodeRenderer node={ node.local } />
-      <ReservedKeywordRenderer>as</ReservedKeywordRenderer>
+      <reservedKeywords.As />
       <NodeRenderer node={ node.exported } />
     </span>
   </NodeWrapper>
@@ -68,8 +69,8 @@ export const ExportSpecifierRenderer = ({ node }: { node: babylon.ExportSpecifie
 export const ExportDefaultDeclarationRenderer = ({ node }: { node: babylon.ExportDefaultDeclaration }) => (
   <NodeWrapper>
     <div>
-      <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
-      <ReservedKeywordRenderer>default</ReservedKeywordRenderer>
+      <reservedKeywords.Export />
+      <reservedKeywords.Default />
       <NodeRenderer node={ node.declaration } />
     </div>
   </NodeWrapper>
@@ -94,9 +95,9 @@ const OptClassDeclarationRenderer = ({ node }: { node: babylon.OptClassDeclarati
 export const ExportAllDeclarationRenderer = ({ node }: { node: babylon.ExportAllDeclaration }) => (
   <NodeWrapper>
     <div>
-      <ReservedKeywordRenderer>export</ReservedKeywordRenderer>
+      <reservedKeywords.Export />
       <OperatorRenderer>*</OperatorRenderer>
-      <ReservedKeywordRenderer>from</ReservedKeywordRenderer>
+      <reservedKeywords.From />
       <NodeRenderer node={ node.source } />
     </div>
   </NodeWrapper>

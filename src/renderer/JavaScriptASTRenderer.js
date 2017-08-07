@@ -409,12 +409,6 @@ const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
 
 //
 
-export const ReservedKeywordRenderer = ({ children }: { children: string }) => (
-  <span className="keyword ms-fontColor-themePrimary">
-    { children }
-  </span>
-)
-
 export const OperatorRenderer = ({ children }: { children: string }) => (
   <span className="operator ms-fontColor-themeSecondary">
     { children }

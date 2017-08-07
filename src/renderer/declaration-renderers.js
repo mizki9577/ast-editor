@@ -1,8 +1,9 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, ReservedKeywordRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, OperatorRenderer } from './JavaScriptASTRenderer.js'
 import { ClassRenderer } from './class-renderers.js'
+import * as reservedKeywords from './reserved-keywords.js'
 
 export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDeclaration }) => (
   <NodeWrapper>
@@ -15,7 +16,10 @@ export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDe
 export const VariableDeclarationRenderer = ({ node }: { node: babylon.VariableDeclaration }) => (
   <NodeWrapper>
     <div className="variable-declaration">
-      <ReservedKeywordRenderer>{ node.kind /* var, let , const */ }</ReservedKeywordRenderer>
+      { node.kind === 'var'   ? <reservedKeywords.Var /> :
+        node.kind === 'let'   ? <reservedKeywords.Let /> :
+        node.kind === 'const' ? <reservedKeywords.Const /> : null
+      }
       { node.declarations.map((declaration, i) => <VariableDeclaratorRenderer key={ i } node={ declaration } />) }
     </div>
   </NodeWrapper>
