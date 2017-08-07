@@ -111,10 +111,11 @@ export const ObjectPropertyRenderer = ({ node }: { node: babylon.ObjectProperty 
 
 export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) => (
   <NodeWrapper>
-    <span>
+    <div>
       { node.async ? <reservedKeywords.Async /> : null }
       { node.generator ? <PunctuationRenderer punctuation="*" /> : null }
-      { node.kind !== 'method' ? <PunctuationRenderer punctuation="method" /> : null }
+      { node.kind === 'get' ? <PunctuationRenderer punctuation="get" /> :
+        node.kind === 'set' ? <PunctuationRenderer punctuation="set" /> : null }
       { node.computed ? <BracketRenderer bracket="[" /> : null }
       <NodeRenderer node={ node.key } />
       { node.computed ? <BracketRenderer bracket="]" /> : null }
@@ -123,7 +124,7 @@ export const ObjectMethodRenderer = ({ node }: { node: babylon.ObjectMethod }) =
       <CommaSeparatedList elements={ node.params } inline />
       <BracketRenderer bracket=")" />
       <NodeRenderer node={ node.body } />
-    </span>
+    </div>
   </NodeWrapper>
 )
 
