@@ -17,7 +17,7 @@ type File = babylon.Node & {
   type: 'File',
 }
 
-export const NodeWrapper = ({ children }: { children: React.Element<*> }) => {
+export const NodeWrapper = ({ children }: { children: React.Element<any> }) => {
   const newProps = {
     className: (children.props.className !== null ? children.props.className : ''),
   }

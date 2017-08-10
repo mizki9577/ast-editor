@@ -6,15 +6,13 @@ import renderBabylonAST from './JavaScriptASTRenderer.js'
 
 const { ipcRenderer } = require('electron')
 
-import type { Node as babylonNode } from 'babylon'
-
-type State = {|
-  ast: babylonNode,
-  focusedNode: babylonNode,
-|}
+import type { Node } from 'babylon'
 
 class AstEditor extends React.Component {
-  state: State
+  state: {|
+    ast: Node,
+    focusedNode: Node,
+  |}
 
   constructor() {
     super()
