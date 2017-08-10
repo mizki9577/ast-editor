@@ -6,40 +6,31 @@ import { ClassRenderer } from './class-renderers.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
 export const FunctionDeclarationRenderer = ({ node }: { node: babylon.FunctionDeclaration }) => (
-  <NodeWrapper>
-    <div>
-      <FunctionRenderer node={ node } />
-    </div>
+  <NodeWrapper block>
+    <FunctionRenderer node={ node } />
   </NodeWrapper>
 )
 
 export const VariableDeclarationRenderer = ({ node }: { node: babylon.VariableDeclaration }) => (
-  <NodeWrapper>
-    <div className="variable-declaration">
-      { node.kind === 'var'   ? <reservedKeywords.Var /> :
-        node.kind === 'let'   ? <reservedKeywords.Let /> :
-        node.kind === 'const' ? <reservedKeywords.Const /> : null
-      }
-      { node.declarations.map((declaration, i) => <VariableDeclaratorRenderer key={ i } node={ declaration } />) }
-    </div>
+  <NodeWrapper block className="variable-declaration">
+    { node.kind === 'var'   ? <reservedKeywords.Var /> :
+      node.kind === 'let'   ? <reservedKeywords.Let /> :
+      node.kind === 'const' ? <reservedKeywords.Const /> : null }
+    { node.declarations.map((declaration, i) => <VariableDeclaratorRenderer key={ i } node={ declaration } />) }
   </NodeWrapper>
 )
 
 export const VariableDeclaratorRenderer = ({ node }: { node: babylon.VariableDeclarator }) => (
-  <NodeWrapper>
-    <span>
-      <NodeRenderer node={ node.id } />
-      { node.init !== null ? <PunctuationRenderer punctuation="=" /> : null }
-      <NodeRenderer node={ node.init } />
-    </span>
+  <NodeWrapper inline>
+    <NodeRenderer node={ node.id } />
+    { node.init !== null ? <PunctuationRenderer punctuation="=" /> : null }
+    <NodeRenderer node={ node.init } />
   </NodeWrapper>
 )
 
 export const ClassDeclarationRenderer = ({ node }: { node: babylon.ClassDeclaration }) => (
-  <NodeWrapper>
-    <div>
-      <ClassRenderer node={ node } />
-    </div>
+  <NodeWrapper block>
+    <ClassRenderer node={ node } />
   </NodeWrapper>
 )
 

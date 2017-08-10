@@ -17,14 +17,22 @@ type File = babylon.Node & {
   type: 'File',
 }
 
-export const NodeWrapper = ({ children }: { children: React.Element<any> }) => {
-  const newProps = {
-    className: (children.props.className !== null ? children.props.className : ''),
-  }
-  const props = Object.assign({}, children.props, newProps)
-  const newChildren = React.cloneElement(children, props, children.props.children)
+export const NodeWrapper = ({ className='', inline=false, block=false, children }
+  : { className?: string, inline?: boolean, block?: boolean, children: React.Element<any>[] }) => {
+  if (inline === block) return undefined
 
-  return newChildren
+  const props = {
+    className: className,
+  }
+
+  const Wrapper = inline ? 'span' : block ? 'div' : null
+  if (Wrapper === null) return undefined
+
+  return (
+    <Wrapper {...props}>
+      { children }
+    </Wrapper>
+  )
 }
 
 export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
@@ -354,57 +362,47 @@ export const NodeRenderer = ({ node }: { node: babylon.Node }) => {
 }
 
 const UnknownNodeRenderer = ({ node }: { node: babylon.Node }) => (
-  <NodeWrapper>
-    <span className="ms-fontColor-neutralLight ms-bgColor-red">[UNKNOWN: { node.type }]</span>
+  <NodeWrapper inline className="ms-fontColor-neutralLight ms-bgColor-red">
+    [UNKNOWN: { node.type }]
   </NodeWrapper>
 )
 
 const FileRenderer = ({ node }: { node: File }) => (
-  <NodeWrapper>
-    <div>
-      <NodeRenderer node={ node.program } />
-    </div>
+  <NodeWrapper block>
+    <NodeRenderer node={ node.program } />
   </NodeWrapper>
 )
 
 const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
-  <NodeWrapper>
-    <span className="identifier ms-fontColor-neutralLight">
-      { node.name }
-    </span>
+  <NodeWrapper inline className="identifier ms-fontColor-neutralLight">
+    { node.name }
   </NodeWrapper>
 )
 
 const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
-  <NodeWrapper>
-    <div>
-      { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
-      { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
-    </div>
+  <NodeWrapper block>
+    { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
+    { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
   </NodeWrapper>
 )
 
 export const FunctionRenderer = ({ node }: { node: babylon.Function }) => (
-  <NodeWrapper>
-    <span>
-      { node.async ? <reservedKeywords.Async /> : null }
-      <reservedKeywords.Function />
-      { node.generator ? <PunctuationRenderer punctuation="*" /> : null }
-      <NodeRenderer node={ node.id } />
-      <BracketRenderer bracket="(" />
-      <CommaSeparatedList elements={ node.params } inline />
-      <BracketRenderer bracket=")" />
-      <NodeRenderer node={ node.body } />
-    </span>
+  <NodeWrapper inline>
+    { node.async ? <reservedKeywords.Async /> : null }
+    <reservedKeywords.Function />
+    { node.generator ? <PunctuationRenderer punctuation="*" /> : null }
+    <NodeRenderer node={ node.id } />
+    <BracketRenderer bracket="(" />
+    <CommaSeparatedList elements={ node.params } inline />
+    <BracketRenderer bracket=")" />
+    <NodeRenderer node={ node.body } />
   </NodeWrapper>
 )
 
 const DecoratorRenderer = ({ node }: { node: babylon.Decorator }) => (
-  <NodeWrapper>
-    <div>
-      <PunctuationRenderer punctuation="@" />
-      <NodeRenderer node={ node.expression } />
-    </div>
+  <NodeWrapper block>
+    <PunctuationRenderer punctuation="@" />
+    <NodeRenderer node={ node.expression } />
   </NodeWrapper>
 )
 
