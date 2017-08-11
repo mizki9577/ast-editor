@@ -20,7 +20,6 @@
     "webpack": "^3.4.1"
   },
   "dependencies": {
-    "babel-traverse": "^6.25.0",
     "babylon": "^6.17.4",
     "circular-json": "^0.3.3",
     "office-ui-fabric-react": "^4.30.0",
