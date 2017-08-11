@@ -14,7 +14,7 @@ export const BlockStatementRenderer = ({ node }: { node: babylon.BlockStatement 
   <NodeWrapper inline className="block-statement">
     <BracketRenderer bracket="{" />
     <div className="block-body">
-      { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
+      { Array.isArray(node.directives) ? node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) : null }
       { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
     </div>
     <BracketRenderer bracket="}" />

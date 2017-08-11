@@ -381,7 +381,7 @@ const IdentifierRenderer = ({ node }: { node: babylon.Identifier }) => (
 
 const ProgramRenderer = ({ node }: { node: babylon.Program }) => (
   <NodeWrapper block>
-    { node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) }
+    { Array.isArray(node.directive) ? node.directives.map((directive, i) => <NodeRenderer key={ i } node={ directive } />) : null }
     { node.body.map((child, i) => <NodeRenderer key={ i } node={ child } />) }
   </NodeWrapper>
 )
