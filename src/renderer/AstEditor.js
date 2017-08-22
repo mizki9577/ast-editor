@@ -9,12 +9,12 @@ import * as actions from './actions.js'
 
 import convertFluxContainer from './convertFluxContainer.js'
 
-class AstEditor extends React.Component {
-  state: {|
-    ast: any,
-    focusedNode: any,
-  |}
+type TState = {|
+  ast: any,
+  focusedNode: any,
+|}
 
+class AstEditor extends React.Component<null, TState> {
   static getStores() {
     return [store]
   }

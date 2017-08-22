@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 
-import React from 'react'
+import * as React from 'react'
 import * as t from 'babel-types'
 
 import * as literals from './literal-renderers.js'
@@ -18,7 +18,7 @@ type File = babylon.Node & {
 }
 
 export const NodeWrapper = ({ className='', inline=false, block=false, children }
-  : { className?: string, inline?: boolean, block?: boolean, children: React.Element<any>[] }) => {
+  : { className?: string, inline?: boolean, block?: boolean, children: React.Node }) => {
   if (inline === block) return undefined
 
   const props = {
