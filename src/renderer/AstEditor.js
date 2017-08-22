@@ -1,10 +1,13 @@
 // @flow
 import React from 'react'
+import { Container } from 'flux/utils'
 import { Fabric } from 'office-ui-fabric-react'
-import * as circularJson from 'circular-json'
-import renderJavaScriptAST from './ast_renderers/javascript/index.js'
 
-const { ipcRenderer } = require('electron')
+import renderJavaScriptAST from './ast_renderers/javascript/index.js'
+import store from './store.js'
+import * as actions from './actions.js'
+
+import convertFluxContainer from './convertFluxContainer.js'
 
 class AstEditor extends React.Component {
   state: {|
@@ -12,21 +15,16 @@ class AstEditor extends React.Component {
     focusedNode: any,
   |}
 
-  constructor() {
-    super()
+  static getStores() {
+    return [store]
+  }
 
-    this.state = {
-      ast: null,
-      focusedNode: null,
-    }
+  static calculateState() {
+    return store.getState()
   }
 
   componentDidMount() {
-    ipcRenderer.on('ast-parsed', (ev, astJson) => {
-      const ast = circularJson.parse(astJson)
-      this.setState({ ast, focusedNode: ast })
-    })
-    ipcRenderer.send('ready')
+    actions.ready()
   }
 
   handleKeyDown(ev: KeyboardEvent) {
@@ -67,5 +65,5 @@ class AstEditor extends React.Component {
   }
 }
 
-export default AstEditor
+export default Container.create(convertFluxContainer(AstEditor))
 // vim: set ts=2 sw=2 et:
