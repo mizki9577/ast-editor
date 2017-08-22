@@ -1,5 +1,5 @@
 const { DefinePlugin } = require('webpack')
-const BabiliPlugin = require("babili-webpack-plugin")
+const BabelMinifyPlugin = require("babel-minify-webpack-plugin")
 
 module.exports = (env) => {
   const rules = [
@@ -25,7 +25,7 @@ module.exports = (env) => {
   ]
 
   if (env.production) {
-    plugins.push(new BabiliPlugin())
+    plugins.push(new BabelMinifyPlugin())
   }
 
   return {

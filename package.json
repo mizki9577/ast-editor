@@ -13,11 +13,11 @@
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "babili-webpack-plugin": "^0.1.2",
     "electron": "^1.6.11",
-    "flow-bin": "^0.52.0",
+    "flow-bin": "^0.53.1",
     "webpack": "^3.4.1"
   },
   "dependencies": {
