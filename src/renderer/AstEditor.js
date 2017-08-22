@@ -2,16 +2,14 @@
 import React from 'react'
 import { Fabric } from 'office-ui-fabric-react'
 import * as circularJson from 'circular-json'
-import renderBabylonAST from './JavaScriptASTRenderer.js'
+import renderJavaScriptAST from './ast_renderers/javascript/index.js'
 
 const { ipcRenderer } = require('electron')
 
-import type { Node } from 'babylon'
-
 class AstEditor extends React.Component {
   state: {|
-    ast: Node,
-    focusedNode: Node,
+    ast: any,
+    focusedNode: any,
   |}
 
   constructor() {
@@ -62,7 +60,7 @@ class AstEditor extends React.Component {
         <div className="renderer-root ms-bgColor-neutralDark"
           tabIndex={ 0 }
           onKeyDown={ ev => this.handleKeyDown(ev) }>
-          { renderBabylonAST(this.state.ast) }
+          { renderJavaScriptAST(this.state.ast) }
         </div>
       </Fabric>
     )

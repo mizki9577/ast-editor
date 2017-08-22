@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer, CommaSeparatedList } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer, CommaSeparatedList } from './index.js'
 
 export const AssignmentPropertyRenderer = ({ node }: { node: babylon.AssignmentProperty }) => (
   <NodeWrapper inline>

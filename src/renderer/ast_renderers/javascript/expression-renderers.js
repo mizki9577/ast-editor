@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, FunctionRenderer, BracketRenderer, PunctuationRenderer, CommaSeparatedList } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, FunctionRenderer, BracketRenderer, PunctuationRenderer, CommaSeparatedList } from './index.js'
 import { ClassRenderer } from './class-renderers.js'
 import * as reservedKeywords from './reserved-keywords.js'
 

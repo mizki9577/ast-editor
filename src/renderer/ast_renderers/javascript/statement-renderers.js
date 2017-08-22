@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer } from './JavaScriptASTRenderer.js'
+import { NodeRenderer, NodeWrapper, BracketRenderer, PunctuationRenderer } from './index.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
 export const ExpressionStatementRenderer = ({ node }: { node: babylon.ExpressionStatement }) => (

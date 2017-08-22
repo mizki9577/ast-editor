@@ -1,7 +1,7 @@
 // @flow
 import type babylon from 'babylon'
 import React from 'react'
-import { NodeWrapper, PunctuationRenderer } from './JavaScriptASTRenderer.js'
+import { NodeWrapper, PunctuationRenderer } from './index.js'
 import * as reservedKeywords from './reserved-keywords.js'
 
 export const RegExpLiteralRenderer = ({ node }: { node: babylon.RegExpLiteral }) => (
