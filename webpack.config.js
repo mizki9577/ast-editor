@@ -1,5 +1,5 @@
 const { DefinePlugin } = require('webpack')
-const BabelMinifyPlugin = require("babel-minify-webpack-plugin")
+const BabelMinifyPlugin = require('babel-minify-webpack-plugin')
 
 module.exports = (env) => {
   const rules = [
@@ -18,14 +18,15 @@ module.exports = (env) => {
     },
   ]
 
-  const plugins = [
-    new DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env.production ? 'production' : 'development'),
-    }),
-  ]
+  const plugins = []
 
   if (env.production) {
-    plugins.push(new BabelMinifyPlugin())
+    plugins.push(
+      new DefinePlugin({
+        'process.env.NODE_ENV': '"production"',
+      }),
+      new BabelMinifyPlugin(),
+    )
   }
 
   return {
