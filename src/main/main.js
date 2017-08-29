@@ -20,7 +20,7 @@ const createWindow = () => {
     window = null
   })
 
-  promisify(fs.readFile)(process.argv[2], { encoding: 'UTF-8', flag: 'r' })
+  promisify(fs.readFile)(process.argv[process.argv.length - 1], { encoding: 'UTF-8', flag: 'r' })
     .then(src => {
       const ast = parse(src)
       const astJson = circularJson.stringify(ast)
