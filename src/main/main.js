@@ -3,6 +3,8 @@ const path = require('path')
 const fs = require('fs')
 const promisify = require('util-promisify')
 const { app, BrowserWindow, ipcMain } = require('electron')
+const devtron = require('devtron')
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer')
 const babylon = require('babylon')
 const circularJson = require('circular-json')
 
@@ -42,6 +44,12 @@ const parse = src => {
 
 app.on('ready', () => {
   createWindow()
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(process.env.NODE_ENV)
+    devtron.install()
+    installExtension(REACT_DEVELOPER_TOOLS)
+  }
 })
 
 app.on('window-all-closed', () => {
