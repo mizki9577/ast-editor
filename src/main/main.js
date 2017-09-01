@@ -1,12 +1,14 @@
 const url = require('url')
 const path = require('path')
 const fs = require('fs')
+
 const promisify = require('util-promisify')
+
 const { app, BrowserWindow, ipcMain } = require('electron')
 const devtron = require('devtron')
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer')
-const babylon = require('babylon')
-const circularJson = require('circular-json')
+
+const parse = require('./parsers/javascript.js')
 
 let window = null
 
@@ -25,21 +27,11 @@ const createWindow = () => {
   promisify(fs.readFile)(process.argv[process.argv.length - 1], { encoding: 'UTF-8', flag: 'r' })
     .then(src => {
       const ast = parse(src)
-      const astJson = circularJson.stringify(ast)
       ipcMain.on('ready', ev => {
-        ev.sender.send('ast-parsed', astJson)
+        ev.sender.send('ast-parsed', ast)
       })
     })
     .catch(e => console.log(e))
-}
-
-const parse = src => {
-  const ast = babylon.parse(src, {
-    sourceType: 'module',
-    plugins: ['jsx', 'flow'],
-  })
-
-  return ast
 }
 
 app.on('ready', () => {

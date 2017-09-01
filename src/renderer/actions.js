@@ -1,12 +1,10 @@
 // @flow
 import { ipcRenderer } from 'electron'
-import * as circularJson from 'circular-json'
 
 import dispatcher from './dispatcher.js'
 
 export const ready = () => {
-  ipcRenderer.on('ast-parsed', (ev, astJson) => {
-    const ast = circularJson.parse(astJson)
+  ipcRenderer.on('ast-parsed', (ev, ast) => {
     astReceivced(ast)
   })
   ipcRenderer.send('ready')

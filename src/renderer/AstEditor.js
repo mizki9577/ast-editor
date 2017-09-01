@@ -11,7 +11,7 @@ import convertFluxContainer from './convertFluxContainer.js'
 
 type TState = {|
   ast: any,
-  focusedNode: any,
+  focusedNodeId: number,
 |}
 
 class AstEditor extends React.Component<null, TState> {
@@ -30,9 +30,6 @@ class AstEditor extends React.Component<null, TState> {
   handleKeyDown(ev: KeyboardEvent) {
     switch (ev.key) {
       case 'h':
-        if (this.state.focusedNode.parent != null) {
-          this.setState({ focusedNode: this.state.focusedNode.parent })
-        }
         break
 
       case 'l':
