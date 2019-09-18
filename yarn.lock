@@ -6,9 +6,9 @@
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@microsoft/load-themed-styles/-/load-themed-styles-1.7.1.tgz#8692ef2df6d199ccc617900826a70cf3cc9ec761"
 
-"@types/node@^7.0.18":
-  version "7.0.42"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.42.tgz#051ff1cdbd1e1b7523ba425bc388147483344dbf"
+"@types/node@^8.0.24":
+  version "8.10.54"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.54.tgz#1c88eb253ac1210f1a5876953fb70f7cc4928402"
 
 "@uifabric/styling@>=0.20.0 <1.0.0":
   version "0.20.0"
@@ -1211,11 +1211,11 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron@^1.6.11:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.6.tgz#fb69ea31bd03df0eff247f26f0b538bd29b6ee72"
+electron@^1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.8.tgz#a90cddb075291f49576993e6f5c8bb4439301cae"
   dependencies:
-    "@types/node" "^7.0.18"
+    "@types/node" "^8.0.24"
     electron-download "^3.0.1"
     extract-zip "^1.0.3"
 
